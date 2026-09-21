@@ -29,10 +29,7 @@ export const links = {
   whatsappNumero: '5511968624262',
   whatsappMensagem:
     'Olá, Patricia! Vim pelo seu site e gostaria de saber sobre horários para sessão.',
-  /* Dois perfis diferentes aparecem nas fontes. Enquanto não houver
-     confirmação, o link fica fora do site (melhor nenhum link do que um
-     link errado). Preencha com a URL completa para o link voltar. */
-  instagram: null as string | null,
+  instagram: 'https://www.instagram.com/psipatriciadomingues/' as string | null,
   google: 'https://maps.app.goo.gl/uVwuSHFzQA7XVy5s9',
   zenklub: null as string | null,
   cadastroCfp: 'https://cadastro.cfp.org.br',
@@ -250,10 +247,11 @@ export const sobre = {
   },
   temas: {
     titulo: 'Temas com que trabalho',
-    /* Não incluídos por falta de confirmação: TOC e transtorno bipolar. */
     itens: [
       'ansiedade',
       'depressão',
+      'transtorno obsessivo-compulsivo (TOC)',
+      'transtorno bipolar',
       'luto e perdas',
       'transições de vida',
       'relacionamentos',
@@ -283,7 +281,7 @@ export const agendar = {
       id: 'whatsapp',
       titulo: 'Direto comigo',
       texto:
-        'Me envie uma mensagem pelo WhatsApp para combinarmos horário, valor e forma de pagamento.',
+        'Me envie uma mensagem pelo WhatsApp para combinarmos horário e valor. O pagamento pode ser por Pix, transferência ou cartão.',
       acao: 'whatsapp',
     },
   ],
@@ -324,11 +322,13 @@ export const duvidas = {
     },
     {
       pergunta: 'Qual a idade mínima?',
-      resposta: 'Atendo adultos e idosos. [[CONFIRMAR: idade mínima atendida]]',
+      resposta:
+        'Atendo adultos e idosos, a partir de 18 anos.',
     },
     {
       pergunta: 'Você emite recibo para reembolso do plano de saúde?',
-      resposta: '[[CONFIRMAR: emite recibo para reembolso?]]',
+      resposta:
+        'Sim. Emito recibo das sessões para você solicitar reembolso ao seu plano de saúde. Quanto o plano devolve depende das regras de cada contrato.',
     },
     {
       pergunta: 'E se eu precisar de ajuda agora?',
