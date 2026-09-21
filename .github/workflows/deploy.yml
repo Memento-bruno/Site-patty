@@ -32,13 +32,13 @@ jobs:
       # Devolve o endereço real do site e o caminho base já configurados no
       # GitHub Pages. Vindo daqui, continuam certos se o repositório for
       # renomeado ou passar a usar domínio próprio.
+      # Antes da primeira publicação é preciso ligar o Pages uma vez, em
+      # Settings -> Pages -> Source -> GitHub Actions. O token do Actions não
+      # tem permissão para fazer isso sozinho (enablement: true falha com
+      # "Resource not accessible by integration").
       - name: Configurar o GitHub Pages
         id: pages
         uses: actions/configure-pages@v5
-        with:
-          # Liga o GitHub Pages na primeira publicação, sem precisar mexer
-          # nas configurações do repositório na mão.
-          enablement: true
 
       # O build avisa, no fim, quantos [[CONFIRMAR]] ainda aparecem no site.
       - name: Construir o site
