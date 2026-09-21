@@ -36,7 +36,9 @@ import { sobre, profissional, links, botoes } from '../data/site';
               <dt>{item.periodo ?? ''}</dt>
               <dd>
                 <span class="formacao__curso">{item.curso}</span>
-                <span class="formacao__instituicao"><Texto valor={item.instituicao} /></span>
+                {item.instituicao && (
+                  <span class="formacao__instituicao"><Texto valor={item.instituicao} /></span>
+                )}
                 {item.andamento && <span class="formacao__estado">Em andamento</span>}
                 {item.nota && <span class="formacao__nota">{item.nota}</span>}
               </dd>

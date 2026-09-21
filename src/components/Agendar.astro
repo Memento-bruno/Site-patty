@@ -43,7 +43,7 @@ const secundarios = [
 
     <div class="agendar__notas">
       <p>{agendar.nota}</p>
-      <p><Texto valor={agendar.horarioResposta} /></p>
+      {agendar.horarioResposta && <p><Texto valor={agendar.horarioResposta} /></p>}
     </div>
 
     {

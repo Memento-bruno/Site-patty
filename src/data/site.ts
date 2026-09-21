@@ -211,7 +211,7 @@ export const sobre = {
         periodo: '2025–2026',
         curso: 'Curso de Psicoterapia Baseada em Evidências',
         instituicao: 'InPBE — Instituto de Psicologia Baseada em Evidências',
-        andamento: true,
+        andamento: false,
         nota: null as string | null,
       },
       {
@@ -232,14 +232,16 @@ export const sobre = {
       {
         periodo: null as string | null,
         curso: 'Formação em Cuidado com Perdas e Luto',
-        instituicao: '[[CONFIRMAR: instituição e período]]',
+        /* Instituição e período ainda não informados. Preencha a string
+           para a linha aparecer sob o nome do curso. */
+        instituicao: null as string | null,
         andamento: false,
         nota: null as string | null,
       },
       {
-        periodo: null as string | null,
+        periodo: 'Conclusão 2020' as string | null,
         curso: 'Graduação em Psicologia',
-        instituicao: '[[CONFIRMAR: instituição e período]]',
+        instituicao: 'UNIP — Universidade Paulista, São Paulo' as string | null,
         andamento: false,
         nota: null as string | null,
       },
@@ -287,7 +289,9 @@ export const agendar = {
   ],
   /* Orientação de privacidade recomendada pelo briefing (3.4). */
   nota: 'Por mensagem, não é preciso contar detalhes sobre a sua saúde. Conversamos sobre isso na sessão.',
-  horarioResposta: 'Respondo mensagens [[CONFIRMAR: dias e horários]].',
+  /* Sem horário de resposta divulgado, por escolha dela. Para informar,
+     preencha a frase aqui e ela volta a aparecer abaixo dos dois blocos. */
+  horarioResposta: null as string | null,
 } as const;
 
 /* --------------------------------------------------------------------------- Dúvidas */
@@ -399,7 +403,7 @@ export const privacidade = {
     {
       titulo: 'Contato para questões de privacidade',
       paragrafos: [
-        'Para falar sobre privacidade, escreva para [[CONFIRMAR: e-mail profissional]].',
+        'Para falar sobre privacidade, escreva para psi.patriciabraz@gmail.com.',
       ],
     },
   ],

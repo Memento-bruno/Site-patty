@@ -4,21 +4,28 @@
 
    Em desenvolvimento eles aparecem com fundo amarelo tracejado.
    Em produção o texto continua no HTML (para não sumir sem ninguém notar)
-   e o comando `npm run build` avisa quantos restam. */
+   e o comando `npm run build` avisa quantos restam.
+
+   Também transforma endereços de e-mail em link, para quem precisa escrever
+   não ter que copiar à mão. */
 interface Props {
   valor: string;
 }
 
 const { valor } = Astro.props;
 const dev = import.meta.env.DEV;
-const partes = valor.split(/(\[\[CONFIRMAR[^\]]*\]\])/g).filter(Boolean);
+const partes = valor
+  .split(/(\[\[CONFIRMAR[^\]]*\]\]|[\w.+-]+@[\w-]+\.[\w.-]+\w)/g)
+  .filter(Boolean);
 ---
 {
-  partes.map((parte) =>
-    parte.startsWith('[[CONFIRMAR') ? (
-      <span class:list={['confirmar', dev && 'confirmar--dev']}>{parte}</span>
-    ) : (
-      <Fragment set:text={parte} />
-    ),
-  )
+  partes.map((parte) => {
+    if (parte.startsWith('[[CONFIRMAR')) {
+      return <span class:list={['confirmar', dev && 'confirmar--dev']}>{parte}</span>;
+    }
+    if (/^[\w.+-]+@[\w-]+\.[\w.-]+\w$/.test(parte)) {
+      return <a href={`mailto:${parte}`}>{parte}</a>;
+    }
+    return <Fragment set:text={parte} />;
+  })
 }
