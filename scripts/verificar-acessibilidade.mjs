@@ -11,7 +11,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { setTimeout as espera } from 'node:timers/promises';
 
 const PORTA = Number(process.env.PORTA_PREVIEW ?? 4399);
-const BASE = (process.env.BASE_PATH ?? '/site-patricia-domingues').replace(/\/$/, '');
+const BASE = (process.env.BASE_PATH ?? '/Site-patty').replace(/\/$/, '');
 const PAGINAS = ['/', '/politica-de-privacidade', '/pagina-que-nao-existe'];
 
 const executavel =

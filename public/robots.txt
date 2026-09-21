@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://memento-bruno.github.io/site-patricia-domingues/sitemap-index.xml

@@ -4,15 +4,15 @@ import sitemap from '@astrojs/sitemap';
 /* ---------------------------------------------------------------------------
    Onde o site fica publicado.
 
-   Hoje (GitHub Pages, repositório site-patricia-domingues):
-     site: 'https://memento-bruno.github.io'   base: '/site-patricia-domingues'
+   Na publicação pelo GitHub Actions estes dois valores vêm prontos da própria
+   configuração do GitHub Pages (ver .github/workflows/deploy.yml), então
+   continuam certos mesmo se o repositório for renomeado ou passar a usar
+   domínio próprio.
 
-   Quando houver domínio próprio (ex.: patriciadomingues.com.br), troque para:
-     site: 'https://patriciadomingues.com.br'  base: '/'
-   e crie o arquivo public/CNAME com o domínio dentro. O README explica.
+   Os valores abaixo são só o padrão de quem roda na própria máquina.
    --------------------------------------------------------------------------- */
 const site = process.env.SITE_URL || 'https://memento-bruno.github.io';
-const base = process.env.BASE_PATH || '/site-patricia-domingues';
+const base = process.env.BASE_PATH || '/Site-patty';
 
 export default defineConfig({
   site,

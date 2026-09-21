@@ -22,7 +22,9 @@ const {
   indexar = true,
 } = Astro.props;
 
-const canonica = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', Astro.site);
+/* Sem tirar a barra final: é assim que o GitHub Pages serve as páginas e é
+   assim que elas entram no sitemap. Canônica e sitemap precisam concordar. */
+const canonica = new URL(Astro.url.pathname, Astro.site);
 const imagemOg = new URL(url(seo.og), Astro.site).href;
 
 const perfis = [links.vittude, links.instagram, links.google].filter(
@@ -50,8 +52,11 @@ const dadosEstruturados = {
 
     <title>{titulo}</title>
     <meta name="description" content={descricao} />
-    <link rel="canonical" href={canonica.href} />
-    {!indexar && <meta name="robots" content="noindex, follow" />}
+    {indexar ? (
+      <link rel="canonical" href={canonica.href} />
+    ) : (
+      <meta name="robots" content="noindex, follow" />
+    )}
 
     <meta name="author" content={profissional.identificacao} />
     <meta name="theme-color" content="#FBFAFC" />
@@ -75,6 +80,7 @@ const dadosEstruturados = {
     <meta name="twitter:description" content={descricao} />
     <meta name="twitter:image" content={imagemOg} />
 
+    <link rel="sitemap" type="application/xml" href={url('/sitemap-index.xml')} />
     <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={url('/favicon.svg')} />
 

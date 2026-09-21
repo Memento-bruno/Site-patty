@@ -96,6 +96,8 @@ O site publica sozinho. Toda vez que uma alteração chega na branch `main`
 deste repositório, o GitHub constrói e publica a versão nova em poucos
 minutos.
 
+O site fica em **https://memento-bruno.github.io/Site-patty/**
+
 Dá para acompanhar na aba **Actions** do repositório. Se algo der errado, a
 publicação para e o site que já estava no ar continua como estava.
 
@@ -109,17 +111,14 @@ GitHub Actions**.
 
 ### Quando houver domínio próprio
 
-1. Crie o arquivo `public/CNAME` com o domínio dentro, sem `https://`:
-   ```
-   patriciadomingues.com.br
-   ```
-2. Em `astro.config.mjs`, troque as duas linhas do topo:
-   ```js
-   const site = process.env.SITE_URL || 'https://patriciadomingues.com.br';
-   const base = process.env.BASE_PATH || '/';
-   ```
-3. Atualize o endereço do sitemap em `public/robots.txt`.
-4. Aponte o domínio para o GitHub Pages no painel do registro.br.
+1. Aponte o domínio para o GitHub Pages no painel do registro.br.
+2. No GitHub: **Settings → Pages → Custom domain**, digite o domínio e salve.
+3. Em `astro.config.mjs`, troque o valor padrão de `base` de `'/Site-patty'`
+   para `'/'` (só para quem roda o site na própria máquina).
+
+Não precisa mexer em mais nada: o endereço do site, o caminho base, o sitemap
+e o `robots.txt` são montados na hora da publicação a partir da configuração do
+GitHub Pages.
 
 ---
 
@@ -150,7 +149,7 @@ navegador.
 Para medir desempenho, com o site construído e `npm run preview` rodando:
 
 ```bash
-npx lighthouse http://localhost:4321/site-patricia-domingues/ --view
+npx lighthouse http://localhost:4321/Site-patty/ --view
 ```
 
 ---
