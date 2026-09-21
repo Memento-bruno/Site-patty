@@ -38,8 +38,16 @@ const svgBruto = await tracar(bitmap, {
   background: 'transparent',
 });
 
+/* O potrace escreve coordenadas com 3 casas decimais. Como o SVG entra
+   embutido no HTML, cada casa a mais é peso na página. Arredondar para uma
+   casa é invisível: o viewBox tem ~2000 unidades de largura e a marca é
+   exibida entre 48 px (cabeçalho) e 200 px (rodapé), então 0,1 unidade vale
+   entre 0,002 px e 0,01 px na tela. */
+const arredondar = (texto) =>
+  texto.replace(/-?\d+\.\d+/g, (n) => String(Math.round(Number(n) * 10) / 10));
+
 /* Deixa a cor a cargo do CSS e tira o que não precisa ir para o HTML. */
-const svg = svgBruto
+const svg = arredondar(svgBruto)
   .replace(/ fill="#000000"/g, ' fill="currentColor"')
   .replace(/<svg /, '<svg fill="currentColor" ')
   .replace(/ version="[\d.]+"/, '')
