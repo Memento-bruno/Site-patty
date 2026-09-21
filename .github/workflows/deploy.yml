@@ -1,0 +1,53 @@
+name: Publicar o site
+
+on:
+  push:
+    branches: [main]
+  # Permite publicar na mão pela aba "Actions" do GitHub.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Uma publicação por vez; se duas forem disparadas juntas, a mais nova espera.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  construir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # O build avisa, no fim, quantos [[CONFIRMAR]] ainda aparecem no site.
+      - name: Construir o site
+        run: npm run build
+
+      # Trava a publicação se algo proibido pelo Código de Ética voltar ao site.
+      - name: Conferir as regras do CFP
+        run: npm run etica
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  publicar:
+    needs: construir
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
