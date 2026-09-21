@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Rodape from '../components/Rodape.astro';
+import BarraAgendamento from '../components/BarraAgendamento.astro';
+import Texto from '../components/Texto.astro';
+import { privacidade, profissional, naoEncontrada } from '../data/site';
+import { url } from '../lib/url';
+
+const atualizadaEm = new Date(`${privacidade.atualizacao}T12:00:00Z`).toLocaleDateString(
+  'pt-BR',
+  { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' },
+);
+---
+<Base
+  titulo={`${privacidade.titulo} | ${profissional.nomeCompleto}`}
+  descricao="Como este site trata (e não trata) dados pessoais. Sem cookies, sem formulários e sem ferramentas de rastreamento."
+>
+  <Header />
+  <main id="conteudo" class="secao">
+    <article class="container">
+      <div class="texto">
+      <h1>{privacidade.titulo}</h1>
+      <p class="texto__data">Última atualização: {atualizadaEm}.</p>
+
+      {
+        privacidade.blocos.map((bloco) => (
+          <section class="texto__bloco">
+            <h2>{bloco.titulo}</h2>
+            {bloco.paragrafos.map((paragrafo) => (
+              <p><Texto valor={paragrafo} /></p>
+            ))}
+          </section>
+        ))
+      }
+
+        <p class="texto__voltar">
+          <a href={url('/')}>{naoEncontrada.voltar}</a>
+        </p>
+      </div>
+    </article>
+  </main>
+  <Rodape />
+  <BarraAgendamento />
+</Base>
+
+<style>
+  .texto { max-width: 44rem; }
+
+  .texto h1 { font-size: var(--t-h2); }
+
+  .texto__data {
+    margin-top: var(--e-4);
+    font-family: var(--fonte-titulo);
+    font-size: var(--t-pequeno);
+    color: var(--texto-suave);
+  }
+
+  .texto__bloco { margin-top: var(--e-12); }
+
+  .texto__bloco h2 {
+    font-size: var(--t-h3);
+    margin-bottom: var(--e-4);
+  }
+
+  .texto__bloco p + p { margin-top: var(--e-4); }
+
+  .texto__voltar {
+    margin-top: var(--e-16);
+    padding-top: var(--e-6);
+    border-top: 1px solid var(--linha);
+    font-family: var(--fonte-titulo);
+    font-size: 1.0625rem;
+  }
+</style>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face {
+    font-family: 'Schibsted Grotesk Variable';
+    src: url('../node_modules/@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2') format('woff2');
+    font-weight: 400 800;
+  }
+  @font-face {
+    font-family: 'Literata Variable';
+    src: url('../node_modules/@fontsource-variable/literata/files/literata-latin-wght-normal.woff2') format('woff2');
+    font-weight: 400 700;
+  }
+
+  :root {
+    --ameixa-900: #3B2745;
+    --ameixa-600: #6E4F7E;
+    --lilas-200: #DCD0E4;
+    --lilas-100: #EFE9F3;
+    --papel: #FBFAFC;
+    --ocre-500: #B8862F;
+    --texto-suave: #4B3D55;
+  }
+
+  * { box-sizing: border-box; margin: 0; }
+
+  body {
+    width: 1200px;
+    height: 630px;
+    background: linear-gradient(150deg, var(--lilas-100) 0%, var(--papel) 62%);
+    font-family: 'Schibsted Grotesk Variable', sans-serif;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    align-items: center;
+    gap: 64px;
+    padding: 72px;
+  }
+
+  .marca { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
+  .marca svg { color: var(--ameixa-900); }
+  .marca span { font-size: 26px; font-weight: 700; color: var(--ameixa-900); }
+
+  h1 {
+    font-size: 66px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--ameixa-900);
+  }
+
+  .crp {
+    margin-top: 24px;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--ameixa-600);
+  }
+
+  .resumo {
+    margin-top: 28px;
+    font-family: 'Literata Variable', serif;
+    font-size: 25px;
+    line-height: 1.5;
+    color: var(--texto-suave);
+    max-width: 22ch;
+  }
+
+  /* Mesmo arco da foto do hero. Trocar por um recorte do retrato quando a
+     foto real existir (ver README). */
+  .retrato {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    max-height: 486px;
+    justify-self: end;
+    border-radius: 999px 999px 0 0;
+    background: var(--lilas-200);
+    border: 1px solid var(--papel);
+  }
+
+  .retrato::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: translate(16px, 16px);
+    background: var(--lilas-200);
+    border-radius: inherit;
+  }
+</style>
+</head>
+<body>
+  <div>
+    <div class="marca">
+      <svg viewBox="0 0 100 60" width="38" height="38" fill="none">
+        <path d="M9 55 A 41 41 0 0 1 91 55" stroke="currentColor" stroke-width="18" stroke-linecap="round"/>
+      </svg>
+      <span>Patricia Domingues</span>
+    </div>
+    <h1>Patricia Braz Domingues</h1>
+    <p class="crp">Psicóloga, CRP 06/167326</p>
+    <p class="resumo">Atendimento psicológico online para adultos e idosos.</p>
+  </div>
+  <div class="retrato"></div>
+</body>
+</html>

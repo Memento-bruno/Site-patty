@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Rodape from '../components/Rodape.astro';
+import BarraAgendamento from '../components/BarraAgendamento.astro';
+import Icone from '../components/Icone.astro';
+import { naoEncontrada, botoes, profissional, whatsappUrl } from '../data/site';
+import { url } from '../lib/url';
+---
+<Base
+  titulo={`Página não encontrada | ${profissional.nomeCompleto}`}
+  descricao={naoEncontrada.titulo}
+  indexar={false}
+>
+  <Header />
+  <main id="conteudo" class="secao">
+    <div class="container erro">
+      <h1>{naoEncontrada.titulo}</h1>
+      <p>{naoEncontrada.paragrafo}</p>
+
+      <div class="erro__acoes">
+        <a class="botao botao--primario" href={url('/')}>{naoEncontrada.voltar}</a>
+        <a class="botao botao--contorno" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+          <Icone nome="whatsapp-logo" />
+          {botoes.whatsapp}<span class="so-leitor"> (abre em nova aba)</span>
+        </a>
+      </div>
+    </div>
+  </main>
+  <Rodape />
+  <BarraAgendamento />
+</Base>
+
+<style>
+  .erro { max-width: 40rem; }
+
+  .erro h1 { font-size: var(--t-h2); }
+
+  .erro p {
+    margin-top: var(--e-6);
+    color: var(--texto-suave);
+  }
+
+  .erro__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-4);
+    margin-top: var(--e-8);
+  }
+
+  .erro__acoes .botao { flex: 1 1 100%; }
+
+  @media (min-width: 48rem) {
+    .erro__acoes .botao { flex: 0 0 auto; }
+  }
+</style>
