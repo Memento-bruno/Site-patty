@@ -1,5 +1,5 @@
 ---
-import Arco from './Arco.astro';
+import Marca from './Marca.astro';
 import { profissional } from '../data/site';
 import { url } from '../lib/url';
 
@@ -11,7 +11,7 @@ interface Props {
 const { href = url('/'), class: classe } = Astro.props;
 ---
 <a href={href} class:list={['logo', classe]}>
-  <Arco class="logo__arco" tamanho="1.75rem" />
+  <Marca variante="simbolo" altura="3rem" traco={15} class="logo__marca" />
   <span class="logo__texto">
     <span class="logo__nome">{profissional.nomeUso}</span>
     <span class="logo__crp">{profissional.titulo}, {profissional.crp}</span>
@@ -29,13 +29,14 @@ const { href = url('/'), class: classe } = Astro.props;
     padding-block: var(--e-1);
   }
 
-  /* :global porque a classe vai para dentro do componente Arco */
-  .logo :global(.logo__arco) {
+  /* :global porque a classe vai para dentro do componente Marca.
+     A marca herda a cor do texto, então acompanha a faixa escura sozinha. */
+  .logo :global(.logo__marca) {
     color: var(--ameixa-900);
     flex: none;
   }
 
-  .em-ameixa .logo :global(.logo__arco) { color: var(--texto-claro); }
+  .em-ameixa .logo :global(.logo__marca) { color: var(--texto-claro); }
 
   .logo__texto {
     display: flex;
@@ -43,6 +44,8 @@ const { href = url('/'), class: classe } = Astro.props;
     line-height: 1.15;
   }
 
+  /* O nome vem tipografado, e não do manuscrito da logo: no tamanho do
+     cabeçalho o manuscrito fica ilegível. Ele aparece inteiro no rodapé. */
   .logo__nome {
     font-family: var(--fonte-titulo);
     font-size: 1.1875rem;

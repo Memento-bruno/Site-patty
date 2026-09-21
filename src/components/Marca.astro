@@ -1,0 +1,48 @@
+---
+/* A logo da Patricia, em três recortes:
+
+   - `simbolo`    rosto de traço contínuo com a borboleta. Cabeçalho e menu.
+   - `assinatura` o símbolo com o nome manuscrito. Só onde cabe grande
+                  (rodapé): abaixo de ~110 px de altura o manuscrito some.
+   - `borboleta`  só a borboleta. Centro do selo e favicon.
+
+   Os arquivos ficam em src/icons/marca/ e foram vetorizados dos PNGs
+   originais com scripts/vetorizar-logo.mjs. Usam `currentColor`, então
+   basta a cor do texto mudar para a marca acompanhar — é assim que ela
+   aparece em ameixa no fundo claro e em claro dentro da faixa escura. */
+interface Props {
+  variante?: 'simbolo' | 'assinatura' | 'borboleta';
+  altura: string;
+  /* Engrossa o traço em tamanhos pequenos. O caminho é um contorno
+     preenchido, então um stroke da mesma cor aumenta a massa visual sem
+     redesenhar nada. Medido em unidades do viewBox (~2000 de largura):
+     15 equilibra o símbolo com o nome ao lado no cabeçalho; acima de 28 a
+     linha perde a delicadeza do original. */
+  traco?: number;
+  class?: string;
+}
+
+const { variante = 'simbolo', altura, traco = 0, class: classe } = Astro.props;
+
+const arquivos = import.meta.glob<string>('../icons/marca/*.svg', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
+
+const bruto = arquivos[`../icons/marca/${variante}.svg`];
+if (!bruto) throw new Error(`Variante da marca não encontrada: ${variante}`);
+
+const svg = bruto
+  .replace(
+    '<svg ',
+    `<svg aria-hidden="true" focusable="false" style="height:${altura};width:auto"${classe ? ` class="${classe}"` : ''} `,
+  )
+  .replace(
+    '<path ',
+    traco > 0
+      ? `<path stroke="currentColor" stroke-width="${traco}" stroke-linejoin="round" `
+      : '<path ',
+  );
+---
+<Fragment set:html={svg} />

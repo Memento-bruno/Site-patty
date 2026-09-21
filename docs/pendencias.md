@@ -46,10 +46,11 @@ volta editando `src/data/site.ts`.
    `hero.titulo`, em `src/data/site.ts`.
 3. **Fotos.** O site mostra um espaço liso em lilás com a legenda "Foto da
    Patricia" até as fotos reais entrarem. Ver o README.
-4. **Logotipo e cores próprias.** Se ela já usa uma identidade no Instagram,
-   dá para adaptar os tokens. Hoje o site usa a Paleta A do briefing
-   ("ameixa e ocre"); a Paleta B está comentada no fim de
-   `src/styles/tokens.css`.
+4. **Cores próprias.** O logotipo dela já está no site (resolvido). Falta saber
+   se ela usa uma paleta própria no Instagram — hoje o site usa a Paleta A do
+   briefing ("ameixa e ocre"), e a Paleta B está comentada no fim de
+   `src/styles/tokens.css`. O logotipo é vetorial e herda a cor do texto, então
+   acompanha qualquer paleta sem precisar de novo arquivo.
 5. **Domínio e e-mail profissional.** Sugestões do briefing para verificar no
    registro.br: `patriciadomingues.com.br`, `patriciabrazdomingues.com.br`,
    `psicologapatriciadomingues.com.br`.

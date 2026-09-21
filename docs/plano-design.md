@@ -6,15 +6,37 @@ sairia "de fábrica" para qualquer site de psicologia.
 
 ## 1. Três princípios
 
-### 1.1 O arco é a única assinatura, e ela é escassa
+### 1.1 A marca dela aparece pouco, e por isso aparece
 
-O arco (◠) aparece em exatamente três lugares: a foto do hero, o monograma do
-logotipo e os marcadores da lista "Talvez você esteja aqui". Em nenhum outro.
+> Revisado depois que a Patricia enviou o logotipo dela. A versão anterior
+> deste princípio dizia que o arco (◠) era a assinatura do site — ele era um
+> monograma provisório, inventado enquanto não se sabia se ela tinha logo.
+> Tem. O arco saiu do logotipo e do centro do selo.
 
-O reflexo automático seria repetir a forma em todo canto — topo de seção,
-divisória, moldura de ícone — até virar papel de parede. A escassez é o que faz
-o arco ser lido como assinatura e não como enfeite. Se a forma aparecer num
-quarto lugar, ela deixa de significar alguma coisa.
+O logotipo da Patricia é um rosto de perfil em traço contínuo com uma borboleta,
+acompanhado do nome manuscrito. Ele aparece em três lugares, cada um com o
+recorte que aquele tamanho comporta:
+
+| Onde | Recorte | Por quê |
+|---|---|---|
+| Cabeçalho e menu | só o símbolo, 48 px | abaixo de ~110 px o manuscrito fica ilegível; o nome vai tipografado ao lado |
+| Centro do selo do CRP | só a borboleta | o elemento mais simples da marca, no único ornamento da página |
+| Rodapé | a assinatura inteira | é o único lugar com espaço para o manuscrito ser lido |
+
+O reflexo automático seria carimbar o símbolo em todo canto — topo de seção,
+divisória, marca d'água atrás do texto. A escassez é o que faz a marca ser lida
+como assinatura e não como papel de parede.
+
+O arco permaneceu onde sempre foi forma de layout, e não marca: o recorte da
+foto do hero (vindo da referência visual) e os marcadores em ocre da lista
+"Talvez você esteja aqui", que ecoam esse recorte.
+
+Os três arquivos foram vetorizados dos PNGs originais
+(`scripts/vetorizar-logo.mjs`) e usam `currentColor`: a marca herda a cor do
+texto, então acompanha a faixa escura e qualquer troca de paleta sem precisar
+de um segundo arquivo. Em tamanhos pequenos o traço é engrossado por `stroke`
+— 15 unidades no cabeçalho, 18 na borboleta do selo, 40 no favicon —, o que dá
+leitura sem redesenhar a marca.
 
 ### 1.2 O CRP ocupa o lugar do ornamento
 
@@ -130,6 +152,7 @@ Cada linha abaixo é uma decisão que teria saído no automático e foi substitu
 
 | Reflexo automático | O que ficou | Motivo |
 |---|---|---|
+| Logotipo grande em marca d'água atrás de uma seção | A marca em três pontos, cada um no recorte que o tamanho comporta | 1.1 |
 | Rótulo em CAIXA ALTA espaçada acima de cada H2 | Nada acima do H2; a linha de apoio, quando existe, é sentence case em Schibsted Grotesk 15 px | 6.8: rótulo em versalete é a assinatura de template |
 | "Saiba mais" / "Agende agora →" | "Ver horários na Vittude", "Chamar no WhatsApp", "Agendar sessão" — nomes que dizem o que acontece, iguais em todo o site | 6.8 e 7 |
 | Ícone de cérebro, cabeça com engrenagem ou flor de lótus | Câmera de vídeo, duas pessoas, relógio (Phosphor regular, SVG inline) | 6.7: clichê de categoria |

@@ -1,5 +1,5 @@
 ---
-import Logo from './Logo.astro';
+import Marca from './Marca.astro';
 import { profissional, rodape, links, botoes, whatsappUrl } from '../data/site';
 import { url } from '../lib/url';
 
@@ -15,7 +15,9 @@ const externos = [
 <footer class="rodape">
   <div class="container rodape__grade">
     <div class="rodape__marca">
-      <Logo />
+      <a href={url('/')} class="rodape__logo" aria-label={`${profissional.nomeUso}, início`}>
+        <Marca variante="assinatura" altura="7rem" traco={8} />
+      </a>
       <p class="rodape__identificacao">{profissional.identificacao}</p>
       <p class="rodape__resumo">{rodape.resumo}</p>
       <a class="rodape__verificar" href={links.cadastroCfp} target="_blank" rel="noopener noreferrer">
@@ -62,8 +64,14 @@ const externos = [
     gap: var(--e-12);
   }
 
+  .rodape__logo {
+    display: inline-block;
+    color: var(--ameixa-900);
+    padding-block: var(--e-2);
+  }
+
   .rodape__identificacao {
-    margin-top: var(--e-6);
+    margin-top: var(--e-4);
     font-family: var(--fonte-titulo);
     font-size: 1.0625rem;
     font-weight: 600;
