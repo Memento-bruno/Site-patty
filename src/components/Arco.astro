@@ -1,0 +1,28 @@
+---
+/* A assinatura visual do site. Aparece em exatamente três lugares:
+   o logotipo, os marcadores da lista "Talvez você esteja aqui" e — na forma
+   grande, em CSS — a foto do hero. Em nenhum outro. */
+interface Props {
+  tamanho?: string;
+  class?: string;
+  traco?: number;
+}
+
+const { tamanho = '1.75rem', class: classe, traco = 18 } = Astro.props;
+---
+<svg
+  viewBox="0 0 100 60"
+  width={tamanho}
+  height={tamanho}
+  fill="none"
+  aria-hidden="true"
+  focusable="false"
+  class={classe}
+>
+  <path
+    d="M9 55 A 41 41 0 0 1 91 55"
+    stroke="currentColor"
+    stroke-width={traco}
+    stroke-linecap="round"
+  />
+</svg>

@@ -1,0 +1,62 @@
+---
+import Arco from './Arco.astro';
+import { profissional } from '../data/site';
+import { url } from '../lib/url';
+
+interface Props {
+  href?: string;
+  class?: string;
+}
+
+const { href = url('/'), class: classe } = Astro.props;
+---
+<a href={href} class:list={['logo', classe]}>
+  <Arco class="logo__arco" tamanho="1.75rem" />
+  <span class="logo__texto">
+    <span class="logo__nome">{profissional.nomeUso}</span>
+    <span class="logo__crp">{profissional.titulo}, {profissional.crp}</span>
+  </span>
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--e-3);
+    min-height: 3rem;
+    text-decoration: none;
+    color: inherit;
+    padding-block: var(--e-1);
+  }
+
+  /* :global porque a classe vai para dentro do componente Arco */
+  .logo :global(.logo__arco) {
+    color: var(--ameixa-900);
+    flex: none;
+  }
+
+  .em-ameixa .logo :global(.logo__arco) { color: var(--texto-claro); }
+
+  .logo__texto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+
+  .logo__nome {
+    font-family: var(--fonte-titulo);
+    font-size: 1.1875rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ameixa-900);
+  }
+
+  .em-ameixa .logo__nome { color: var(--texto-claro); }
+
+  .logo__crp {
+    font-family: var(--fonte-titulo);
+    font-size: var(--t-pequeno);
+    font-weight: 500;
+    color: var(--texto-suave);
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+import Icone from './Icone.astro';
+import { essencial } from '../data/site';
+---
+<section class="essencial" aria-labelledby="essencial-titulo">
+  <h2 id="essencial-titulo" class="so-leitor">O essencial sobre o atendimento</h2>
+  <ul class="essencial__lista">
+    {
+      essencial.map((cartao) => (
+        <li class="cartao">
+          <Icone nome={cartao.icone} tamanho="1.75rem" class="cartao__icone" />
+          <h3 class="cartao__titulo">{cartao.titulo}</h3>
+          <p class="cartao__texto">{cartao.texto}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  /* Os três cartões que "sobem" sobre a base do hero. São dois dos únicos
+     cartões do site e os únicos elementos com sombra. */
+  .essencial {
+    margin-top: var(--e-12);
+    /* metade para fora da caixa do hero */
+    transform: translateY(2.5rem);
+    margin-bottom: 2.5rem;
+  }
+
+  .essencial__lista {
+    list-style: none;
+    display: grid;
+    gap: var(--e-4);
+  }
+
+  .cartao {
+    background: var(--papel);
+    border: 1px solid var(--linha);
+    border-radius: var(--r-cartao);
+    box-shadow: var(--sombra-cartao);
+    padding: var(--e-6);
+  }
+
+  .cartao :global(.cartao__icone) {
+    color: var(--ameixa-600);
+    margin-bottom: var(--e-4);
+  }
+
+  .cartao__titulo {
+    font-size: var(--t-h3);
+    font-weight: 600;
+    margin-bottom: var(--e-2);
+  }
+
+  .cartao__texto {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--texto-suave);
+  }
+
+  @media (min-width: 48rem) {
+    .essencial {
+      margin-top: var(--e-16);
+      transform: translateY(3.5rem);
+      margin-bottom: 3.5rem;
+    }
+
+    .essencial__lista {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--e-6);
+    }
+  }
+</style>

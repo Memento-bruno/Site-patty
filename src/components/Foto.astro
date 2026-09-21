@@ -1,0 +1,116 @@
+---
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+/* Enquanto não houver foto real, mostra um espaço liso em --lilas-200.
+   Nunca usar banco de imagens nem imagem gerada por IA (briefing 6.7).
+
+   Para colocar a foto de verdade, basta salvar o arquivo em
+   src/assets/fotos/ com o nome esperado (hero.jpg ou sobre.jpg).
+   O site passa a usá-la sozinho, já convertida para AVIF e WebP. */
+
+interface Props {
+  nome: 'hero' | 'sobre';
+  alt: string;
+  legendaPlaceholder: string;
+  formato?: 'arco' | 'retangulo';
+  /* O bloco lilás deslocado atrás pertence à composição do hero. */
+  blocoAtras?: boolean;
+  prioridade?: boolean;
+  class?: string;
+}
+
+const {
+  nome,
+  alt,
+  legendaPlaceholder,
+  formato = 'arco',
+  blocoAtras = formato === 'arco',
+  prioridade = false,
+  class: classe,
+} = Astro.props;
+
+const arquivos = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/fotos/*.{jpg,jpeg,png,webp,avif}',
+  { eager: true },
+);
+
+const encontrada = Object.entries(arquivos).find(([caminho]) =>
+  caminho.toLowerCase().includes(`/${nome}.`),
+)?.[1].default;
+---
+<div class:list={['foto', `foto--${formato}`, blocoAtras && 'foto--com-bloco', classe]}>
+  {
+    encontrada ? (
+      <Picture
+        src={encontrada}
+        formats={['avif', 'webp']}
+        alt={alt}
+        widths={[420, 640, 900, 1200]}
+        sizes="(min-width: 64rem) 32rem, (min-width: 48rem) 40vw, 82vw"
+        loading={prioridade ? 'eager' : 'lazy'}
+        decoding={prioridade ? 'sync' : 'async'}
+        fetchpriority={prioridade ? 'high' : 'auto'}
+        class="foto__img"
+      />
+    ) : (
+      <div class="foto__vazia">
+        <span>{legendaPlaceholder}</span>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .foto {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+  }
+
+  /* O bloco lilás deslocado 16 px para a direita e para baixo (briefing 6.4) */
+  .foto--com-bloco::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: translate(16px, 16px);
+    background: var(--lilas-200);
+    border-radius: inherit;
+  }
+
+  .foto--arco {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--r-pilula) var(--r-pilula) 0 0;
+  }
+
+  .foto--retangulo {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--r-foto);
+  }
+
+  /* :global porque .foto__img é aplicada pelo componente <Picture> */
+  .foto :global(.foto__img),
+  .foto__vazia {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+
+  .foto :global(.foto__img) { object-fit: cover; }
+
+  .foto__vazia {
+    /* fio claro só no placeholder: sem ele, o espaço liso se funde com o
+       bloco lilás deslocado e a forma de arco some */
+    border: 1px solid var(--papel);
+    display: grid;
+    place-items: center;
+    background: var(--lilas-200);
+    color: var(--texto-suave);
+    font-family: var(--fonte-titulo);
+    font-size: var(--t-pequeno);
+    font-weight: 500;
+    text-align: center;
+    padding: var(--e-4);
+  }
+</style>

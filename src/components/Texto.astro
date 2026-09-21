@@ -1,0 +1,24 @@
+---
+/* Renderiza um texto de src/data/site.ts destacando os marcadores
+   [[CONFIRMAR: ...]] que ainda não foram preenchidos.
+
+   Em desenvolvimento eles aparecem com fundo amarelo tracejado.
+   Em produção o texto continua no HTML (para não sumir sem ninguém notar)
+   e o comando `npm run build` avisa quantos restam. */
+interface Props {
+  valor: string;
+}
+
+const { valor } = Astro.props;
+const dev = import.meta.env.DEV;
+const partes = valor.split(/(\[\[CONFIRMAR[^\]]*\]\])/g).filter(Boolean);
+---
+{
+  partes.map((parte) =>
+    parte.startsWith('[[CONFIRMAR') ? (
+      <span class:list={['confirmar', dev && 'confirmar--dev']}>{parte}</span>
+    ) : (
+      <Fragment set:text={parte} />
+    ),
+  )
+}

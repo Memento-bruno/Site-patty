@@ -1,0 +1,199 @@
+---
+import Icone from './Icone.astro';
+import Logo from './Logo.astro';
+import { navegacao, botoes, links, whatsappUrl } from '../data/site';
+---
+<div id="menu-mobile" class="menu" hidden>
+  <div class="menu__painel" role="dialog" aria-modal="true" aria-label="Menu de navegação">
+    <div class="menu__topo">
+      <Logo />
+      <button type="button" class="menu__fechar" data-menu-fechar>
+        <Icone nome="x" tamanho="1.5rem" />
+        <span class="so-leitor">Fechar menu</span>
+      </button>
+    </div>
+
+    <nav class="menu__nav" aria-label="Seções do site">
+      <ul>
+        {
+          navegacao.map((item) => (
+            <li>
+              <a href={item.href} data-menu-link>{item.rotulo}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="menu__acoes">
+      <a class="botao botao--primario" href="#agendar" data-menu-link>{botoes.agendar}</a>
+      <a
+        class="botao botao--contorno"
+        href={links.vittude}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icone nome="calendar-blank" />
+        {botoes.vittude}<span class="so-leitor"> (abre em nova aba)</span>
+      </a>
+      <a
+        class="botao botao--contorno"
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icone nome="whatsapp-logo" />
+        {botoes.whatsapp}<span class="so-leitor"> (abre em nova aba)</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .menu {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: var(--papel);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .menu[hidden] { display: none; }
+
+  .menu__painel {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--e-8);
+    padding: var(--e-4) var(--margem) var(--e-12);
+  }
+
+  .menu__topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e-4);
+    min-height: 3.5rem;
+  }
+
+  .menu__fechar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    flex: none;
+    background: transparent;
+    border: 1px solid var(--linha);
+    border-radius: var(--r-pilula);
+    color: var(--ameixa-900);
+    cursor: pointer;
+  }
+
+  .menu__nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu__nav li + li { border-top: 1px solid var(--linha); }
+
+  .menu__nav a {
+    display: flex;
+    align-items: center;
+    min-height: 3.5rem;
+    font-family: var(--fonte-titulo);
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: var(--ameixa-900);
+    text-decoration: none;
+  }
+
+  .menu__acoes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--e-3);
+    margin-top: auto;
+  }
+
+  .menu__acoes .botao { width: 100%; }
+
+  @media (min-width: 48rem) {
+    .menu { display: none; }
+  }
+</style>
+
+<script>
+  /* Único JavaScript do site: abrir e fechar o menu no celular,
+     com foco preso dentro do painel enquanto ele está aberto. */
+  const menu = document.getElementById('menu-mobile');
+  const abrir = document.querySelector<HTMLButtonElement>('[data-menu-abrir]');
+
+  if (menu && abrir) {
+    const focavel =
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    let ultimoFoco: HTMLElement | null = null;
+
+    const abre = () => {
+      ultimoFoco = document.activeElement as HTMLElement | null;
+      menu.hidden = false;
+      abrir.setAttribute('aria-expanded', 'true');
+      document.documentElement.classList.add('menu-aberto');
+      document.documentElement.style.overflow = 'hidden';
+      menu.querySelector<HTMLElement>('[data-menu-fechar]')?.focus();
+    };
+
+    const fecha = () => {
+      menu.hidden = true;
+      abrir.setAttribute('aria-expanded', 'false');
+      document.documentElement.classList.remove('menu-aberto');
+      document.documentElement.style.overflow = '';
+      (ultimoFoco ?? abrir).focus();
+    };
+
+    abrir.addEventListener('click', abre);
+
+    menu.addEventListener('click', (evento) => {
+      const alvo = evento.target as HTMLElement;
+      if (alvo.closest('[data-menu-fechar]') || alvo.closest('[data-menu-link]')) {
+        fecha();
+      }
+    });
+
+    document.addEventListener('keydown', (evento) => {
+      if (menu.hidden) return;
+
+      if (evento.key === 'Escape') {
+        evento.preventDefault();
+        fecha();
+        return;
+      }
+
+      if (evento.key !== 'Tab') return;
+
+      const itens = Array.from(menu.querySelectorAll<HTMLElement>(focavel)).filter(
+        (item) => item.offsetParent !== null,
+      );
+      if (itens.length === 0) return;
+
+      const primeiro = itens[0];
+      const ultimo = itens[itens.length - 1];
+      const ativo = document.activeElement;
+
+      if (evento.shiftKey && (ativo === primeiro || !menu.contains(ativo))) {
+        evento.preventDefault();
+        ultimo.focus();
+      } else if (!evento.shiftKey && ativo === ultimo) {
+        evento.preventDefault();
+        primeiro.focus();
+      }
+    });
+
+    /* Se a tela crescer até o layout de desktop, o painel não faz mais sentido. */
+    const largura = window.matchMedia('(min-width: 48rem)');
+    largura.addEventListener('change', (evento) => {
+      if (evento.matches && !menu.hidden) fecha();
+    });
+  }
+</script>

@@ -1,0 +1,110 @@
+---
+import Logo from './Logo.astro';
+import Icone from './Icone.astro';
+import MenuMobile from './MenuMobile.astro';
+import { navegacao, botoes } from '../data/site';
+---
+<header class="cabecalho">
+  <div class="cabecalho__grade container">
+    <Logo />
+
+    <nav class="cabecalho__nav" aria-label="Seções do site">
+      <ul>
+        {
+          navegacao.map((item) => (
+            <li>
+              <a href={item.href}>{item.rotulo}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a class="botao botao--primario cabecalho__cta" href="#agendar">{botoes.agendar}</a>
+
+    <button type="button" class="cabecalho__menu" data-menu-abrir aria-expanded="false" aria-controls="menu-mobile">
+      <Icone nome="list" tamanho="1.625rem" />
+      <span class="so-leitor">Abrir menu</span>
+    </button>
+  </div>
+</header>
+
+<MenuMobile />
+
+<style>
+  .cabecalho {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--papel);
+    border-bottom: 1px solid var(--linha);
+  }
+
+  .cabecalho__grade {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e-4);
+    min-height: 4.5rem;
+    padding-block: var(--e-2);
+  }
+
+  /* A "pílula" de navegação do centro (referência 6.1) */
+  .cabecalho__nav {
+    display: none;
+    background: var(--lilas-100);
+    border-radius: var(--r-pilula);
+    padding: var(--e-1);
+  }
+
+  .cabecalho__nav ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+  }
+
+  .cabecalho__nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3rem;
+    padding-inline: var(--e-4);
+    border-radius: var(--r-pilula);
+    font-family: var(--fonte-titulo);
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: var(--ameixa-900);
+    text-decoration: none;
+    transition: background-color 150ms ease;
+  }
+
+  .cabecalho__nav a:hover { background: var(--papel); }
+
+  .cabecalho__cta { display: none; }
+
+  .cabecalho__menu {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    flex: none;
+    background: transparent;
+    border: 1px solid var(--linha);
+    border-radius: var(--r-pilula);
+    color: var(--ameixa-900);
+    cursor: pointer;
+  }
+
+  @media (min-width: 48rem) {
+    .cabecalho__nav,
+    .cabecalho__cta { display: flex; }
+
+    .cabecalho__menu { display: none; }
+  }
+
+  /* Entre 768 e 1023 px a pílula de navegação fica apertada; some o CRP
+     do logo antes de deixar a navegação quebrar. */
+  @media (min-width: 48rem) and (max-width: 63.999rem) {
+    .cabecalho__nav a { padding-inline: var(--e-3); font-size: 1rem; }
+  }
+</style>

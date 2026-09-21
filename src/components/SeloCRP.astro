@@ -1,0 +1,142 @@
+---
+import Arco from './Arco.astro';
+import { hero } from '../data/site';
+
+/* O único ornamento circular da página. Em vez de um "selo de verificado"
+   genérico, ele gira a identificação profissional exigida pelo Código de
+   Ética. O ✦ do texto do briefing vira uma estrela desenhada em SVG: a fonte
+   do site só carrega o subconjunto latino, e um caractere fora dele cairia
+   numa fonte do sistema. */
+
+const RAIO = 74;
+const CENTRO = 100;
+const PERIMETRO = 2 * Math.PI * RAIO;
+
+/* Largura média aproximada de um caractere em Schibsted Grotesk 600,
+   com font-size 15 e letter-spacing 1.5, em unidades do viewBox. */
+const LARGURA_CARACTERE = 9.6;
+
+const partes = hero.selo.texto
+  .split('✦')
+  .map((parte) => parte.trim())
+  .filter(Boolean);
+
+const larguras = partes.map((parte) => parte.length * LARGURA_CARACTERE);
+const folga = (PERIMETRO - larguras.reduce((a, b) => a + b, 0)) / partes.length;
+
+let cursor = folga / 2;
+const segmentos = partes.map((texto, indice) => {
+  const meio = cursor + larguras[indice] / 2;
+  const fim = cursor + larguras[indice];
+  const separador = fim + folga / 2;
+  cursor = fim + folga;
+
+  const angulo = (separador / PERIMETRO) * Math.PI * 2 - Math.PI / 2;
+  return {
+    texto,
+    offset: (meio / PERIMETRO) * 100,
+    estrela: {
+      x: CENTRO + RAIO * Math.cos(angulo),
+      y: CENTRO + RAIO * Math.sin(angulo),
+    },
+  };
+});
+
+const ESTRELA = 'M 0,-4.2 Q 0.95,-0.95 4.2,0 Q 0.95,0.95 0,4.2 Q -0.95,0.95 -4.2,0 Q -0.95,-0.95 0,-4.2 Z';
+---
+<div class="selo" role="img" aria-label={hero.selo.descricao}>
+  <svg class="selo__svg" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+    <circle cx="100" cy="100" r="99" class="selo__fundo" />
+    <circle cx="100" cy="100" r="92" class="selo__anel" />
+
+    <g class="selo__giro">
+      <path
+        id="selo-trilha"
+        d="M 100,26 A 74,74 0 1 1 100,174 A 74,74 0 1 1 100,26"
+        fill="none"
+      />
+      {
+        segmentos.map((segmento) => (
+          <>
+            <text class="selo__texto">
+              <textPath href="#selo-trilha" startOffset={`${segmento.offset}%`} text-anchor="middle">
+                {segmento.texto}
+              </textPath>
+            </text>
+            <path
+              class="selo__estrela"
+              d={ESTRELA}
+              transform={`translate(${segmento.estrela.x.toFixed(2)} ${segmento.estrela.y.toFixed(2)})`}
+            />
+          </>
+        ))
+      }
+    </g>
+  </svg>
+
+  <span class="selo__centro">
+    <Arco tamanho="2rem" traco={16} />
+  </span>
+</div>
+
+<style>
+  .selo {
+    position: relative;
+    width: 6.75rem;
+    height: 6.75rem;
+    flex: none;
+    display: grid;
+    place-items: center;
+  }
+
+  .selo__svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .selo__fundo { fill: var(--papel); }
+
+  .selo__anel {
+    fill: none;
+    stroke: var(--ocre-500);
+    stroke-width: 1.25;
+  }
+
+  .selo__texto {
+    font-family: var(--fonte-titulo);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    fill: var(--ameixa-900);
+  }
+
+  .selo__estrela { fill: var(--ocre-500); }
+
+  .selo__centro {
+    position: relative;
+    display: grid;
+    place-items: center;
+    color: var(--ameixa-900);
+  }
+
+  /* A única animação automática do site. */
+  .selo__giro {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    animation: selo-gira 40s linear infinite;
+  }
+
+  @keyframes selo-gira {
+    to { transform: rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .selo__giro { animation: none; }
+  }
+
+  @media (min-width: 48rem) {
+    .selo { width: 9.5rem; height: 9.5rem; }
+  }
+</style>
