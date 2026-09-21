@@ -35,6 +35,10 @@ jobs:
       - name: Configurar o GitHub Pages
         id: pages
         uses: actions/configure-pages@v5
+        with:
+          # Liga o GitHub Pages na primeira publicação, sem precisar mexer
+          # nas configurações do repositório na mão.
+          enablement: true
 
       # O build avisa, no fim, quantos [[CONFIRMAR]] ainda aparecem no site.
       - name: Construir o site
