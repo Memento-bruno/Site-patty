@@ -1,0 +1,107 @@
+/* ---------------------------------------------------------------------------
+   Tokens do site da Patricia Braz Domingues.
+   Trocar de paleta = editar SÓ este arquivo (ver Paleta B comentada no fim).
+   Regra do briefing (6.2): nenhum verde, verde-azulado, turquesa ou menta.
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* Paleta A — ameixa e ocre */
+  --ameixa-900: #3B2745;
+  --ameixa-600: #6E4F7E;
+  --lilas-200: #DCD0E4;
+  --lilas-100: #EFE9F3;
+  --papel: #FBFAFC;
+  --tinta: #231B28;
+  /* Acento decorativo. NUNCA em texto: contraste ~3:1 sobre --papel. */
+  --ocre-500: #B8862F;
+  --linha: #E3DAE8;
+
+  /* Papéis derivados (não inventar cor nova nos componentes) */
+  --fundo: var(--papel);
+  --texto: var(--tinta);
+  --texto-suave: #4B3D55;   /* 9.6:1 sobre --papel */
+  --texto-claro: #F4EFF7;   /* texto sobre --ameixa-900 */
+  --foco: var(--ameixa-600);
+
+  /* Tipografia */
+  --fonte-titulo: "Schibsted Grotesk Variable", "Helvetica Neue", Arial, sans-serif;
+  --fonte-corpo: "Literata Variable", Georgia, "Times New Roman", serif;
+
+  --t-h1: clamp(2.6rem, 1.6rem + 4.5vw, 4.75rem);
+  --t-h2: clamp(1.9rem, 1.3rem + 2.4vw, 2.9rem);
+  --t-h3: 1.375rem;
+  --t-corpo: 1.125rem;          /* 18 px */
+  --t-pequeno: 0.9375rem;       /* 15 px — piso absoluto do site */
+  --medida: 66ch;               /* largura máxima de texto corrido */
+
+  /* Escala de espaçamento: 4 8 12 16 24 32 48 64 96 128 */
+  --e-1: 0.25rem;
+  --e-2: 0.5rem;
+  --e-3: 0.75rem;
+  --e-4: 1rem;
+  --e-6: 1.5rem;
+  --e-8: 2rem;
+  --e-12: 3rem;
+  --e-16: 4rem;
+  --e-24: 6rem;
+  --e-32: 8rem;
+
+  /* Respiro vertical das seções */
+  --secao-y: 4rem;
+
+  /* Raios, com hierarquia (6.4) */
+  --r-hero: 32px;
+  --r-cartao: 20px;
+  --r-foto: 20px;
+  --r-pilula: 999px;
+
+  /* Única sombra do site: os três cartões sobre o hero */
+  --sombra-cartao: 0 18px 40px -24px rgb(59 39 69 / 0.35);
+
+  /* Grade */
+  --largura: 1200px;
+  --margem: 1.5rem;
+
+  /* Barra fixa de agendamento (só mobile) */
+  --barra-altura: 4.25rem;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --t-corpo: 1.1875rem;       /* 19 px */
+    --secao-y: 6rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --secao-y: 8rem;
+    --margem: 2rem;
+  }
+}
+
+/* Contexto escuro: a faixa "Como agendar" e nada mais.
+   `color` precisa ser declarado aqui, e não só o token: o texto corrido
+   herda do <body>, que é escuro. */
+.em-ameixa {
+  color: var(--texto-claro);
+  --texto: var(--texto-claro);
+  --texto-suave: #D9CCE2;
+  --linha: #5A4468;
+  --foco: #E6D7F0;
+}
+
+/* ---------------------------------------------------------------------------
+   Paleta B — "azul-tinta e areia" (alternativa da seção 6.2 do briefing).
+   Para trocar: apague os valores da Paleta A acima e cole estes no lugar.
+
+   --ameixa-900: #1E3350;
+   --ameixa-600: #4A6485;
+   --lilas-200:  #D9E1EA;
+   --lilas-100:  #EEF2F6;
+   --papel:      #F9F9F7;
+   --tinta:      #1A1F26;
+   --ocre-500:   #C4A277;
+   --linha:      #E1E6EC;
+   --texto-suave: #3A4A5E;
+   --------------------------------------------------------------------------- */
