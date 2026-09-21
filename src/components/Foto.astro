@@ -89,9 +89,13 @@ const encontrada = Object.entries(arquivos).find(([caminho]) =>
     border-radius: var(--r-foto);
   }
 
-  /* :global porque .foto__img é aplicada pelo componente <Picture> */
+  /* :global porque estes elementos vêm do componente <Picture>.
+     O <picture> precisa entrar na cadeia: sem ele, o border-radius da
+     imagem herdaria do <picture> (que não tem raio) e o arco sumiria. */
+  .foto :global(picture),
   .foto :global(.foto__img),
   .foto__vazia {
+    display: block;
     width: 100%;
     height: 100%;
     border-radius: inherit;

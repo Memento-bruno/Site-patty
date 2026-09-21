@@ -82,7 +82,7 @@ export const hero = {
     descricao: 'Psicóloga, CRP 06/167326, atendimento online',
   },
   foto: {
-    alt: 'Retrato de Patricia Braz Domingues',
+    alt: 'Patricia Braz Domingues sorrindo, ao ar livre, diante de um canteiro de flores claras',
     /* Sem foto, o site mostra um espaço neutro em lilás com esta legenda.
        Nunca usar banco de imagens nem imagem gerada por IA. */
     legendaPlaceholder: 'Foto da Patricia',
@@ -202,7 +202,7 @@ export const sobre = {
     'Acredito numa abordagem científica e sensível, que considera o contexto de cada pessoa. Meu objetivo é oferecer um espaço de escuta e compreensão, para que você possa dar os próximos passos com mais confiança.',
   ],
   foto: {
-    alt: 'Segundo retrato de Patricia Braz Domingues',
+    alt: 'Patricia Braz Domingues sorrindo, de jaqueta clara, em uma caverna de paredes claras',
     legendaPlaceholder: 'Foto da Patricia',
   },
   formacao: {
