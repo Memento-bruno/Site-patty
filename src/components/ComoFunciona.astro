@@ -1,0 +1,125 @@
+---
+import { comoFunciona, botoes } from '../data/site';
+---
+<section id="como-funciona" class="secao">
+  <div class="container">
+    <h2>{comoFunciona.titulo}</h2>
+
+    <ol class="passos">
+      {
+        comoFunciona.passos.map((passo, indice) => (
+          <li class="passo">
+            <span class="passo__numero" aria-hidden="true">{indice + 1}</span>
+            <h3 class="passo__titulo">{passo.titulo}</h3>
+            <p class="passo__texto">{passo.texto}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="caixa">
+      <h3>{comoFunciona.caixa.titulo}</h3>
+      <p>{comoFunciona.caixa.texto}</p>
+    </div>
+
+    <p class="acao"><a class="botao botao--primario" href="#agendar">{botoes.agendar}</a></p>
+  </div>
+</section>
+
+<style>
+  /* Única seção numerada do site, porque é a única sequência real. */
+  .passos {
+    list-style: none;
+    display: grid;
+    gap: var(--e-8);
+    margin-top: var(--e-12);
+  }
+
+  .passo {
+    position: relative;
+    padding-left: var(--e-12);
+  }
+
+  .passo__numero {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--ameixa-600);
+    border-radius: var(--r-pilula);
+    background: var(--papel);
+    font-family: var(--fonte-titulo);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--ameixa-900);
+  }
+
+  /* A linha fina que liga os passos */
+  .passo:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 1.25rem;
+    top: 2.5rem;
+    bottom: calc(var(--e-8) * -1);
+    width: 1px;
+    background: var(--linha);
+  }
+
+  .passo__titulo { margin-bottom: var(--e-2); }
+  .passo__texto { color: var(--texto-suave); }
+
+  .caixa {
+    margin-top: var(--e-12);
+    padding: var(--e-6);
+    background: var(--lilas-100);
+    border-radius: var(--r-cartao);
+    max-width: 44rem;
+  }
+
+  .caixa p {
+    margin-top: var(--e-2);
+    color: var(--texto-suave);
+  }
+
+  .acao { margin-top: var(--e-8); }
+  .acao .botao { width: 100%; }
+
+  @media (min-width: 48rem) {
+    .acao .botao { width: auto; }
+
+    .passos {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto auto;
+      gap: var(--e-6);
+      margin-top: var(--e-16);
+    }
+
+    .passo {
+      padding-left: 0;
+      display: grid;
+      grid-row: span 3;
+      grid-template-rows: subgrid;
+      row-gap: var(--e-4);
+      align-content: start;
+    }
+
+    .passo__numero {
+      position: static;
+      justify-self: start;
+    }
+
+    .passo__titulo { margin-bottom: 0; }
+
+    .passo:not(:last-child)::before {
+      left: 2.5rem;
+      top: 1.25rem;
+      bottom: auto;
+      width: auto;
+      right: calc(var(--e-6) * -1);
+      height: 1px;
+    }
+  }
+</style>

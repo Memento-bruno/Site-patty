@@ -1,0 +1,81 @@
+---
+import Icone from './Icone.astro';
+import Texto from './Texto.astro';
+import { duvidas, botoes, whatsappUrl } from '../data/site';
+---
+<section id="duvidas" class="secao">
+  <div class="container">
+    <h2>{duvidas.titulo}</h2>
+
+    <div class="duvidas__lista">
+      {
+        duvidas.itens.map((item) => (
+          <details class="duvida">
+            <summary>
+              <span>{item.pergunta}</span>
+              <Icone nome="caret-down" tamanho="1.25rem" class="duvida__seta" />
+            </summary>
+            <p><Texto valor={item.resposta} /></p>
+          </details>
+        ))
+      }
+    </div>
+
+    <p class="duvidas__fechamento">
+      {duvidas.fechamento}{' '}
+      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+        {botoes.whatsapp}<span class="so-leitor"> (abre em nova aba)</span>
+      </a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .duvidas__lista {
+    margin-top: var(--e-8);
+    max-width: 47.5rem;
+  }
+
+  /* <details> nativo: sem JavaScript. */
+  .duvida { border-top: 1px solid var(--linha); }
+  .duvida:last-of-type { border-bottom: 1px solid var(--linha); }
+
+  .duvida summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e-4);
+    min-height: 3.5rem;
+    padding-block: var(--e-4);
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--fonte-titulo);
+    font-size: 1.1875rem;
+    font-weight: 600;
+    color: var(--ameixa-900);
+  }
+
+  .duvida summary::-webkit-details-marker { display: none; }
+
+  .duvida :global(.duvida__seta) {
+    flex: none;
+    color: var(--ameixa-600);
+    transition: transform 150ms ease;
+  }
+
+  .duvida[open] :global(.duvida__seta) { transform: rotate(180deg); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .duvida :global(.duvida__seta) { transition: none; }
+  }
+
+  .duvida p {
+    padding-bottom: var(--e-6);
+    color: var(--texto-suave);
+  }
+
+  .duvidas__fechamento {
+    margin-top: var(--e-8);
+    max-width: 47.5rem;
+  }
+</style>

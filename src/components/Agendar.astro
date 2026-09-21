@@ -1,0 +1,132 @@
+---
+import Icone from './Icone.astro';
+import Texto from './Texto.astro';
+import { agendar, botoes, links, whatsappUrl } from '../data/site';
+
+const destinos = {
+  vittude: { href: links.vittude, rotulo: botoes.vittude, icone: 'calendar-blank' },
+  whatsapp: { href: whatsappUrl, rotulo: botoes.whatsapp, icone: 'whatsapp-logo' },
+} as const;
+
+const secundarios = [
+  links.instagram ? { href: links.instagram, rotulo: 'Instagram', icone: 'instagram-logo' } : null,
+  links.google ? { href: links.google, rotulo: 'Perfil no Google', icone: 'map-pin' } : null,
+].filter((item) => item !== null);
+---
+<section id="agendar" class="secao em-ameixa agendar">
+  <div class="container">
+    <h2>{agendar.titulo}</h2>
+    <p class="agendar__abertura">{agendar.paragrafo}</p>
+
+    <div class="agendar__blocos">
+      {
+        agendar.blocos.map((bloco) => {
+          const destino = destinos[bloco.acao];
+          return (
+            <div class="agendar__bloco">
+              <h3>{bloco.titulo}</h3>
+              <p>{bloco.texto}</p>
+              <a
+                class="botao botao--primario"
+                href={destino.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icone nome={destino.icone} />
+                {destino.rotulo}<span class="so-leitor"> (abre em nova aba)</span>
+              </a>
+            </div>
+          );
+        })
+      }
+    </div>
+
+    <div class="agendar__notas">
+      <p>{agendar.nota}</p>
+      <p><Texto valor={agendar.horarioResposta} /></p>
+    </div>
+
+    {
+      secundarios.length > 0 && (
+        <ul class="agendar__secundarios">
+          {secundarios.map((item) => (
+            <li>
+              <a href={item.href} target="_blank" rel="noopener noreferrer">
+                <Icone nome={item.icone} tamanho="1.125rem" />
+                {item.rotulo}<span class="so-leitor"> (abre em nova aba)</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .agendar { background: var(--ameixa-900); }
+
+  .agendar__abertura {
+    margin-top: var(--e-6);
+    max-width: 56ch;
+  }
+
+  .agendar__blocos {
+    display: grid;
+    gap: var(--e-4);
+    margin-top: var(--e-12);
+  }
+
+  /* Cartões com borda clara e sem sombra: a sombra é exclusiva do hero. */
+  .agendar__bloco {
+    border: 1px solid var(--linha);
+    border-radius: var(--r-cartao);
+    padding: var(--e-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--e-4);
+  }
+
+  .agendar__bloco p { flex: 1; }
+  .agendar__bloco .botao { align-self: stretch; }
+
+  .agendar__notas {
+    display: grid;
+    gap: var(--e-2);
+    margin-top: var(--e-8);
+    font-size: var(--t-pequeno);
+    color: var(--texto-suave);
+  }
+
+  .agendar__notas p { max-width: 60ch; }
+
+  .agendar__secundarios {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-6);
+    margin-top: var(--e-8);
+    padding-top: var(--e-6);
+    border-top: 1px solid var(--linha);
+  }
+
+  .agendar__secundarios a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--e-2);
+    min-height: 3rem;
+    font-family: var(--fonte-titulo);
+    font-size: var(--t-pequeno);
+    font-weight: 500;
+  }
+
+  @media (min-width: 48rem) {
+    .agendar__blocos {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--e-6);
+    }
+
+    .agendar__bloco { padding: var(--e-8); }
+    .agendar__bloco .botao { align-self: start; }
+  }
+</style>

@@ -1,0 +1,130 @@
+---
+import Logo from './Logo.astro';
+import { profissional, rodape, links, botoes, whatsappUrl } from '../data/site';
+import { url } from '../lib/url';
+
+const ano = new Date().getFullYear();
+
+const externos = [
+  { href: links.vittude, rotulo: 'Vittude' },
+  { href: whatsappUrl, rotulo: 'WhatsApp' },
+  links.instagram ? { href: links.instagram, rotulo: 'Instagram' } : null,
+  links.google ? { href: links.google, rotulo: 'Perfil no Google' } : null,
+].filter((item) => item !== null);
+---
+<footer class="rodape">
+  <div class="container rodape__grade">
+    <div class="rodape__marca">
+      <Logo />
+      <p class="rodape__identificacao">{profissional.identificacao}</p>
+      <p class="rodape__resumo">{rodape.resumo}</p>
+      <a class="rodape__verificar" href={links.cadastroCfp} target="_blank" rel="noopener noreferrer">
+        {botoes.verificarCrp}<span class="so-leitor"> (abre em nova aba)</span>
+      </a>
+    </div>
+
+    <nav class="rodape__links" aria-label="Links úteis">
+      <h2>{rodape.tituloLinks}</h2>
+      <ul>
+        {
+          externos.map((item) => (
+            <li>
+              <a href={item.href} target="_blank" rel="noopener noreferrer">
+                {item.rotulo}<span class="so-leitor"> (abre em nova aba)</span>
+              </a>
+            </li>
+          ))
+        }
+        <li><a href={url('/politica-de-privacidade')}>Política de privacidade</a></li>
+      </ul>
+    </nav>
+
+    <div class="rodape__emergencia">
+      <h2>{rodape.emergencia.titulo}</h2>
+      <p>{rodape.emergencia.texto}</p>
+    </div>
+  </div>
+
+  <div class="container rodape__base">
+    <p>© {ano} {profissional.nomeCompleto}</p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    background: var(--papel);
+    border-top: 1px solid var(--linha);
+    padding-top: var(--e-16);
+  }
+
+  .rodape__grade {
+    display: grid;
+    gap: var(--e-12);
+  }
+
+  .rodape__identificacao {
+    margin-top: var(--e-6);
+    font-family: var(--fonte-titulo);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--ameixa-900);
+  }
+
+  .rodape__resumo {
+    margin-top: var(--e-2);
+    font-size: 1.0625rem;
+    color: var(--texto-suave);
+  }
+
+  .rodape__verificar {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3rem;
+    margin-top: var(--e-2);
+    font-family: var(--fonte-titulo);
+    font-size: var(--t-pequeno);
+  }
+
+  .rodape h2 {
+    font-size: var(--t-pequeno);
+    font-weight: 600;
+    color: var(--texto-suave);
+    margin-bottom: var(--e-2);
+  }
+
+  .rodape__links ul { list-style: none; }
+
+  .rodape__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3rem;
+    font-family: var(--fonte-titulo);
+    font-size: 1.0625rem;
+    font-weight: 500;
+  }
+
+  .rodape__emergencia p {
+    font-size: 1.0625rem;
+    color: var(--texto-suave);
+    max-width: 34ch;
+  }
+
+  .rodape__base {
+    margin-top: var(--e-16);
+    padding-block: var(--e-6);
+    border-top: 1px solid var(--linha);
+  }
+
+  .rodape__base p {
+    font-family: var(--fonte-titulo);
+    font-size: var(--t-pequeno);
+    color: var(--texto-suave);
+  }
+
+  @media (min-width: 48rem) {
+    .rodape__grade {
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: var(--e-8);
+    }
+  }
+</style>
