@@ -2,6 +2,14 @@
 import Foto from './Foto.astro';
 import Texto from './Texto.astro';
 import { sobre, profissional, links, botoes } from '../data/site';
+
+/* A lista de temas é lida como uma frase, então começa em maiúscula.
+   Capitalizar aqui, e não nos dados, mantém a regra válida se os temas
+   forem reordenados — e, ao contrário de um ::first-letter em CSS, deixa o
+   texto correto no próprio HTML, que é o que vai para a área de
+   transferência de quem copia. */
+const temas = sobre.temas.itens.join(', ');
+const temasFrase = `${temas.charAt(0).toUpperCase()}${temas.slice(1)}.`;
 ---
 <section id="sobre" class="secao sobre">
   <div class="container sobre__grade">
@@ -48,7 +56,7 @@ import { sobre, profissional, links, botoes } from '../data/site';
       </dl>
 
       <h3 class="sobre__subtitulo">{sobre.temas.titulo}</h3>
-      <p class="sobre__temas">{sobre.temas.itens.join(', ')}.</p>
+      <p class="sobre__temas">{temasFrase}</p>
     </div>
   </div>
 </section>
@@ -126,10 +134,6 @@ import { sobre, profissional, links, botoes } from '../data/site';
     color: var(--texto-suave);
   }
 
-  /* A lista é uma frase corrida: a primeira letra é maiúscula aqui, e não
-     nos dados, para que reordenar os temas não deixe uma maiúscula perdida
-     no meio. */
-  .sobre__temas::first-letter { text-transform: uppercase; }
 
   @media (min-width: 48rem) {
     .sobre__grade {

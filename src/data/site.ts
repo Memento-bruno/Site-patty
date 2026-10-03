@@ -247,9 +247,10 @@ export const sobre = {
   },
   temas: {
     titulo: 'Temas com que trabalho',
-    /* Em minúsculas, menos as siglas: a lista é lida como uma frase corrida
-       e a primeira letra é maiúscula por CSS, não aqui. Assim a ordem pode
-       mudar sem deixar um "Ansiedade" no meio da frase. */
+    /* Em minúsculas, menos as siglas. A lista é lida como uma frase corrida
+       e quem capitaliza a primeira é o componente Sobre.astro, na hora de
+       montar a frase — assim a ordem pode mudar sem deixar um "Ansiedade"
+       perdido no meio dela. */
     itens: [
       'ansiedade',
       'TDAH',
