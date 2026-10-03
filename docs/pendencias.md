@@ -23,7 +23,7 @@ confirma isso no fim da saída.
 | Grafia do nome no CRP | "Patricia Braz Domingues", sem acento | identificação em todo o site |
 | Título do hero | mantido o primeiro | Hero |
 | Logotipo | o dela, vetorizado | cabeçalho, selo, rodapé, favicon |
-| Fotos | as duas enviadas | Hero e "Sobre" |
+| Fotos | retrato no ambiente de atendimento (hero) e foto ao notebook ("Sobre") | Hero e "Sobre" |
 | Zenklub | não atende mais | não aparece |
 | Atendimento presencial | não faz, só online | site segue dizendo online |
 | Título de especialista | não tem registro no CRP | site nunca usa "especialista" como título |
@@ -60,10 +60,8 @@ confirma isso no fim da saída.
 3. **Endereço físico.** O perfil do Google pode exibir endereço. O site não
    publica endereço nenhum, que é o mais seguro para quem atende só online. Se
    o perfil do Google mostrar um endereço residencial, vale revisar lá.
-4. **Foto do hero.** A foto do parque tem bastante verde ao fundo e uma
-   camiseta vermelha forte, enquanto a paleta do site é ameixa e ocre. Publicada
-   assim por decisão do Bruno; dá para inverter com a foto da caverna (tons
-   quentes, que conversam melhor com a paleta) em poucos minutos.
+4. ~~**Foto do hero.**~~ Resolvido: as fotos foram trocadas por duas tiradas no
+   ambiente de atendimento, de fundo neutro, que conversam com a paleta.
 
 ## 3. Do briefing
 
