@@ -247,18 +247,23 @@ export const sobre = {
   },
   temas: {
     titulo: 'Temas com que trabalho',
+    /* Em minúsculas, menos as siglas: a lista é lida como uma frase corrida
+       e a primeira letra é maiúscula por CSS, não aqui. Assim a ordem pode
+       mudar sem deixar um "Ansiedade" no meio da frase. */
     itens: [
       'ansiedade',
-      'depressão',
-      'transtorno obsessivo-compulsivo (TOC)',
-      'transtorno bipolar',
+      'TDAH',
+      'autoestima e insegurança',
+      'relacionamentos',
+      'regulação emocional',
+      'estresse e burnout',
+      'questões profissionais',
       'luto e perdas',
       'transições de vida',
-      'relacionamentos',
-      'autoestima e insegurança',
+      'procrastinação e organização',
+      'depressão',
+      'TOC',
       'autoconhecimento',
-      'regulação emocional',
-      'burnout e estresse',
     ],
   },
 } as const;

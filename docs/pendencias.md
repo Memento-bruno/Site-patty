@@ -13,7 +13,7 @@ confirma isso no fim da saída.
 | Idade mínima | a partir de 18 anos | FAQ |
 | Recibo para reembolso | emite | FAQ |
 | Pagamento no particular | Pix, transferência ou cartão | bloco "Direto comigo" |
-| Temas | entram TOC e transtorno bipolar | "Temas com que trabalho" |
+| Temas | lista revista: 13 temas, com TDAH, questões profissionais e procrastinação e organização; sai transtorno bipolar | "Temas com que trabalho" |
 | Graduação | Universidade Paulista (UNIP), 2016–2020, com o trabalho final | Formação |
 | Formação em Perdas e Luto | AC Bastos, 2022–2023, "Acolhimento, avaliação e intervenção" | Formação |
 | Curso do InPBE | concluído (saiu a marcação "Em andamento") | Formação |

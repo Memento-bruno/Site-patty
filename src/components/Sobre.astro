@@ -121,7 +121,15 @@ import { sobre, profissional, links, botoes } from '../data/site';
   /* Curso em andamento nunca aparece como concluído (briefing 2). */
   .formacao__estado { font-family: var(--fonte-titulo); font-weight: 600; }
 
-  .sobre__temas { margin-top: var(--e-4); color: var(--texto-suave); }
+  .sobre__temas {
+    margin-top: var(--e-4);
+    color: var(--texto-suave);
+  }
+
+  /* A lista é uma frase corrida: a primeira letra é maiúscula aqui, e não
+     nos dados, para que reordenar os temas não deixe uma maiúscula perdida
+     no meio. */
+  .sobre__temas::first-letter { text-transform: uppercase; }
 
   @media (min-width: 48rem) {
     .sobre__grade {
