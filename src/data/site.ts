@@ -230,20 +230,18 @@ export const sobre = {
         nota: 'Trabalho final: “A saúde mental do idoso diante de suas perdas e luto: contribuições da psicoterapia de Aceitação e Compromisso”.',
       },
       {
-        periodo: null as string | null,
-        curso: 'Formação em Cuidado com Perdas e Luto',
-        /* Instituição e período ainda não informados. Preencha a string
-           para a linha aparecer sob o nome do curso. */
-        instituicao: null as string | null,
+        periodo: '2022–2023' as string | null,
+        curso: 'Formação em Perdas e Luto',
+        instituicao: 'AC Bastos' as string | null,
         andamento: false,
-        nota: null as string | null,
+        nota: 'Acolhimento, avaliação e intervenção.' as string | null,
       },
       {
-        periodo: 'Conclusão 2020' as string | null,
+        periodo: '2016–2020' as string | null,
         curso: 'Graduação em Psicologia',
-        instituicao: 'UNIP — Universidade Paulista, São Paulo' as string | null,
+        instituicao: 'Universidade Paulista (UNIP)' as string | null,
+        nota: 'Trabalho final: “Breve revisão bibliográfica: as implicações psicológicas na vida dos cuidadores familiares de pacientes com a doença de Alzheimer”.' as string | null,
         andamento: false,
-        nota: null as string | null,
       },
     ],
   },

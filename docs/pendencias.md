@@ -14,7 +14,8 @@ confirma isso no fim da saída.
 | Recibo para reembolso | emite | FAQ |
 | Pagamento no particular | Pix, transferência ou cartão | bloco "Direto comigo" |
 | Temas | entram TOC e transtorno bipolar | "Temas com que trabalho" |
-| Graduação | UNIP — Universidade Paulista, São Paulo, conclusão 2020 | Formação |
+| Graduação | Universidade Paulista (UNIP), 2016–2020, com o trabalho final | Formação |
+| Formação em Perdas e Luto | AC Bastos, 2022–2023, "Acolhimento, avaliação e intervenção" | Formação |
 | Curso do InPBE | concluído (saiu a marcação "Em andamento") | Formação |
 | Pós em Neuropsicologia | segue em andamento | Formação |
 | E-mail profissional | `psi.patriciabraz@gmail.com`, como link | Política de privacidade |
@@ -31,14 +32,7 @@ confirma isso no fim da saída.
 
 ## 2. Em aberto
 
-### 2.1 Falta o dado
-
-**Formação em Cuidado com Perdas e Luto: instituição e ano.** A linha aparece
-hoje só com o nome do curso, que é correto mas menos transparente que as
-outras da lista. Para completar, preencha `instituicao` e `periodo` desse item
-em `sobre.formacao.itens`, em `src/data/site.ts`.
-
-### 2.2 Decisão adiada
+### 2.1 Decisão adiada
 
 1. **Métricas de visita.** O Bruno quer medir, mas a ferramenta fica para
    depois. Plausible (~US$9/mês) ou Umami (plano gratuito com limite) — as duas
@@ -54,7 +48,7 @@ em `sobre.formacao.itens`, em `src/data/site.ts`.
    vetorial e herda a cor do texto, então acompanha qualquer troca sem precisar
    de arquivo novo.
 
-### 2.3 Conferir com a Patricia antes de divulgar
+### 2.2 Conferir com a Patricia antes de divulgar
 
 1. **Leitura de todo o texto.** Os textos foram escritos a partir do briefing e
    dos perfis públicos dela. Ela é a profissional inscrita e responde pelo
