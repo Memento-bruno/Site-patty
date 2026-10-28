@@ -5,7 +5,7 @@ import { comoFunciona, botoes } from '../data/site';
   <div class="container">
     <h2>{comoFunciona.titulo}</h2>
 
-    <ol class="passos">
+    <ol class="passos" data-revelar data-revelar-grupo>
       {
         comoFunciona.passos.map((passo, indice) => (
           <li class="passo">

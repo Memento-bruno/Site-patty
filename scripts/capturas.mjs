@@ -6,9 +6,9 @@
    Sobe o preview do Astro, fotografa nas larguras de desktop e de celular e
    salva em capturas/ (pasta ignorada pelo git). */
 import { chromium } from 'playwright';
+import { opcoesNavegador } from './navegador.mjs';
 import { spawnSync } from 'node:child_process';
 import { mkdir } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
 import { setTimeout as espera } from 'node:timers/promises';
 
 const PORTA = Number(process.env.PORTA_PREVIEW ?? 4399);
@@ -20,12 +20,6 @@ const TELAS = [
   { nome: 'celular', largura: 390, altura: 844 },
 ];
 
-/* O container já traz o Chromium em /opt/pw-browsers. Se a versão do
-   Playwright instalada não bater com ele, apontamos o executável na mão em
-   vez de baixar um navegador novo. */
-const executavel =
-  process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
-const opcoesNavegador = existsSync(executavel) ? { executablePath: executavel } : {};
 
 const astro = (...argumentos) =>
   spawnSync('npx', ['astro', ...argumentos], { stdio: 'ignore' });

@@ -7,7 +7,7 @@ import { duvidas, botoes, whatsappUrl } from '../data/site';
   <div class="container">
     <h2>{duvidas.titulo}</h2>
 
-    <div class="duvidas__lista">
+    <div class="duvidas__lista" data-revelar>
       {
         duvidas.itens.map((item) => (
           <details class="duvida">

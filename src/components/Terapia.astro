@@ -6,7 +6,7 @@ import { terapia } from '../data/site';
     <h2>{terapia.titulo}</h2>
     <p class="terapia__abertura">{terapia.paragrafo}</p>
 
-    <div class="terapia__colunas">
+    <div class="terapia__colunas" data-revelar data-revelar-grupo>
       {
         [terapia.e, terapia.naoE].map((coluna) => (
           <div class="terapia__coluna">

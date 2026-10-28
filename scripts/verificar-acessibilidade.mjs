@@ -6,17 +6,15 @@
    larguras (inclusive com zoom de 200%), confere o tamanho dos alvos de
    toque e testa o menu do celular pelo teclado. */
 import { chromium } from 'playwright';
+import { opcoesNavegador } from './navegador.mjs';
 import { spawnSync } from 'node:child_process';
-import { existsSync, readFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { setTimeout as espera } from 'node:timers/promises';
 
 const PORTA = Number(process.env.PORTA_PREVIEW ?? 4399);
 const BASE = (process.env.BASE_PATH ?? '/Site-patty').replace(/\/$/, '');
 const PAGINAS = ['/', '/politica-de-privacidade', '/pagina-que-nao-existe'];
 
-const executavel =
-  process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
-const opcoesNavegador = existsSync(executavel) ? { executablePath: executavel } : {};
 const axeFonte = readFileSync('node_modules/axe-core/axe.min.js', 'utf8');
 
 const astro = (...a) => spawnSync('npx', ['astro', ...a], { stdio: 'ignore' });
@@ -92,6 +90,122 @@ try {
     );
     if (excesso > 1) problemas.push(`zoom 200% [${largura}px] rolagem horizontal: +${excesso}px`);
     await contexto.close();
+  }
+
+  /* ------------------------------------------------ revelação ao rolar */
+  /* O conteúdo só pode nascer escondido quando há JavaScript e a pessoa não
+     pediu menos movimento. Se algum desses caminhos quebrar, parte da página
+     fica invisível — por isso cada um é conferido aqui. */
+  {
+    const contar = (pagina) =>
+      pagina.evaluate(() => {
+        const blocos = [...document.querySelectorAll('[data-revelar]')].flatMap((el) =>
+          el.hasAttribute('data-revelar-grupo') ? [...el.children] : [el],
+        );
+        const opacidades = blocos.map((el) => Number(getComputedStyle(el).opacity));
+        return {
+          total: blocos.length,
+          visiveis: opacidades.filter((o) => o > 0.95).length,
+        };
+      });
+
+    /* 1. Com movimento permitido, o que está fora da tela começa escondido
+          e aparece ao rolar. */
+    {
+      const contexto = await navegador.newContext({ viewport: { width: 1440, height: 900 } });
+      const pagina = await contexto.newPage();
+      await pagina.goto(endereco('/'), { waitUntil: 'networkidle', timeout: 60_000 });
+      await espera(400);
+      const inicio = await contar(pagina);
+      if (inicio.total === 0) problemas.push('nenhum bloco marcado com data-revelar foi encontrado');
+      if (inicio.total > 0 && inicio.visiveis === inicio.total) {
+        problemas.push('revelação: nada começou escondido — o efeito não está agindo');
+      }
+      await pagina.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await espera(2500);
+      const fim = await contar(pagina);
+      if (fim.visiveis !== fim.total) {
+        problemas.push(`revelação: ${fim.total - fim.visiveis} bloco(s) seguiram invisíveis depois de rolar a página`);
+      }
+      await contexto.close();
+    }
+
+    /* 2. Com "reduzir movimento", nada se esconde em momento nenhum. */
+    {
+      const contexto = await navegador.newContext({
+        viewport: { width: 1440, height: 900 },
+        reducedMotion: 'reduce',
+      });
+      const pagina = await contexto.newPage();
+      await pagina.goto(endereco('/'), { waitUntil: 'networkidle', timeout: 60_000 });
+      await espera(400);
+      const r = await contar(pagina);
+      if (r.visiveis !== r.total) {
+        problemas.push(`revelação: com movimento reduzido, ${r.total - r.visiveis} bloco(s) ficaram invisíveis`);
+      }
+      await contexto.close();
+    }
+
+    /* 3. Sem JavaScript, a página aparece inteira. */
+    {
+      const contexto = await navegador.newContext({
+        viewport: { width: 1440, height: 900 },
+        javaScriptEnabled: false,
+      });
+      const pagina = await contexto.newPage();
+      await pagina.goto(endereco('/'), { waitUntil: 'domcontentloaded', timeout: 60_000 });
+      await espera(600);
+      const r = await contar(pagina);
+      if (r.visiveis !== r.total) {
+        problemas.push(`revelação: sem JavaScript, ${r.total - r.visiveis} bloco(s) ficaram invisíveis`);
+      }
+      await contexto.close();
+    }
+
+    /* 4. Trava de segurança: se o script da revelação não rodar (erro de
+          sintaxe num navegador antigo, por exemplo), a classe sai sozinha e
+          o conteúdo aparece. O script é embutido no HTML pelo Astro, então
+          aqui ele é removido da resposta para simular a falha. */
+    {
+      const contexto = await navegador.newContext({ viewport: { width: 1440, height: 900 } });
+      const pagina = await contexto.newPage();
+      let removeu = false;
+      await pagina.route(endereco('/'), async (rota) => {
+        const resposta = await rota.fetch();
+        const original = await resposta.text();
+        const html = original.replace(
+          /* O (?:(?!<\/script>)[\s\S]) impede a busca de atravessar o fim de um
+             script: sem isso ela começaria no primeiro <script type="module">
+             da página (o do menu) e varreria tudo até achar o termo. */
+          /<script type="module">(?:(?!<\/script>)[\s\S])*?IntersectionObserver(?:(?!<\/script>)[\s\S])*?<\/script>/,
+          '',
+        );
+        removeu = html !== original;
+        /* Cabeçalhos recriados sem content-encoding nem content-length: o
+           corpo aqui já vem descomprimido, e reaproveitá-los entregaria ao
+           navegador um texto que ele tentaria descomprimir. */
+        const cabecalhos = { ...resposta.headers() };
+        delete cabecalhos['content-encoding'];
+        delete cabecalhos['content-length'];
+        await rota.fulfill({ status: resposta.status(), headers: cabecalhos, body: html });
+      });
+      await pagina.goto(endereco('/'), { waitUntil: 'domcontentloaded', timeout: 60_000 });
+      await espera(600);
+      const antes = await contar(pagina);
+      if (!removeu) {
+        problemas.push('revelação: não achei o script no HTML para simular a falha — o teste da trava não valeu');
+      } else if (antes.total === 0) {
+        problemas.push('revelação: a página não carregou no teste da trava de segurança');
+      } else if (antes.visiveis === antes.total) {
+        problemas.push('revelação: sem o script, o conteúdo já nascia visível — a trava não foi exercitada');
+      }
+      await espera(3400);
+      const depois = await contar(pagina);
+      if (depois.visiveis !== depois.total) {
+        problemas.push('revelação: a trava de segurança não revelou o conteúdo quando o script não rodou');
+      }
+      await contexto.close();
+    }
   }
 
   /* --------------------------------------------- alvos de toque e fonte */

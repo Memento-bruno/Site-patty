@@ -103,9 +103,39 @@ requisição ao Google Fonts.
 pílula · foto do hero `999px 999px 0 0` em 4:5. Uma única sombra no site, nos
 três cartões do hero. Um único degradê, o do hero.
 
-**Movimento.** Uma única animação automática: o texto do selo, uma volta a cada
-40 s. Parada com `prefers-reduced-motion: reduce`. Nada de animação de entrada
-ao rolar, parallax ou efeito em cartão.
+**Movimento.** Duas coisas se movem, e só duas. O texto do selo gira uma volta
+a cada 40 s. E os blocos de conteúdo sobem 12 px ao entrar na tela, uma vez
+cada. Nada de parallax ou efeito em cartão.
+
+> Revisado a pedido do cliente. O briefing pedia o contrário — a seção 6.6 diz
+> "sem animação de entrada ao rolar", a 6.8 lista "animação de entrada em cada
+> seção" entre os antipadrões de site gerado por IA, e o critério de aceite
+> falava em "única animação automática". A decisão de trocar foi dele; o que
+> ficou do princípio original está descrito abaixo.
+
+O que separa um reveal discreto de um efeito barato é **distância e duração**.
+Aqui são 12 px e 520 ms: perto do limiar de percepção. O reflexo automático —
+30 a 50 px, 800 ms ou mais, em tudo que existe — é o que faz uma página parecer
+que foi montada com um plugin.
+
+Três limites, que são o que sobrou da regra original:
+
+1. **O hero não anima.** É a primeira coisa que a pessoa vê, é o elemento do
+   LCP, e animar a dobra inicial é justamente o vício que a seção 6.8 nomeia.
+2. **Não é "cada seção".** Oito blocos recebem a revelação, escolhidos por
+   terem algo a ganhar: os três cartões do hero, a lista de "Talvez você esteja
+   aqui", as colunas "É"/"Não é", os quatro passos de "Como funciona", a foto e
+   o texto do "Sobre", os dois blocos de "Como agendar" e a lista de dúvidas.
+   Títulos de seção não animam: o H2 ancora e o conteúdo chega sob ele.
+3. **Cascata só onde há ordem.** Dentro de um grupo os itens entram com 70 ms
+   de intervalo. Em "Como funciona" isso reforça uma sequência que existe de
+   verdade. Na lista de dúvidas, que não tem ordem, o bloco entra inteiro.
+
+**O conteúdo nasce visível no HTML.** O estado escondido vem de uma classe que
+só é aposta quando há JavaScript e `prefers-reduced-motion` está desligado, e
+uma trava de 3 s a remove se o script não rodar. Sem script, com movimento
+reduzido ou com o script quebrado, a página aparece inteira. Os quatro caminhos
+são verificados por `npm run a11y`.
 
 ## 3. Estrutura confirmada
 

@@ -18,7 +18,7 @@ const secundarios = [
     <h2>{agendar.titulo}</h2>
     <p class="agendar__abertura">{agendar.paragrafo}</p>
 
-    <div class="agendar__blocos">
+    <div class="agendar__blocos" data-revelar data-revelar-grupo>
       {
         agendar.blocos.map((bloco) => {
           const destino = destinos[bloco.acao];

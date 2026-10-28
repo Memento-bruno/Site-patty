@@ -102,7 +102,66 @@ const dadosEstruturados = {
   </head>
 
   <body>
+    <script is:inline>
+      /* Antes da primeira pintura: marca o documento como apto a animar.
+         Se a pessoa pediu menos movimento no sistema, a classe não entra e
+         a página aparece inteira, sem nada escondido.
+
+         A trava de segurança existe porque o estado escondido vem do CSS: se
+         o script da revelação não chegar a rodar, o conteúdo ficaria
+         invisível para sempre. Em 3 s sem ele, a classe sai sozinha. */
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('com-revelacao');
+        window.__revelacaoPendente = true;
+        setTimeout(function () {
+          if (window.__revelacaoPendente) {
+            document.documentElement.classList.remove('com-revelacao');
+          }
+        }, 3000);
+      }
+    </script>
     <a class="pular" href="#conteudo">Pular para o conteúdo</a>
     <slot />
+
+    <script>
+      /* Revela cada bloco quando ele entra na tela. Uma vez só: o elemento
+         sai do observador assim que aparece e nunca volta a animar. */
+      const raiz = document.documentElement;
+
+      if (raiz.classList.contains('com-revelacao') && 'IntersectionObserver' in window) {
+        window.__revelacaoPendente = false;
+
+        const observador = new IntersectionObserver(
+          (entradas) => {
+            for (const entrada of entradas) {
+              if (!entrada.isIntersecting) continue;
+              observador.unobserve(entrada.target);
+
+              const alvo = entrada.target as HTMLElement;
+              const partes = alvo.hasAttribute('data-revelar-grupo')
+                ? (Array.from(alvo.children) as HTMLElement[])
+                : [alvo];
+
+              partes.forEach((parte, indice) => {
+                /* Num grupo, os itens entram em cascata curta. 70 ms é o
+                   bastante para o olho perceber a ordem sem esperar. */
+                parte.style.transitionDelay = `${indice * 70}ms`;
+                parte.classList.add('revelado');
+              });
+            }
+          },
+          /* Dispara um pouco antes da borda de baixo, para o bloco já estar
+             assentado quando a pessoa chega nele. */
+          { rootMargin: '0px 0px -12% 0px' },
+        );
+
+        for (const alvo of document.querySelectorAll('[data-revelar]')) {
+          observador.observe(alvo);
+        }
+      } else {
+        /* Navegador sem IntersectionObserver: nada fica escondido. */
+        raiz.classList.remove('com-revelacao');
+      }
+    </script>
   </body>
 </html>

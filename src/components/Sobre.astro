@@ -13,7 +13,7 @@ const temasFrase = `${temas.charAt(0).toUpperCase()}${temas.slice(1)}.`;
 ---
 <section id="sobre" class="secao sobre">
   <div class="container sobre__grade">
-    <div class="sobre__media">
+    <div class="sobre__media" data-revelar>
       <Foto
         nome="sobre"
         alt={sobre.foto.alt}
@@ -22,7 +22,7 @@ const temasFrase = `${temas.charAt(0).toUpperCase()}${temas.slice(1)}.`;
       />
     </div>
 
-    <div class="sobre__corpo">
+    <div class="sobre__corpo" data-revelar>
       <h2>{sobre.titulo}</h2>
 
       <div class="sobre__texto">
