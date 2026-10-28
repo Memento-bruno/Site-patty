@@ -208,6 +208,51 @@ try {
     }
   }
 
+  /* ------------------------------------------ chegada e âncoras na URL */
+  /* O site abre sempre no topo. Já quebrou uma vez: o scroll-behavior:
+     smooth no html capturava o salto inicial da âncora e a página descia
+     animada por dois segundos, parando no lugar errado no celular. */
+  for (const largura of [1440, 390]) {
+    const contexto = await navegador.newContext({ viewport: { width: largura, height: 900 } });
+    const pagina = await contexto.newPage();
+
+    /* Abrir com âncora na URL não pode tirar a página do topo. */
+    const posicoes = [];
+    await pagina.goto(`${endereco('/')}#agendar`, { waitUntil: 'commit', timeout: 60_000 });
+    for (let i = 0; i < 14; i += 1) {
+      try {
+        posicoes.push(await pagina.evaluate(() => Math.round(window.scrollY)));
+      } catch {
+        /* navegação em curso */
+      }
+      await espera(110);
+    }
+    const maior = Math.max(...posicoes);
+    if (maior > 5) {
+      problemas.push(`chegada [${largura}px]: abrir com âncora tirou a página do topo (${maior}px)`);
+    }
+    if (pagina.url().includes('#')) {
+      problemas.push(`chegada [${largura}px]: a âncora continuou na URL`);
+    }
+
+    /* O clique na navegação precisa seguir rolando até a seção, e deixar a
+       URL limpa depois. */
+    await pagina.click('.hero a.botao[href="#agendar"]');
+    await espera(2200);
+    const apos = await pagina.evaluate(() => ({
+      hash: location.hash,
+      topoDaSecao: Math.round(document.querySelector('#agendar').getBoundingClientRect().top),
+      rolou: window.scrollY > 100,
+    }));
+    if (!apos.rolou) problemas.push(`chegada [${largura}px]: o clique não rolou até a seção`);
+    if (apos.hash) problemas.push(`chegada [${largura}px]: a âncora não foi limpa depois do clique`);
+    if (Math.abs(apos.topoDaSecao - 112) > 48) {
+      problemas.push(`chegada [${largura}px]: o clique parou a ${apos.topoDaSecao}px, fora da seção`);
+    }
+
+    await contexto.close();
+  }
+
   /* --------------------------------------------- alvos de toque e fonte */
   {
     const contexto = await navegador.newContext({ viewport: { width: 390, height: 844 } });

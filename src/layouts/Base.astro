@@ -99,6 +99,21 @@ const dadosEstruturados = {
       is:inline
       set:html={JSON.stringify(dadosEstruturados)}
     />
+    <script is:inline>
+      /* O site sempre abre no topo.
+
+         Clicar em "Agendar sessão" ou num item do menu deixa a âncora na
+         barra de endereços (/#agendar). Essa URL entra no favorito e no
+         autocompletar, e a visita seguinte passa a começar no meio da
+         página — sempre na mesma seção.
+
+         Tirar a âncora aqui, antes de o navegador ler o corpo, impede o
+         salto: sem um alvo para procurar, ele não sai do topo. Precisa ser
+         no <head>; mais abaixo o salto já teria acontecido. */
+      if (location.hash) {
+        history.replaceState(null, '', location.pathname + location.search);
+      }
+    </script>
   </head>
 
   <body>
@@ -127,6 +142,17 @@ const dadosEstruturados = {
       /* Revela cada bloco quando ele entra na tela. Uma vez só: o elemento
          sai do observador assim que aparece e nunca volta a animar. */
       const raiz = document.documentElement;
+
+      /* Depois que a rolagem do clique assenta, a âncora sai da URL. Esperar
+         é de propósito: mexer no endereço no meio do movimento interrompe a
+         rolagem suave em alguns navegadores. */
+      window.addEventListener('hashchange', () => {
+        setTimeout(() => {
+          if (location.hash) {
+            history.replaceState(null, '', location.pathname + location.search);
+          }
+        }, 1200);
+      });
 
       /* Liga a rolagem suave só agora. Se ela valesse desde o início, abrir o
          site por um link com âncora viraria uma descida animada pela página
