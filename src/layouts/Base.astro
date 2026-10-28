@@ -128,6 +128,13 @@ const dadosEstruturados = {
          sai do observador assim que aparece e nunca volta a animar. */
       const raiz = document.documentElement;
 
+      /* Liga a rolagem suave só agora. Se ela valesse desde o início, abrir o
+         site por um link com âncora viraria uma descida animada pela página
+         toda — ver o comentário em global.css. */
+      const ligarRolagemSuave = () => raiz.classList.add('rolagem-suave');
+      if (document.readyState === 'complete') ligarRolagemSuave();
+      else window.addEventListener('load', ligarRolagemSuave, { once: true });
+
       if (raiz.classList.contains('com-revelacao') && 'IntersectionObserver' in window) {
         window.__revelacaoPendente = false;
 

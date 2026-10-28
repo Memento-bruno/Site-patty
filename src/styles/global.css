@@ -11,8 +11,17 @@ html {
   scroll-padding-top: 7rem;
 }
 
+/* A rolagem suave vale para cliques, não para a chegada.
+
+   Aplicada ao html desde o início, ela captura também o salto inicial de uma
+   âncora: abrir /#agendar vira uma descida animada de dois segundos
+   atravessando a página inteira. Pior no celular, onde o documento cresce
+   durante a descida (imagens adiadas) e a rolagem para longe da seção.
+
+   A classe é posta pelo script do rodapé, depois que a página carrega — aí o
+   salto inicial já aconteceu, instantâneo, como deve ser. */
 @media (prefers-reduced-motion: no-preference) {
-  html { scroll-behavior: smooth; }
+  html.rolagem-suave { scroll-behavior: smooth; }
 }
 
 body {
