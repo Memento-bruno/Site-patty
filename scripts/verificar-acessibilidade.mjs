@@ -109,24 +109,71 @@ try {
         };
       });
 
-    /* 1. Com movimento permitido, o que está fora da tela começa escondido
-          e aparece ao rolar. */
-    {
-      const contexto = await navegador.newContext({ viewport: { width: 1440, height: 900 } });
+    /* 1. Com movimento permitido, o que está fora da tela começa escondido e
+          aparece ao rolar — e aparece ENQUANTO está na tela.
+
+          Nas duas larguras, porque já quebrou só no celular: o observador
+          olhava o contêiner e revelava os filhos de uma vez, o que funciona
+          no desktop (lado a lado) mas no celular revelava os últimos da
+          pilha centenas de pixels abaixo da dobra. A animação acontecia onde
+          ninguém via, e o site parecia não ter efeito nenhum. */
+    for (const largura of [1440, 390]) {
+      const contexto = await navegador.newContext({
+        viewport: { width: largura, height: largura < 500 ? 664 : 900 },
+      });
       const pagina = await contexto.newPage();
       await pagina.goto(endereco('/'), { waitUntil: 'networkidle', timeout: 60_000 });
+
+      /* anota, para cada bloco, onde ele estava na tela quando foi revelado */
+      await pagina.evaluate(() => {
+        window.__revelacoes = [];
+        const alvos = [...document.querySelectorAll('[data-revelar]')].flatMap((el) =>
+          el.hasAttribute('data-revelar-grupo') ? [...el.children] : [el],
+        );
+        for (const el of alvos) {
+          new MutationObserver(() => {
+            if (!el.classList.contains('revelado') || el.dataset.anotado) return;
+            el.dataset.anotado = '1';
+            const caixa = el.getBoundingClientRect();
+            window.__revelacoes.push({
+              nome: String(el.className || el.tagName).split(' ')[0],
+              topo: Math.round(caixa.top),
+              tela: window.innerHeight,
+            });
+          }).observe(el, { attributes: true, attributeFilter: ['class'] });
+        }
+      });
+
       await espera(400);
       const inicio = await contar(pagina);
       if (inicio.total === 0) problemas.push('nenhum bloco marcado com data-revelar foi encontrado');
       if (inicio.total > 0 && inicio.visiveis === inicio.total) {
-        problemas.push('revelação: nada começou escondido — o efeito não está agindo');
+        problemas.push(`revelação [${largura}px]: nada começou escondido — o efeito não está agindo`);
       }
-      await pagina.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-      await espera(2500);
+
+      /* rola aos poucos, como alguém lendo; de uma vez só, o navegador
+         revelaria tudo junto e o teste não veria o problema */
+      for (let passo = 0; passo < 30; passo += 1) {
+        await pagina.mouse.wheel(0, 400);
+        await espera(150);
+      }
+      await espera(1500);
+
       const fim = await contar(pagina);
       if (fim.visiveis !== fim.total) {
-        problemas.push(`revelação: ${fim.total - fim.visiveis} bloco(s) seguiram invisíveis depois de rolar a página`);
+        problemas.push(`revelação [${largura}px]: ${fim.total - fim.visiveis} bloco(s) seguiram invisíveis depois de rolar a página`);
       }
+
+      const foraDaTela = await pagina.evaluate(() =>
+        window.__revelacoes.filter((r) => r.topo > r.tela),
+      );
+      if (foraDaTela.length > 0) {
+        const quais = foraDaTela.map((r) => `${r.nome} (topo ${r.topo}px, tela ${r.tela}px)`).join('; ');
+        problemas.push(
+          `revelação [${largura}px]: ${foraDaTela.length} bloco(s) animaram já abaixo da dobra, onde ninguém vê — ${quais}`,
+        );
+      }
+
       await contexto.close();
     }
 

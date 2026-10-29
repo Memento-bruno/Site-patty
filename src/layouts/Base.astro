@@ -166,30 +166,36 @@ const dadosEstruturados = {
 
         const observador = new IntersectionObserver(
           (entradas) => {
-            for (const entrada of entradas) {
-              if (!entrada.isIntersecting) continue;
+            /* A cascata vale para o que entra na tela ao mesmo tempo, e só.
+               No desktop os três cartões cruzam a borda juntos e chegam na
+               mesma chamada, então escalonam. No celular eles empilham e
+               cruzam um de cada vez, em chamadas separadas, e cada um anima
+               sozinho quando aparece — que é quando a pessoa está olhando. */
+            const chegando = entradas.filter((entrada) => entrada.isIntersecting);
+
+            chegando.forEach((entrada, indice) => {
               observador.unobserve(entrada.target);
-
               const alvo = entrada.target as HTMLElement;
-              const partes = alvo.hasAttribute('data-revelar-grupo')
-                ? (Array.from(alvo.children) as HTMLElement[])
-                : [alvo];
-
-              partes.forEach((parte, indice) => {
-                /* Num grupo, os itens entram em cascata curta. 70 ms é o
-                   bastante para o olho perceber a ordem sem esperar. */
-                parte.style.transitionDelay = `${indice * 70}ms`;
-                parte.classList.add('revelado');
-              });
-            }
+              /* 70 ms é o bastante para o olho perceber a ordem sem esperar. */
+              alvo.style.transitionDelay = `${indice * 70}ms`;
+              alvo.classList.add('revelado');
+            });
           },
           /* Dispara um pouco antes da borda de baixo, para o bloco já estar
              assentado quando a pessoa chega nele. */
           { rootMargin: '0px 0px -12% 0px' },
         );
 
+        /* Cada item é observado por si. Observar o contêiner e revelar os
+           filhos de uma vez funcionava no desktop, onde eles cabem na tela
+           juntos; no celular os últimos da pilha eram revelados centenas de
+           pixels abaixo da dobra e ninguém via a animação. */
         for (const alvo of document.querySelectorAll('[data-revelar]')) {
-          observador.observe(alvo);
+          if (alvo.hasAttribute('data-revelar-grupo')) {
+            for (const filho of alvo.children) observador.observe(filho);
+          } else {
+            observador.observe(alvo);
+          }
         }
       } else {
         /* Navegador sem IntersectionObserver: nada fica escondido. */
