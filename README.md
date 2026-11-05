@@ -7,6 +7,7 @@ de endereço não encontrado.
 Feito em [Astro](https://astro.build) com CSS puro. Sem cookies, sem
 formulários, sem rastreamento e sem scripts de terceiros.
 
+- **Contexto geral, num arquivo só: [`docs/contexto-do-projeto.md`](docs/contexto-do-projeto.md)**
 - O que o site precisa ser e por quê: [`BRIEFING.md`](BRIEFING.md)
 - Decisões de design: [`docs/plano-design.md`](docs/plano-design.md)
 - **O que ainda falta confirmar: [`docs/pendencias.md`](docs/pendencias.md)**
