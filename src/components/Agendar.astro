@@ -77,9 +77,14 @@ const secundarios = [
     margin-top: var(--e-12);
   }
 
-  /* Cartões com borda clara e sem sombra: a sombra é exclusiva do hero. */
+  /* Cartões claros sobre a faixa escura, sem sombra (a sombra é exclusiva
+     do hero). Antes eram só um contorno sobre a ameixa; o bloco claro dá
+     mais contraste ao texto e ao botão, que aqui é o mais importante do
+     site. */
   .agendar__bloco {
-    border: 1px solid var(--linha);
+    background: var(--papel);
+    color: var(--tinta);
+    --texto-suave: #4E3F4F;
     border-radius: var(--r-cartao);
     padding: var(--e-6);
     display: flex;
@@ -87,8 +92,14 @@ const secundarios = [
     gap: var(--e-4);
   }
 
-  .agendar__bloco p { flex: 1; }
-  .agendar__bloco .botao { align-self: stretch; }
+  .agendar__bloco h3 { color: var(--ameixa-900); }
+  .agendar__bloco p { flex: 1; color: var(--texto-suave); }
+  .agendar__bloco .botao {
+    align-self: stretch;
+    background: var(--ameixa-900);
+    color: var(--texto-claro);
+  }
+  .agendar__bloco .botao:hover { background: var(--ameixa-600); color: var(--texto-claro); }
 
   .agendar__notas {
     display: grid;
@@ -115,7 +126,7 @@ const secundarios = [
     align-items: center;
     gap: var(--e-2);
     min-height: 3rem;
-    font-family: var(--fonte-titulo);
+    font-family: var(--fonte-rotulo);
     font-size: var(--t-pequeno);
     font-weight: 500;
   }

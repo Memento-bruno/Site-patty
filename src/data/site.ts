@@ -58,7 +58,7 @@ export const navegacao = [
 export const seo = {
   titulo: 'Patricia Braz Domingues | Psicóloga online | CRP 06/167326',
   descricao:
-    'Psicoterapia online para adultos e idosos com a psicóloga Patricia Braz Domingues, CRP 06/167326. Agende pela Vittude ou pelo WhatsApp.',
+    'Psicóloga Patricia Braz Domingues, CRP 06/167326. Psicoterapia por videochamada para adultos e idosos, com TCC e ACT. Agende pela Vittude ou pelo WhatsApp.',
   idioma: 'pt-BR',
   og: '/og.jpg',
 } as const;
@@ -68,11 +68,11 @@ export const seo = {
 export const hero = {
   identificacao: 'Psicóloga Patricia Braz Domingues, CRP 06/167326',
   /* Alternativas para a Patricia escolher (trocar o valor de `titulo`):
-     - 'Às vezes, o primeiro passo é conversar com alguém preparado para ouvir.'
-     - 'Para cuidar do que pesa, com calma e com método.' */
-  titulo: 'Um espaço seguro para entender o que você sente.',
+     - 'Terapia por videochamada, com uma psicóloga que explica cada passo.'
+     - 'Um horário só seu para cuidar do que não cabe no resto da semana.' */
+  titulo: 'Cinquenta minutos para falar do que você vem adiando.',
   paragrafo:
-    'Atendo adultos e idosos por videochamada, de onde você estiver, com uma prática baseada em evidências e atenta ao contexto de cada pessoa.',
+    'Sou psicóloga e atendo adultos e idosos por videochamada. Trabalho com TCC e ACT, duas abordagens com pesquisa por trás. Você não precisa saber o que isso significa para começar: eu explico no caminho.',
   selo: {
     /* O ✦ separa as partes no texto que gira em volta do selo. */
     texto: 'Psicóloga ✦ CRP 06/167326 ✦ Atendimento online ✦',
@@ -91,69 +91,80 @@ export const hero = {
 export const essencial = [
   {
     icone: 'video-camera',
-    titulo: 'Online, de onde você estiver',
+    titulo: 'Por videochamada',
     texto:
-      'Sessões por videochamada. Você só precisa de internet, um fone de ouvido e um lugar reservado.',
+      'Você entra pelo celular ou pelo computador, de casa, do trabalho ou de outro país. Precisa de internet, fone de ouvido e uma porta fechada.',
   },
   {
     icone: 'users',
     titulo: 'Adultos e idosos',
     texto:
-      'Acompanho pessoas em diferentes fases da vida, no Brasil e brasileiros que moram em outros países.',
+      'A partir dos 18 anos, sem idade máxima. Boa parte do que estudei foi sobre envelhecimento, luto e quem cuida de alguém da família.',
   },
   {
     icone: 'clock',
     titulo: 'Sessões de 50 minutos',
-    texto: 'A frequência é combinada entre nós, de acordo com o seu momento.',
+    texto:
+      'A primeira serve para a gente se conhecer. Depois, combinamos a frequência: semanal é o mais comum, mas não é regra.',
   },
 ] as const;
 
 /* --------------------------------------------------------------------------- Talvez você esteja aqui */
 
 export const reconhecer = {
-  titulo: 'Talvez você esteja aqui porque…',
+  titulo: 'O que costuma trazer alguém até aqui',
   itens: [
-    'A preocupação não desliga, mesmo quando está tudo aparentemente bem.',
-    'Você perdeu alguém ou algo importante, e o luto tem sido difícil de carregar.',
-    'Está no meio de uma mudança de trabalho, de cidade ou de fase da vida, e se sente sem chão.',
-    'Os relacionamentos têm trazido mais desgaste do que conforto.',
-    'Sente um cansaço que não passa com descanso, ou tem vivido no automático.',
-    'Quer se conhecer melhor, mesmo sem nenhuma crise acontecendo.',
+    'Você acorda cansado, e o dia nem começou.',
+    'Perdeu alguém, e as pessoas em volta já acham que era hora de você estar bem.',
+    'Aposentou, mudou de cidade, os filhos saíram de casa. A rotina mudou e você ainda não.',
+    'Discute com quem ama por coisas pequenas e depois não sabe explicar por quê.',
+    'Adia tudo, inclusive o que gosta de fazer.',
+    'Nada está exatamente errado. Mesmo assim, você gostaria de se entender melhor.',
   ],
   fechamento:
-    'Nada disso precisa virar um rótulo. Na terapia, a gente começa entendendo o que está acontecendo com você, no seu contexto, sem pressa e sem julgamento.',
+    'Você não precisa se encaixar em nenhuma dessas frases para começar. Na primeira conversa eu pergunto o que te trouxe, e partimos daí.',
 } as const;
 
 /* --------------------------------------------------------------------------- O que acontece na terapia */
 
 export const terapia = {
-  titulo: 'O que acontece na terapia',
+  titulo: 'O que acontece numa sessão',
   paragrafo:
-    'Psicoterapia é um trabalho feito a dois, com uma profissional habilitada, sigilo e método. É um espaço para olhar com cuidado para o que você pensa, sente e faz, e para o que é importante na sua vida.',
-  e: {
-    titulo: 'É',
+    'Uma sessão é uma conversa com direção. Você fala, eu pergunto, e aos poucos montamos um mapa do que está acontecendo: em que situações o problema aparece, o que passa pela sua cabeça nessas horas, o que você faz em seguida. Às vezes você sai com uma tarefa para a semana, um exercício ou algo para observar. Na sessão seguinte, começamos por ela.',
+  /* O que fica combinado desde o início. Quatro itens, lidos como pares
+     "palavra: explicação". */
+  combinados: {
+    titulo: 'O que fica combinado desde o início',
     itens: [
-      'Um lugar de escuta atenta e sem julgamento.',
-      'Um processo com objetivos combinados entre nós.',
-      'Um trabalho apoiado em conhecimento científico.',
-      'Confidencial.',
-    ],
-  },
-  naoE: {
-    titulo: 'Não é',
-    itens: [
-      'Alguém dizendo o que você deve fazer.',
-      'Só para quem está em crise.',
-      'Um processo com prazo ou resultado definido de antemão.',
+      {
+        termo: 'Sigilo',
+        texto:
+          'O que você diz na sessão não sai dela. Isso é um dever do meu código de ética, não um favor.',
+      },
+      {
+        termo: 'Objetivos definidos a dois',
+        texto:
+          'Combinamos o que você quer que mude e, de tempos em tempos, revisamos se estamos no caminho.',
+      },
+      {
+        termo: 'Sem prazo fechado',
+        texto:
+          'Nem eu nem você sabemos hoje quantas sessões vão ser. Isso se descobre no caminho, e você pode parar quando quiser.',
+      },
+      {
+        termo: 'Nenhum conselho pronto',
+        texto:
+          'Eu não vou dizer o que você deve fazer da sua vida. O trabalho é você enxergar as opções com mais clareza, não eu escolher por você.',
+      },
     ],
   },
   comoTrabalho: {
     titulo: 'Como eu trabalho',
     texto:
-      'Meu trabalho é orientado pela Terapia Cognitivo-Comportamental (TCC) e pela Terapia de Aceitação e Compromisso (ACT). Na prática, olhamos juntos para a relação entre pensamentos, emoções e comportamentos, buscamos formas mais flexíveis de lidar com o que é difícil e aproximamos suas escolhas daquilo que tem valor para você.',
+      'Trabalho com Terapia Cognitivo-Comportamental (TCC) e Terapia de Aceitação e Compromisso (ACT). Os nomes são compridos; a ideia não é. A TCC olha para a ligação entre o que você pensa, o que sente e o que faz, e testa se o jeito de pensar que virou hábito ainda serve. A ACT parte do princípio de que parte do desconforto não vai sumir, e pergunta o que você quer fazer da sua vida mesmo assim. Uso uma ou outra conforme o que aparece, e explico por quê.',
   },
   fraseFinal:
-    'Procurar terapia não é sinal de fraqueza e não precisa esperar o limite. É uma forma de cuidar da saúde, como qualquer outra.',
+    'Não precisa estar no fundo do poço. Muita gente marca a primeira sessão só porque cansou de ter a mesma conversa com a própria cabeça.',
 } as const;
 
 /* --------------------------------------------------------------------------- Como funciona */
@@ -162,29 +173,30 @@ export const comoFunciona = {
   titulo: 'Como funciona',
   passos: [
     {
-      titulo: 'Você escolhe como agendar.',
+      titulo: 'Você escolhe por onde marcar.',
       texto:
-        'Pela Vittude, com agenda e pagamento na própria plataforma, ou diretamente comigo pelo WhatsApp.',
+        'Pela Vittude, com os horários abertos e o pagamento feito lá mesmo, ou por mensagem no WhatsApp, direto comigo.',
     },
     {
       titulo: 'Primeira sessão.',
       texto:
-        'Nos conhecemos, você conta o que te trouxe e avaliamos juntos se o atendimento online é adequado para o seu momento.',
+        'Cinquenta minutos para você contar o que te trouxe e eu entender se o meu trabalho serve para isso. Se eu achar que outro tipo de atendimento serve melhor, digo.',
     },
     {
-      titulo: 'Combinamos o caminho.',
-      texto: 'Definimos objetivos, frequência e por onde começar.',
+      titulo: 'Combinamos o rumo.',
+      texto:
+        'A partir da segunda sessão definimos o que você quer que mude, com que frequência nos vemos e por onde começar.',
     },
     {
       titulo: 'Acompanhamento.',
       texto:
-        'Sessões de 50 minutos por videochamada. Ao longo do processo, revisamos juntos como você está.',
+        'Sessões por videochamada, de preferência sempre no mesmo horário. De tempos em tempos paramos para revisar: o que mudou, o que falta, se faz sentido continuar.',
     },
   ],
   caixa: {
     titulo: 'Para a sessão',
     texto:
-      'Internet estável, celular ou computador com câmera, fone de ouvido e um lugar onde você possa falar à vontade.',
+      'Internet que não caia, fone de ouvido e um lugar onde ninguém vai entrar nos próximos 50 minutos. Pode ser o carro estacionado, se for o único canto tranquilo da casa.',
   },
 } as const;
 
@@ -193,10 +205,10 @@ export const comoFunciona = {
 export const sobre = {
   titulo: 'Quem vai te acompanhar',
   paragrafos: [
-    'Olá, eu sou a Patricia. Muito prazer!',
-    'Sou psicóloga clínica e atendo online adultos e idosos, acompanhando pessoas em diferentes lugares do Brasil e do mundo.',
-    'Minha história começou em São Paulo. Crescer nessa cidade despertou meu interesse pela complexidade das experiências humanas e me levou à Psicologia. Durante a formação, participei de projetos sociais e grupos de estudo, que ampliaram meu entendimento da psicologia como espaço de cuidado e de aprendizado contínuo.',
-    'Acredito numa abordagem científica e sensível, que considera o contexto de cada pessoa. Meu objetivo é oferecer um espaço de escuta e compreensão, para que você possa dar os próximos passos com mais confiança.',
+    'Eu sou a Patricia. Nasci e cresci em São Paulo, e foi aqui que decidi estudar Psicologia: numa cidade desse tamanho, você cruza com milhares de pessoas por dia e não sabe nada sobre nenhuma delas. Eu queria saber.',
+    'Na graduação passei por projetos sociais e grupos de estudo, e meu trabalho de conclusão foi sobre quem cuida de um familiar com Alzheimer. Esse assunto, o de quem cuida e o de quem perde, ficou comigo: a especialização que fiz depois tratou da saúde mental do idoso diante das perdas, e em seguida veio uma formação específica em luto.',
+    'Hoje atendo só online, adultos e idosos, no Brasil e fora dele. Trabalho com TCC e ACT porque são abordagens com pesquisa por trás e porque dá para explicar o que estamos fazendo. E eu gosto de explicar.',
+    'O que eu quero de uma sessão é simples de dizer: que você saia dela entendendo um pouco melhor o que estava embolado quando entrou.',
   ],
   foto: {
     alt: 'Patricia Braz Domingues sorrindo, sentada diante do notebook onde faz os atendimentos',
@@ -274,25 +286,25 @@ export const sobre = {
 export const agendar = {
   titulo: 'Como agendar',
   paragrafo:
-    'Escolha o caminho mais prático para você. Se tiver dúvidas antes de marcar, pode me chamar no WhatsApp.',
+    'Dois caminhos, o mesmo atendimento. Pela Vittude você vê a agenda e paga na hora; pelo WhatsApp a gente combina direto. Se quiser tirar uma dúvida antes de marcar, pode chamar.',
   blocos: [
     {
       id: 'vittude',
       titulo: 'Pela Vittude',
       texto:
-        'Veja os horários disponíveis e agende direto na plataforma. Pagamento por cartão ou boleto.',
+        'Os horários livres aparecem na plataforma, e o pagamento é feito lá mesmo, por cartão ou boleto.',
       acao: 'vittude',
     },
     {
       id: 'whatsapp',
       titulo: 'Direto comigo',
       texto:
-        'Me envie uma mensagem pelo WhatsApp para combinarmos horário e valor. O pagamento pode ser por Pix, transferência ou cartão.',
+        'Me mande uma mensagem dizendo que veio pelo site. Eu respondo com os horários que tenho, e combinamos valor e forma de pagamento: Pix, transferência ou cartão.',
       acao: 'whatsapp',
     },
   ],
   /* Orientação de privacidade recomendada pelo briefing (3.4). */
-  nota: 'Por mensagem, não é preciso contar detalhes sobre a sua saúde. Conversamos sobre isso na sessão.',
+  nota: 'Não precisa explicar o motivo na mensagem. Isso fica para a sessão, onde há sigilo.',
   /* Sem horário de resposta divulgado, por escolha dela. Para informar,
      preencha a frase aqui e ela volta a aparecer abaixo dos dois blocos. */
   horarioResposta: null as string | null,
@@ -306,51 +318,50 @@ export const duvidas = {
     {
       pergunta: 'A terapia online funciona?',
       resposta:
-        'O atendimento psicológico online é reconhecido e regulamentado pelo Conselho Federal de Psicologia. Para muitas pessoas, ele funciona bem e facilita manter a regularidade. Na primeira sessão, avaliamos juntos se esse formato é adequado para o seu momento.',
+        'O Conselho Federal de Psicologia regulamenta o atendimento online desde 2018, e hoje ele faz parte do dia a dia da profissão. O que muda em relação ao presencial é prático: você precisa de um lugar reservado e de uma conexão estável. O resto não muda: a conversa, o sigilo, o método. Se na primeira sessão eu perceber que o formato não está funcionando para você, eu falo.',
     },
     {
       pergunta: 'Preciso estar em crise para começar?',
       resposta:
-        'Não. Muita gente começa a terapia para se conhecer melhor, atravessar uma mudança ou cuidar de algo antes que fique mais pesado.',
+        'Não. Crise é um dos motivos, não o único. Tem gente que começa porque uma decisão não sai do lugar, porque a rotina mudou, ou só porque quer se conhecer com mais honestidade.',
     },
     {
       pergunta: 'O que eu falar fica em sigilo?',
       resposta:
-        'Sim. O sigilo profissional é um dever previsto no Código de Ética do Psicólogo. Se quiser, conversamos sobre isso logo na primeira sessão.',
+        'Sim. O que você diz na sessão fica entre nós, por dever ético e legal. As exceções são raras e previstas no Código de Ética, como um risco grave à sua vida ou à de outra pessoa. Se quiser, explico todas elas na primeira conversa.',
     },
     {
       pergunta: 'Quanto tempo dura a terapia?',
       resposta:
-        'Depende do que você busca e de como o processo caminha. Não existe um número fixo de sessões; revisamos isso juntos ao longo do caminho.',
+        'Não dá para saber antes de começar. Alguns processos são curtos e focados em um problema; outros duram mais. De tempos em tempos revisamos juntos se faz sentido continuar, e a decisão de parar é sempre sua.',
     },
     {
       pergunta: 'Você atende quem mora fora do Brasil?',
       resposta:
-        'Sim. Acompanho brasileiros que vivem em outros países, por videochamada e em português.',
+        'Sim. Atendo brasileiros que vivem em outros países, em português. Combinamos o horário já convertido para o seu fuso.',
     },
     {
       pergunta: 'Qual a idade mínima?',
-      resposta:
-        'Atendo adultos e idosos, a partir de 18 anos.',
+      resposta: '18 anos. Não atendo crianças nem adolescentes.',
     },
     {
       pergunta: 'Você emite recibo para reembolso do plano de saúde?',
       resposta:
-        'Sim. Emito recibo das sessões para você solicitar reembolso ao seu plano de saúde. Quanto o plano devolve depende das regras de cada contrato.',
+        'Sim. Emito recibo com o meu CRP para você pedir o reembolso. Quanto o plano devolve depende das regras do seu contrato, e vale conferir com ele antes.',
     },
     {
       pergunta: 'E se eu precisar de ajuda agora?',
       resposta:
-        'Este site e as sessões agendadas não são um serviço de emergência. Se você está em risco ou pensando em se machucar, ligue 188 (CVV, gratuito, 24 horas) ou 192 (SAMU), ou procure o pronto-socorro mais próximo.',
+        'Este site e as sessões marcadas não são um serviço de emergência. Se você está em risco agora ou pensando em se machucar, ligue 188 (CVV, gratuito, 24 horas) ou 192 (SAMU), ou vá ao pronto-socorro mais próximo.',
     },
   ],
-  fechamento: 'Ficou alguma dúvida?',
+  fechamento: 'Sobrou alguma pergunta?',
 } as const;
 
 /* --------------------------------------------------------------------------- Rodapé */
 
 export const rodape = {
-  resumo: 'Atendimento psicológico online para adultos e idosos.',
+  resumo: 'Psicoterapia por videochamada para adultos e idosos.',
   tituloLinks: 'Links',
   emergencia: {
     titulo: 'Emergência',
@@ -414,8 +425,8 @@ export const privacidade = {
 } as const;
 
 export const naoEncontrada = {
-  titulo: 'Esta página não existe ou mudou de endereço.',
+  titulo: 'Essa página não existe, ou mudou de lugar.',
   paragrafo:
-    'Talvez o endereço tenha sido digitado com uma letra a mais, ou o link que te trouxe até aqui esteja desatualizado.',
+    'Pode ser uma letra a mais no endereço, ou um link antigo. O site inteiro está na página inicial.',
   voltar: 'Voltar para o início',
 } as const;

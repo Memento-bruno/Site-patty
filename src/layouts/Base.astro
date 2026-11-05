@@ -1,10 +1,11 @@
 ---
 import '@fontsource-variable/schibsted-grotesk/wght.css';
-import '@fontsource-variable/literata/wght.css';
+import '@fontsource-variable/literata/opsz.css';
 import '../styles/global.css';
 
-/* Só o arquivo usado no H1 é pré-carregado (briefing 9.3). */
-import fonteTitulo from '@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2?url';
+/* Só o arquivo usado no H1 é pré-carregado (briefing 9.3). O H1 agora é
+   em Literata, no arquivo com eixo de tamanho óptico. */
+import fonteTitulo from '@fontsource-variable/literata/files/literata-latin-opsz-normal.woff2?url';
 
 import { profissional, links, seo } from '../data/site';
 import { url } from '../lib/url';
@@ -59,7 +60,7 @@ const dadosEstruturados = {
     )}
 
     <meta name="author" content={profissional.identificacao} />
-    <meta name="theme-color" content="#FBFAFC" />
+    <meta name="theme-color" content="#FCFAF9" />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />

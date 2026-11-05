@@ -21,10 +21,8 @@ import { essencial } from '../data/site';
   /* Os três cartões que "sobem" sobre a base do hero. São dois dos únicos
      cartões do site e os únicos elementos com sombra. */
   .essencial {
-    margin-top: var(--e-12);
-    /* metade para fora da caixa do hero */
-    transform: translateY(2.5rem);
-    margin-bottom: 2.5rem;
+    /* os cartões sobem sobre o fim da faixa malva */
+    margin-top: -2.5rem;
   }
 
   .essencial__lista {
@@ -47,7 +45,7 @@ import { essencial } from '../data/site';
   }
 
   .cartao__titulo {
-    font-size: var(--t-h3);
+    font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: var(--e-2);
   }
@@ -59,11 +57,7 @@ import { essencial } from '../data/site';
   }
 
   @media (min-width: 48rem) {
-    .essencial {
-      margin-top: var(--e-16);
-      transform: translateY(3.5rem);
-      margin-bottom: 3.5rem;
-    }
+    .essencial { margin-top: -3.5rem; }
 
     .essencial__lista {
       grid-template-columns: repeat(3, 1fr);

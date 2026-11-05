@@ -6,17 +6,18 @@ import { terapia } from '../data/site';
     <h2>{terapia.titulo}</h2>
     <p class="terapia__abertura">{terapia.paragrafo}</p>
 
-    <div class="terapia__colunas" data-revelar data-revelar-grupo>
-      {
-        [terapia.e, terapia.naoE].map((coluna) => (
-          <div class="terapia__coluna">
-            <h3>{coluna.titulo}</h3>
-            <ul>
-              {coluna.itens.map((item) => <li>{item}</li>)}
-            </ul>
-          </div>
-        ))
-      }
+    <div class="terapia__combinados">
+      <h3>{terapia.combinados.titulo}</h3>
+      <dl class="combinados" data-revelar data-revelar-grupo>
+        {
+          terapia.combinados.itens.map((item) => (
+            <div class="combinados__item">
+              <dt>{item.termo}</dt>
+              <dd>{item.texto}</dd>
+            </div>
+          ))
+        }
+      </dl>
     </div>
 
     <div class="terapia__metodo">
@@ -34,65 +35,58 @@ import { terapia } from '../data/site';
     max-width: 62ch;
   }
 
-  .terapia__colunas {
+  .terapia__combinados { margin-top: var(--e-12); }
+
+  /* Quatro pares termo/explicação, separados por fio. Sem cartão: a seção
+     já está numa faixa de fundo, e cartão dentro de faixa é o padrão de
+     template que o plano de design evita. */
+  .combinados {
+    margin: var(--e-6) 0 0;
     display: grid;
-    gap: var(--e-8);
-    margin-top: var(--e-12);
+    border-top: 1px solid var(--linha);
   }
 
-  .terapia__coluna h3 { margin-bottom: var(--e-4); }
-
-  .terapia__coluna ul {
-    list-style: none;
+  .combinados__item {
     display: grid;
-    gap: var(--e-3);
+    gap: var(--e-2);
+    padding-block: var(--e-6);
+    border-bottom: 1px solid var(--linha);
   }
 
-  .terapia__coluna li {
-    padding-left: var(--e-6);
-    position: relative;
+  .combinados dt {
+    font-family: var(--fonte-rotulo);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--ameixa-900);
+  }
+
+  .combinados dd {
+    margin: 0;
     color: var(--texto-suave);
-  }
-
-  /* Um traço curto, não um marcador redondo: a lista de arcos é da outra seção. */
-  .terapia__coluna li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.85em;
-    width: var(--e-3);
-    height: 1px;
-    background: var(--ameixa-600);
+    max-width: 48ch;
   }
 
   .terapia__metodo {
     margin-top: var(--e-12);
-    padding-top: var(--e-8);
-    border-top: 1px solid var(--linha);
-  }
-
-  .terapia__metodo p {
-    margin-top: var(--e-4);
     max-width: 62ch;
   }
 
+  .terapia__metodo p { margin-top: var(--e-4); }
+
   .terapia__final {
-    margin-top: var(--e-8);
-    max-width: 52ch;
-    color: var(--texto-suave);
-    font-size: 1.0625rem;
+    margin-top: var(--e-12);
+    max-width: 46ch;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: var(--ameixa-900);
   }
 
   @media (min-width: 48rem) {
-    .terapia__colunas {
+    .combinados {
       grid-template-columns: 1fr 1fr;
-      gap: var(--e-12);
+      column-gap: var(--e-12);
     }
 
-    /* A régua vertical que separa "É" de "Não é" */
-    .terapia__coluna + .terapia__coluna {
-      border-left: 1px solid var(--linha);
-      padding-left: var(--e-12);
-    }
+    .terapia__final { font-size: 1.375rem; }
   }
 </style>

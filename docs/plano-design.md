@@ -203,3 +203,32 @@ Duas decisões merecem registro explícito porque contrariam a referência visua
 2. **Tudo alinhado à esquerda, inclusive os H2.** Títulos de seção centralizados
    são o padrão da categoria; alinhar à esquerda mantém uma única margem óptica
    descendo a página e dá a ela uma leitura de documento, não de folheto.
+
+## 5. Revisão de novembro de 2026: textos e visual
+
+Rodada feita a pedido do Bruno, com dois objetivos: textos que não pareçam
+os de qualquer outra psicóloga nem escritos por inteligência artificial, e
+um visual mais forte. Os três princípios da seção 1 continuam valendo.
+
+**Textos.** Saíram as fórmulas que aparecem em todo site de psicologia
+("espaço seguro", "escuta atenta e sem julgamento", "não é sinal de
+fraqueza", colunas "É / Não é", triplas de adjetivos). Entraram frases
+concretas e em primeira pessoa, com dados que só ela tem: o trabalho de
+conclusão sobre cuidadores de pessoas com Alzheimer, a especialização sobre
+luto na velhice, a explicação curta do que a TCC e a ACT fazem na prática.
+O título do hero diz o que a sessão é (cinquenta minutos) e para o que
+serve, em vez de prometer um sentimento.
+
+**Visual.** Quatro mudanças, cada uma com um motivo:
+
+| Mudança | Motivo |
+|---|---|
+| Títulos em Literata (serifa, com eixo óptico) em vez de Schibsted Grotesk | Título grande em grotesca lê como landing page de produto; em serifa lê como página de revista, e combina com o texto corrido. A grotesca ficou em navegação, botões e rótulos |
+| Hero em faixa de borda a borda, sem a caixa arredondada com degradê | A caixa de 32 px com degradê é o traço mais reconhecível daquela família de templates. A faixa lisa some atrás do conteúdo |
+| Paleta mais quente: ameixa mais funda, lilás puxado para o malva, papel levemente quente | Menos "roxo de template", mais papel de carta. Continua sem nenhum verde |
+| Botões com canto de 12 px em vez de pílula; navegação sem a pílula cinza; cartões de "Como agendar" claros sobre a faixa escura | Menos cara de aplicativo; mais contraste onde está o botão mais importante do site |
+
+A seção "Talvez você esteja aqui" virou uma coluna só de frases em corpo
+maior, separadas por fio, e as colunas "É / Não é" viraram quatro pares
+"combinado: explicação". O arco continua em dois lugares, cartão continua
+em dois lugares, o hero continua sem animação.

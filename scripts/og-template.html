@@ -10,18 +10,18 @@
   }
   @font-face {
     font-family: 'Literata Variable';
-    src: url('../node_modules/@fontsource-variable/literata/files/literata-latin-wght-normal.woff2') format('woff2');
-    font-weight: 400 700;
+    src: url('../node_modules/@fontsource-variable/literata/files/literata-latin-opsz-normal.woff2') format('woff2');
+    font-weight: 200 900;
   }
 
   :root {
-    --ameixa-900: #3B2745;
-    --ameixa-600: #6E4F7E;
-    --lilas-200: #DCD0E4;
-    --lilas-100: #EFE9F3;
-    --papel: #FBFAFC;
+    --ameixa-900: #35203A;
+    --ameixa-600: #6D4A73;
+    --lilas-200: #DFCDD7;
+    --lilas-100: #F1E8EC;
+    --papel: #FCFAF9;
     --ocre-500: #B8862F;
-    --texto-suave: #4B3D55;
+    --texto-suave: #4E3F4F;
   }
 
   * { box-sizing: border-box; margin: 0; }
@@ -29,7 +29,7 @@
   body {
     width: 1200px;
     height: 630px;
-    background: linear-gradient(150deg, var(--lilas-100) 0%, var(--papel) 62%);
+    background: var(--lilas-100);
     font-family: 'Schibsted Grotesk Variable', sans-serif;
     display: grid;
     grid-template-columns: 1fr 380px;
@@ -43,10 +43,11 @@
   .marca span { font-size: 26px; font-weight: 700; color: var(--ameixa-900); }
 
   h1 {
+    font-family: 'Literata Variable', serif;
     font-size: 66px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
+    font-weight: 560;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
     color: var(--ameixa-900);
   }
 

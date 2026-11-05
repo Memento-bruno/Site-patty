@@ -49,17 +49,15 @@ import { navegacao, botoes } from '../data/site';
     padding-block: var(--e-2);
   }
 
-  /* A "pílula" de navegação do centro (referência 6.1) */
-  .cabecalho__nav {
-    display: none;
-    background: var(--lilas-100);
-    border-radius: var(--r-pilula);
-    padding: var(--e-1);
-  }
+  /* Navegação sem a "pílula" da referência: links simples, com um traço
+     fino que aparece no hover. A pílula cinza no centro do cabeçalho é um
+     tique de template que não acrescentava nada à leitura. */
+  .cabecalho__nav { display: none; }
 
   .cabecalho__nav ul {
     display: flex;
     align-items: center;
+    gap: var(--e-2);
     list-style: none;
   }
 
@@ -67,17 +65,18 @@ import { navegacao, botoes } from '../data/site';
     display: inline-flex;
     align-items: center;
     min-height: 3rem;
-    padding-inline: var(--e-4);
-    border-radius: var(--r-pilula);
-    font-family: var(--fonte-titulo);
+    padding-inline: var(--e-3);
+    font-family: var(--fonte-rotulo);
     font-size: 1.0625rem;
     font-weight: 500;
     color: var(--ameixa-900);
     text-decoration: none;
-    transition: background-color 150ms ease;
+    text-underline-offset: 0.35em;
+    text-decoration-thickness: 1.5px;
+    transition: color 150ms ease;
   }
 
-  .cabecalho__nav a:hover { background: var(--papel); }
+  .cabecalho__nav a:hover { text-decoration: underline; color: var(--ameixa-600); }
 
   .cabecalho__cta { display: none; }
 
@@ -90,7 +89,7 @@ import { navegacao, botoes } from '../data/site';
     flex: none;
     background: transparent;
     border: 1px solid var(--linha);
-    border-radius: var(--r-pilula);
+    border-radius: var(--r-botao);
     color: var(--ameixa-900);
     cursor: pointer;
   }

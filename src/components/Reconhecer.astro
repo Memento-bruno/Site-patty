@@ -26,10 +26,11 @@ import { reconhecer } from '../data/site';
 <style>
   .reconhecer__grade { display: grid; gap: var(--e-8); }
 
+  /* Uma coluna só, frases em corpo maior, separadas por fio: lê como uma
+     lista de situações para reconhecer, não como grade de "benefícios". */
   .reconhecer__lista {
     list-style: none;
     display: grid;
-    gap: var(--e-6);
   }
 
   .reconhecer__lista li {
@@ -37,18 +38,23 @@ import { reconhecer } from '../data/site';
     grid-template-columns: 1.5rem 1fr;
     gap: var(--e-4);
     align-items: start;
+    padding-block: var(--e-4);
+    border-top: 1px solid var(--linha);
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: var(--ameixa-900);
   }
 
-  /* O arco ocre como marcador: segunda das três aparições da assinatura. */
+  .reconhecer__lista li:last-child { border-bottom: 1px solid var(--linha); }
+
+  /* O arco ocre como marcador: segunda das duas aparições da assinatura. */
   .reconhecer__lista :global(.reconhecer__marcador) {
     color: var(--ocre-500);
-    margin-top: 0.55em;
+    margin-top: 0.5em;
   }
 
   .reconhecer__fechamento {
     margin-top: var(--e-8);
-    padding-top: var(--e-8);
-    border-top: 1px solid var(--linha);
     color: var(--texto-suave);
   }
 
@@ -58,14 +64,14 @@ import { reconhecer } from '../data/site';
       gap: var(--e-8) var(--e-6);
     }
 
-    .reconhecer__titulo { grid-column: 1 / 6; }
-    .reconhecer__corpo { grid-column: 6 / 13; }
+    .reconhecer__titulo { grid-column: 1 / 5; max-width: 12ch; }
+    .reconhecer__corpo { grid-column: 5 / 13; }
 
-    .reconhecer__lista {
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--e-6) var(--e-8);
+    .reconhecer__lista li {
+      padding-block: var(--e-6);
+      font-size: 1.375rem;
     }
 
-    .reconhecer__fechamento { max-width: 62ch; }
+    .reconhecer__fechamento { max-width: 58ch; }
   }
 </style>

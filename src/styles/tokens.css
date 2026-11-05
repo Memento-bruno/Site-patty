@@ -5,30 +5,37 @@
    --------------------------------------------------------------------------- */
 
 :root {
-  /* Paleta A — ameixa e ocre */
-  --ameixa-900: #3B2745;
-  --ameixa-600: #6E4F7E;
-  --lilas-200: #DCD0E4;
-  --lilas-100: #EFE9F3;
-  --papel: #FBFAFC;
-  --tinta: #231B28;
+  /* Paleta A — ameixa e ocre, na versão mais quente de 2026.
+     A ameixa ficou mais funda e os lilases puxaram para o malva (um lilás
+     com um pouco de rosa), para o site parecer menos "roxo de template" e
+     mais papel de carta. O ocre continua só como acento. Nenhum verde. */
+  --ameixa-900: #35203A;
+  --ameixa-600: #6D4A73;
+  --lilas-200: #DFCDD7;
+  --lilas-100: #F1E8EC;
+  --papel: #FCFAF9;
+  --tinta: #241A26;
   /* Acento decorativo. NUNCA em texto: contraste ~3:1 sobre --papel. */
   --ocre-500: #B8862F;
-  --linha: #E3DAE8;
+  --linha: #E6DBE0;
 
   /* Papéis derivados (não inventar cor nova nos componentes) */
   --fundo: var(--papel);
   --texto: var(--tinta);
-  --texto-suave: #4B3D55;   /* 9.6:1 sobre --papel */
-  --texto-claro: #F4EFF7;   /* texto sobre --ameixa-900 */
+  --texto-suave: #4E3F4F;   /* 9.3:1 sobre --papel */
+  --texto-claro: #F6EFF2;   /* texto sobre --ameixa-900 */
   --foco: var(--ameixa-600);
 
-  /* Tipografia */
-  --fonte-titulo: "Schibsted Grotesk Variable", "Helvetica Neue", Arial, sans-serif;
+  /* Tipografia. Os títulos passaram da grotesca para a serifa: um título
+     grande em Literata (com eixo de tamanho óptico) lê como página de
+     revista, não como landing page de produto. A grotesca continua em
+     navegação, botões, rótulos e nos títulos pequenos de cartão. */
+  --fonte-titulo: "Literata Variable", Georgia, "Times New Roman", serif;
+  --fonte-rotulo: "Schibsted Grotesk Variable", "Helvetica Neue", Arial, sans-serif;
   --fonte-corpo: "Literata Variable", Georgia, "Times New Roman", serif;
 
-  --t-h1: clamp(2.6rem, 1.6rem + 4.5vw, 4.75rem);
-  --t-h2: clamp(1.9rem, 1.3rem + 2.4vw, 2.9rem);
+  --t-h1: clamp(2.5rem, 1.5rem + 4.2vw, 4.5rem);
+  --t-h2: clamp(1.85rem, 1.3rem + 2.2vw, 2.75rem);
   --t-h3: 1.375rem;
   --t-corpo: 1.125rem;          /* 18 px */
   --t-pequeno: 0.9375rem;       /* 15 px — piso absoluto do site */
@@ -49,14 +56,17 @@
   /* Respiro vertical das seções */
   --secao-y: 4rem;
 
-  /* Raios, com hierarquia (6.4) */
+  /* Raios, com hierarquia (6.4). O botão deixou de ser pílula: cantos de
+     12 px dão um objeto mais firme, menos "aplicativo". A pílula fica só
+     para o que é redondo de fato (o selo, o ícone do WhatsApp). */
   --r-hero: 32px;
-  --r-cartao: 20px;
-  --r-foto: 20px;
+  --r-cartao: 16px;
+  --r-foto: 16px;
+  --r-botao: 12px;
   --r-pilula: 999px;
 
   /* Única sombra do site: os três cartões sobre o hero */
-  --sombra-cartao: 0 18px 40px -24px rgb(59 39 69 / 0.35);
+  --sombra-cartao: 0 18px 40px -24px rgb(53 32 58 / 0.35);
 
   /* Grade */
   --largura: 1200px;
@@ -86,9 +96,9 @@
 .em-ameixa {
   color: var(--texto-claro);
   --texto: var(--texto-claro);
-  --texto-suave: #D9CCE2;
-  --linha: #5A4468;
-  --foco: #E6D7F0;
+  --texto-suave: #DCCBD5;
+  --linha: #5C4560;
+  --foco: #EAD9E3;
 }
 
 /* ---------------------------------------------------------------------------
