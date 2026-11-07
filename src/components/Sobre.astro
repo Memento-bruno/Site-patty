@@ -1,6 +1,7 @@
 ---
 import Foto from './Foto.astro';
 import Texto from './Texto.astro';
+import Icone from './Icone.astro';
 import { sobre, profissional, links, botoes } from '../data/site';
 
 /* A lista de temas é lida como uma frase, então começa em maiúscula.
@@ -10,6 +11,7 @@ import { sobre, profissional, links, botoes } from '../data/site';
    transferência de quem copia. */
 const temas = sobre.temas.itens.join(', ');
 const temasFrase = `${temas.charAt(0).toUpperCase()}${temas.slice(1)}.`;
+const totalFormacoes = sobre.formacao.itens.length;
 ---
 <section id="sobre" class="secao sobre">
   <div class="container sobre__grade">
@@ -36,24 +38,42 @@ const temasFrase = `${temas.charAt(0).toUpperCase()}${temas.slice(1)}.`;
         </a>
       </p>
 
-      <h3 class="sobre__subtitulo">{sobre.formacao.titulo}</h3>
-      <dl class="formacao">
-        {
-          sobre.formacao.itens.map((item) => (
-            <div class="formacao__item">
-              <dt>{item.periodo ?? ''}</dt>
-              <dd>
+      <h3 class="sobre__subtitulo" id="formacao-titulo">{sobre.formacao.titulo}</h3>
+      <!-- Carrossel: rolagem lateral nativa (dedo, trackpad, teclado), sem
+           passar sozinho. Os botões só avançam ou voltam um item. Sem JS,
+           a lista continua rolável e inteira. -->
+      <div
+        class="carrossel"
+        role="region"
+        aria-roledescription="carrossel"
+        aria-labelledby="formacao-titulo"
+        data-carrossel
+      >
+        <ol class="carrossel__trilho" tabindex="0" aria-label="Formação, role para o lado" data-carrossel-trilho>
+          {
+            sobre.formacao.itens.map((item) => (
+              <li class="formacao__item">
+                <span class="formacao__periodo">{item.periodo ?? ''}</span>
                 <span class="formacao__curso">{item.curso}</span>
                 {item.instituicao && (
                   <span class="formacao__instituicao"><Texto valor={item.instituicao} /></span>
                 )}
                 {item.andamento && <span class="formacao__estado">Em andamento</span>}
                 {item.nota && <span class="formacao__nota">{item.nota}</span>}
-              </dd>
-            </div>
-          ))
-        }
-      </dl>
+              </li>
+            ))
+          }
+        </ol>
+        <div class="carrossel__controles" hidden data-carrossel-controles>
+          <button type="button" class="carrossel__botao" data-carrossel-voltar aria-label="Formação anterior">
+            <Icone nome="caret-left" tamanho="1.25rem" />
+          </button>
+          <p class="carrossel__posicao" aria-live="polite" data-carrossel-posicao>1 de {totalFormacoes}</p>
+          <button type="button" class="carrossel__botao" data-carrossel-avancar aria-label="Próxima formação">
+            <Icone nome="caret-right" tamanho="1.25rem" />
+          </button>
+        </div>
+      </div>
 
       <h3 class="sobre__subtitulo">{sobre.temas.titulo}</h3>
       <p class="sobre__temas">{temasFrase}</p>
@@ -93,29 +113,46 @@ const temasFrase = `${temas.charAt(0).toUpperCase()}${temas.slice(1)}.`;
 
   .sobre__subtitulo { margin-top: var(--e-12); }
 
-  .formacao {
-    margin: var(--e-6) 0 0;
+  /* Sem isto a trilha do carrossel alarga a coluna e a página rola de lado. */
+  .sobre__corpo { min-width: 0; }
+
+  .carrossel { margin-top: var(--e-6); min-width: 0; }
+
+  .carrossel__trilho {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 var(--e-4);
     display: grid;
+    grid-auto-flow: column;
+    /* Um item e a ponta do próximo, para mostrar que há mais ao lado. */
+    grid-auto-columns: 85%;
     gap: var(--e-6);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+
+  .carrossel__trilho:focus-visible {
+    outline: 3px solid var(--foco);
+    outline-offset: 4px;
   }
 
   .formacao__item {
-    display: grid;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
     gap: var(--e-1);
-    padding-bottom: var(--e-6);
-    border-bottom: 1px solid var(--linha);
+    padding-left: var(--e-4);
+    border-left: 2px solid var(--linha);
   }
 
-  .formacao__item:last-child { border-bottom: 0; padding-bottom: 0; }
-
-  .formacao dt {
+  .formacao__periodo {
     font-family: var(--fonte-rotulo);
     font-size: var(--t-pequeno);
     font-weight: 600;
     color: var(--texto-suave);
   }
-
-  .formacao dd { margin: 0; display: grid; gap: var(--e-1); }
 
   .formacao__curso { font-size: 1.0625rem; }
 
@@ -124,6 +161,40 @@ const temasFrase = `${temas.charAt(0).toUpperCase()}${temas.slice(1)}.`;
   .formacao__nota {
     font-size: var(--t-pequeno);
     color: var(--texto-suave);
+  }
+
+  .carrossel__controles {
+    display: flex;
+    align-items: center;
+    gap: var(--e-3);
+    margin-top: var(--e-2);
+  }
+
+  .carrossel__botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid var(--linha);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--texto);
+    cursor: pointer;
+  }
+
+  .carrossel__botao:hover:not(:disabled) { border-color: var(--texto-suave); }
+  .carrossel__botao:disabled { opacity: 0.4; cursor: default; }
+  .carrossel__botao:focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
+
+  .carrossel__posicao {
+    margin: 0;
+    font-family: var(--fonte-rotulo);
+    font-size: var(--t-pequeno);
+    color: var(--texto-suave);
+    font-variant-numeric: tabular-nums;
+    min-width: 4.5rem;
+    text-align: center;
   }
 
   /* Curso em andamento nunca aparece como concluído (briefing 2). */
@@ -149,9 +220,61 @@ const temasFrase = `${temas.charAt(0).toUpperCase()}${temas.slice(1)}.`;
 
     .sobre__corpo { grid-column: 6 / 13; }
 
-    .formacao__item {
-      grid-template-columns: 7rem 1fr;
-      gap: var(--e-4);
-    }
+    .carrossel__trilho { grid-auto-columns: calc((100% - var(--e-6)) / 2); }
   }
 </style>
+
+<script>
+  /* Liga os botões e o "1 de 5" do carrossel de formação. A rolagem em si é
+     do navegador; aqui só se lê qual item está à esquerda e se pede para
+     rolar um item para o lado. */
+  for (const carrossel of document.querySelectorAll<HTMLElement>('[data-carrossel]')) {
+    const trilho = carrossel.querySelector<HTMLElement>('[data-carrossel-trilho]');
+    const controles = carrossel.querySelector<HTMLElement>('[data-carrossel-controles]');
+    const voltar = carrossel.querySelector<HTMLButtonElement>('[data-carrossel-voltar]');
+    const avancar = carrossel.querySelector<HTMLButtonElement>('[data-carrossel-avancar]');
+    const posicao = carrossel.querySelector<HTMLElement>('[data-carrossel-posicao]');
+    if (!trilho || !controles || !voltar || !avancar || !posicao) continue;
+    const itens = [...trilho.children] as HTMLElement[];
+
+    const atual = () => {
+      const inicio = trilho.getBoundingClientRect().left;
+      let melhor = 0;
+      let menor = Infinity;
+      itens.forEach((item, i) => {
+        const d = Math.abs(item.getBoundingClientRect().left - inicio);
+        if (d < menor) { menor = d; melhor = i; }
+      });
+      return melhor;
+    };
+
+    const atualizar = () => {
+      const fim = trilho.scrollLeft + trilho.clientWidth >= trilho.scrollWidth - 4;
+      const i = fim ? itens.length - 1 : atual();
+      posicao.textContent = `${i + 1} de ${itens.length}`;
+      voltar.disabled = trilho.scrollLeft <= 4;
+      avancar.disabled = fim;
+      /* Tudo cabe sem rolar: os controles não têm o que fazer. */
+      controles.hidden = trilho.scrollWidth <= trilho.clientWidth + 4;
+    };
+
+    const ir = (passo: number) => {
+      const alvo = itens[Math.min(itens.length - 1, Math.max(0, atual() + passo))];
+      const reduzir = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      trilho.scrollTo({
+        left: alvo.offsetLeft - itens[0].offsetLeft,
+        behavior: reduzir ? 'auto' : 'smooth',
+      });
+    };
+
+    voltar.addEventListener('click', () => ir(-1));
+    avancar.addEventListener('click', () => ir(1));
+    let quadro = 0;
+    trilho.addEventListener('scroll', () => {
+      cancelAnimationFrame(quadro);
+      quadro = requestAnimationFrame(atualizar);
+    }, { passive: true });
+    window.addEventListener('resize', atualizar);
+    atualizar();
+  }
+</script>
