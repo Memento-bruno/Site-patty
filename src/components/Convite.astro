@@ -1,0 +1,35 @@
+---
+import { convite } from '../data/site';
+---
+<section id="convite" class="convite" aria-label="Agendar uma sessão">
+  <div class="container convite__dentro">
+    <div class="convite__texto">
+      <p class="convite__titulo">{convite.texto}</p>
+      <p class="convite__apoio">{convite.apoio}</p>
+    </div>
+    <a class="botao botao--primario" href="#agendar">{convite.botao}</a>
+  </div>
+</section>
+
+<style>
+  .convite {
+    border-block: 1px solid var(--linha);
+    padding-block: var(--e-12);
+  }
+  .convite__dentro {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e-6);
+  }
+  .convite__texto { display: grid; gap: var(--e-2); min-width: 0; max-width: 46ch; }
+  .convite__titulo {
+    font-family: var(--fonte-titulo);
+    font-size: var(--t-h3);
+    font-weight: 700;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  .convite__apoio { color: var(--texto-suave); }
+</style>

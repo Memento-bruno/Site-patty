@@ -127,7 +127,7 @@ export const reconhecer = {
 /* --------------------------------------------------------------------------- O que acontece na terapia */
 
 export const terapia = {
-  titulo: 'O que acontece na terapia',
+  titulo: 'O que acontece na terapia?',
   paragrafo:
     'Psicoterapia é um trabalho feito a dois, com uma profissional habilitada, sigilo e método. É um espaço para olhar com cuidado para o que você pensa, sente e faz, e para o que é importante na sua vida.',
   e: {
@@ -156,10 +156,18 @@ export const terapia = {
     'Procurar terapia não é sinal de fraqueza e não precisa esperar o limite. É uma forma de cuidar da saúde, como qualquer outra.',
 } as const;
 
+/* --------------------------------------------------------------------------- Convite (faixa entre seções) */
+
+export const convite = {
+  texto: 'Quer conversar sobre o que está vivendo?',
+  apoio: 'O primeiro passo é marcar uma sessão. Você escolhe o caminho mais prático.',
+  botao: 'Ver como agendar',
+} as const;
+
 /* --------------------------------------------------------------------------- Como funciona */
 
 export const comoFunciona = {
-  titulo: 'Como funciona',
+  titulo: 'Como funciona o atendimento?',
   passos: [
     {
       titulo: 'Você escolhe como agendar.',
@@ -191,7 +199,7 @@ export const comoFunciona = {
 /* --------------------------------------------------------------------------- Quem vai te acompanhar */
 
 export const sobre = {
-  titulo: 'Quem vai te acompanhar',
+  titulo: 'Quem vai te acompanhar?',
   paragrafos: [
     'Olá, eu sou a Patricia. Muito prazer!',
     'Sou psicóloga clínica e atendo online adultos e idosos, acompanhando pessoas em diferentes lugares do Brasil e do mundo.',
@@ -272,7 +280,7 @@ export const sobre = {
 /* --------------------------------------------------------------------------- Como agendar */
 
 export const agendar = {
-  titulo: 'Como agendar',
+  titulo: 'Como marcar a primeira sessão?',
   paragrafo:
     'Escolha o caminho mais prático para você. Se tiver dúvidas antes de marcar, pode me chamar no WhatsApp.',
   blocos: [
@@ -301,7 +309,7 @@ export const agendar = {
 /* --------------------------------------------------------------------------- Dúvidas */
 
 export const duvidas = {
-  titulo: 'Dúvidas',
+  titulo: 'Ficou alguma dúvida?',
   itens: [
     {
       pergunta: 'A terapia online funciona?',
