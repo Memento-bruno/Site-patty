@@ -14,7 +14,6 @@ const numero = (i: number) => String(i + 1).padStart(2, '0');
         </h2>
         <p class="temas__abertura">{temas.paragrafo}</p>
       </div>
-      <span class="temas__contagem" aria-hidden="true">{temas.itens.length}</span>
     </div>
 
     <ul class="temas__grade" data-revelar data-revelar-grupo>
@@ -134,13 +133,7 @@ const numero = (i: number) => String(i + 1).padStart(2, '0');
 <style>
   /* --------------------------------------------------------------- Cabeçalho */
 
-  .temas__cabeca {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: var(--e-12);
-    margin-bottom: var(--e-12);
-  }
+  .temas__cabeca { margin-bottom: var(--e-12); }
 
   .temas__destaque {
     font-family: var(--fonte-corpo);
@@ -155,20 +148,6 @@ const numero = (i: number) => String(i + 1).padStart(2, '0');
     color: var(--texto-suave);
   }
 
-  /* Quantos temas há, num círculo fino: só no desktop. */
-  .temas__contagem {
-    display: none;
-    flex: none;
-    place-items: center;
-    width: 5.5rem;
-    height: 5.5rem;
-    border: 1px solid var(--lilas-200);
-    border-radius: 50%;
-    font-family: var(--fonte-corpo);
-    font-style: italic;
-    font-size: 2.25rem;
-    color: var(--ameixa-600);
-  }
 
   /* --------------------------------------------------------------- Cartões */
 
@@ -283,7 +262,6 @@ const numero = (i: number) => String(i + 1).padStart(2, '0');
 
   @media (min-width: 64rem) {
     .temas__grade { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .temas__contagem { display: grid; }
     .tema { padding: var(--e-8) var(--e-6); min-height: 17rem; }
   }
 
