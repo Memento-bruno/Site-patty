@@ -1,98 +1,693 @@
 ---
+import Icone from './Icone.astro';
 import { terapia } from '../data/site';
+
+const { paradas, contexto, comoTrabalho } = terapia;
+
+/* Seis partes em volta do "você", começando no alto e seguindo o relógio. */
+const angulo = (i: number) => -90 + i * (360 / contexto.fatores.length);
+const anguloCiclo = (i: number) => -90 + i * (360 / comoTrabalho.ciclo.length);
 ---
-<section class="secao faixa-lilas terapia">
+<section class="secao faixa-lilas terapia" aria-labelledby="terapia-titulo">
   <div class="container">
-    <h2>{terapia.titulo}</h2>
-    <p class="terapia__abertura">{terapia.paragrafo}</p>
+    <p class="intro">{terapia.rotulo}</p>
+    <h2 id="terapia-titulo">{terapia.titulo}</h2>
 
-    <div class="terapia__colunas" data-revelar data-revelar-grupo>
-      {
-        [terapia.e, terapia.naoE].map((coluna) => (
-          <div class="terapia__coluna">
-            <h3>{coluna.titulo}</h3>
-            <ul>
-              {coluna.itens.map((item) => <li>{item}</li>)}
-            </ul>
+    <div class="percurso" data-percurso>
+    <span class="percurso__trilho" aria-hidden="true"><span class="percurso__progresso"></span></span>
+    <ol class="percurso__lista">
+
+      {/* 1. O que é */}
+      <li class="parada">
+        <span class="parada__marco"><Icone nome={paradas.oQueE.icone} tamanho="1.5rem" /></span>
+        <div class="parada__conteudo">
+          <h3>{paradas.oQueE.titulo}</h3>
+          <p class="parada__texto">{terapia.paragrafo}</p>
+        </div>
+      </li>
+
+      {/* 2. Você, por inteiro */}
+      <li class="parada">
+        <span class="parada__marco"><Icone nome={paradas.contexto.icone} tamanho="1.5rem" /></span>
+        <div class="parada__conteudo contexto">
+          <div class="contexto__texto">
+            <h3>{paradas.contexto.titulo}</h3>
+            {contexto.paragrafos.map((p) => <p class="parada__texto">{p}</p>)}
           </div>
-        ))
-      }
-    </div>
 
-    <div class="terapia__metodo">
-      <h3>{terapia.comoTrabalho.titulo}</h3>
-      <p>{terapia.comoTrabalho.texto}</p>
-    </div>
+          <div class="contexto__mapa">
+            <div class="orbita" data-orbita>
+              <span class="orbita__anel" aria-hidden="true"></span>
+              <span class="orbita__anel orbita__anel--fora" aria-hidden="true"></span>
+              <span class="orbita__centro" aria-hidden="true">{contexto.centro}</span>
+              <ul class="orbita__fatores">
+                {
+                  contexto.fatores.map((f, i) => (
+                    <li style={`--angulo: ${angulo(i)}deg; --ordem: ${i};`}>
+                      <button type="button" class="fator" aria-pressed="false" data-texto={f.texto}>
+                        <Icone nome={f.icone} tamanho="1.25rem" />
+                        <span>{f.nome}</span>
+                      </button>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+            <p class="contexto__legenda" aria-live="polite" data-legenda data-padrao={contexto.instrucao}>
+              {contexto.instrucao}
+            </p>
+          </div>
+        </div>
+      </li>
 
-    <p class="terapia__final">{terapia.fraseFinal}</p>
+      {/* 3. É e não é */}
+      <li class="parada">
+        <span class="parada__marco"><Icone nome={paradas.eNaoE.icone} tamanho="1.5rem" /></span>
+        <div class="parada__conteudo">
+          <h3>{paradas.eNaoE.titulo}</h3>
+
+          <div class="abas" data-abas>
+            <div class="abas__lista" role="tablist" aria-label={paradas.eNaoE.titulo} hidden data-abas-lista>
+              <button type="button" role="tab" id="aba-e" aria-controls="painel-e" aria-selected="true" class="aba">
+                <Icone nome="check" tamanho="1.125rem" />
+                {terapia.e.titulo}
+              </button>
+              <button type="button" role="tab" id="aba-nao-e" aria-controls="painel-nao-e" aria-selected="false" tabindex="-1" class="aba">
+                <Icone nome="minus" tamanho="1.125rem" />
+                {terapia.naoE.titulo}
+              </button>
+            </div>
+
+            <div class="abas__paineis">
+              {
+                [
+                  { id: 'e', coluna: terapia.e, icone: 'check' },
+                  { id: 'nao-e', coluna: terapia.naoE, icone: 'minus' },
+                ].map(({ id, coluna, icone }) => (
+                  <div class={`painel painel--${id}`} id={`painel-${id}`} role="tabpanel" aria-labelledby={`aba-${id}`}>
+                    <p class="painel__titulo">{coluna.titulo}</p>
+                    <ul>
+                      {coluna.itens.map((item, i) => (
+                        <li style={`--ordem: ${i};`}>
+                          <span class="painel__icone"><Icone nome={icone} tamanho="1rem" /></span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </li>
+
+      {/* 4. Como eu trabalho */}
+      <li class="parada">
+        <span class="parada__marco"><Icone nome={paradas.metodo.icone} tamanho="1.5rem" /></span>
+        <div class="parada__conteudo metodo">
+          <div>
+            <h3>{paradas.metodo.titulo}</h3>
+            <p class="parada__texto">{comoTrabalho.texto}</p>
+          </div>
+
+          <div class="ciclo" role="img" aria-label={`Ciclo entre ${comoTrabalho.ciclo.map((c) => c.nome.toLowerCase()).join(', ')}`}>
+            <svg class="ciclo__anel" viewBox="0 0 200 200" aria-hidden="true">
+              <defs>
+                <marker id="ciclo-ponta" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="currentColor" />
+                </marker>
+              </defs>
+              {
+                [0, 1, 2].map((i) => {
+                  const r = 70;
+                  const a1 = ((-90 + i * 120 + 24) * Math.PI) / 180;
+                  const a2 = ((-90 + (i + 1) * 120 - 24) * Math.PI) / 180;
+                  const x1 = 100 + r * Math.cos(a1), y1 = 100 + r * Math.sin(a1);
+                  const x2 = 100 + r * Math.cos(a2), y2 = 100 + r * Math.sin(a2);
+                  return <path d={`M${x1.toFixed(1)},${y1.toFixed(1)} A${r},${r} 0 0 1 ${x2.toFixed(1)},${y2.toFixed(1)}`} marker-end="url(#ciclo-ponta)" />;
+                })
+              }
+            </svg>
+            {
+              comoTrabalho.ciclo.map((c, i) => (
+                <span class="ciclo__no" style={`--angulo: ${anguloCiclo(i)}deg; --ordem: ${i};`} aria-hidden="true">
+                  <Icone nome={c.icone} tamanho="1.375rem" />
+                  <span>{c.nome}</span>
+                </span>
+              ))
+            }
+          </div>
+        </div>
+      </li>
+
+      {/* 5. Fechamento */}
+      <li class="parada parada--final">
+        <span class="parada__marco"><Icone nome={paradas.final.icone} tamanho="1.5rem" /></span>
+        <div class="parada__conteudo">
+          <h3 class="so-leitor">{paradas.final.titulo}</h3>
+          <p class="terapia__final">{terapia.fraseFinal}</p>
+        </div>
+      </li>
+    </ol>
+    </div>
   </div>
 </section>
 
+<script>
+  /* ------------------------------------------------ percurso
+     A linha da esquerda vai se enchendo conforme a pessoa rola, e cada
+     parada "acende" quando a linha chega nela. Sem JavaScript tudo já
+     aparece aceso; nada fica escondido. */
+  const percurso = document.querySelector<HTMLElement>('[data-percurso]');
+  if (percurso) {
+    percurso.classList.add('percurso--vivo');
+    const paradas = [...percurso.querySelectorAll<HTMLElement>('.parada')];
+    const marcos = paradas.map((p) => p.querySelector<HTMLElement>('.parada__marco')!);
+    let pedido = 0;
+
+    const atualizar = () => {
+      pedido = 0;
+      const caixa = percurso.getBoundingClientRect();
+      const ponto = window.innerHeight * 0.6;
+      const inicio = marcos[0].getBoundingClientRect();
+      const fim = marcos[marcos.length - 1].getBoundingClientRect();
+      const topo = inicio.top + inicio.height / 2;
+      const base = fim.top + fim.height / 2;
+      const fracao = Math.min(1, Math.max(0, (ponto - topo) / (base - topo)));
+      percurso.style.setProperty('--progresso', fracao.toFixed(3));
+      marcos.forEach((marco, i) => {
+        const r = marco.getBoundingClientRect();
+        paradas[i].classList.toggle('ativa', r.top + r.height / 2 <= ponto + 1);
+      });
+      if (caixa.bottom < 0) percurso.style.setProperty('--progresso', '1');
+    };
+    const pedir = () => { if (!pedido) pedido = requestAnimationFrame(atualizar); };
+    window.addEventListener('scroll', pedir, { passive: true });
+    window.addEventListener('resize', pedir);
+    atualizar();
+  }
+
+  /* ------------------------------------------------ "você, por inteiro" */
+  const orbita = document.querySelector<HTMLElement>('[data-orbita]');
+  const legenda = document.querySelector<HTMLElement>('[data-legenda]');
+  if (orbita && legenda) {
+    const fatores = [...orbita.querySelectorAll<HTMLButtonElement>('.fator')];
+    for (const fator of fatores) {
+      fator.addEventListener('click', () => {
+        const ligado = fator.getAttribute('aria-pressed') === 'true';
+        for (const f of fatores) f.setAttribute('aria-pressed', 'false');
+        if (ligado) {
+          legenda.textContent = legenda.dataset.padrao ?? '';
+          orbita.classList.remove('orbita--escolha');
+        } else {
+          fator.setAttribute('aria-pressed', 'true');
+          legenda.textContent = fator.dataset.texto ?? '';
+          orbita.classList.add('orbita--escolha');
+        }
+      });
+    }
+  }
+
+  /* ------------------------------------------------ abas "é / não é"
+     Sem JavaScript as duas listas aparecem uma depois da outra. */
+  const abas = document.querySelector<HTMLElement>('[data-abas]');
+  if (abas) {
+    const lista = abas.querySelector<HTMLElement>('[data-abas-lista]')!;
+    const botoes = [...lista.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const paineis = botoes.map((b) => document.getElementById(b.getAttribute('aria-controls')!)!);
+    lista.hidden = false;
+    abas.classList.add('abas--vivas');
+
+    const escolher = (indice: number, focar = false) => {
+      botoes.forEach((b, i) => {
+        const sim = i === indice;
+        b.setAttribute('aria-selected', String(sim));
+        b.tabIndex = sim ? 0 : -1;
+        paineis[i].hidden = !sim;
+      });
+      if (focar) botoes[indice].focus();
+    };
+
+    botoes.forEach((b, i) => {
+      b.addEventListener('click', () => escolher(i));
+      b.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          escolher((i + (e.key === 'ArrowRight' ? 1 : -1) + botoes.length) % botoes.length, true);
+        }
+      });
+    });
+    escolher(0);
+  }
+</script>
+
 <style>
-  .terapia__abertura {
-    margin-top: var(--e-6);
-    max-width: 62ch;
+  .terapia h2 { margin-bottom: var(--e-12); }
+
+  /* --------------------------------------------------------------- Percurso */
+
+  .percurso {
+    --trilho: 3.25rem;
+    --progresso: 1;
+    position: relative;
   }
 
-  .terapia__colunas {
+  .percurso__lista {
+    list-style: none;
     display: grid;
-    gap: var(--e-8);
-    margin-top: var(--e-12);
+    gap: var(--e-16);
   }
 
-  .terapia__coluna h3 { margin-bottom: var(--e-4); }
+  /* A linha vertical liga o centro do primeiro ícone ao do último. */
+  .percurso__trilho {
+    position: absolute;
+    left: calc(var(--trilho) / 2 - 1px);
+    top: calc(var(--trilho) / 2);
+    bottom: calc(var(--trilho) / 2);
+    width: 2px;
+    background: var(--lilas-200);
+    border-radius: 2px;
+    overflow: hidden;
+  }
 
-  .terapia__coluna ul {
+  .percurso__progresso {
+    position: absolute;
+    inset: 0;
+    background: var(--ameixa-600);
+    transform-origin: top;
+    transform: scaleY(var(--progresso));
+  }
+
+  .parada {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--trilho) 1fr;
+    gap: var(--e-6);
+    align-items: start;
+  }
+
+  .parada__marco {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: var(--trilho);
+    height: var(--trilho);
+    border-radius: 50%;
+    background: var(--ameixa-900);
+    color: var(--texto-claro);
+    border: 2px solid var(--ameixa-900);
+  }
+
+  .parada__conteudo { min-width: 0; padding-top: var(--e-2); }
+  .parada__conteudo h3 { margin-bottom: var(--e-4); }
+
+  .parada__texto { max-width: 62ch; }
+  .parada__texto + .parada__texto { margin-top: var(--e-4); }
+
+  /* Com JavaScript: as paradas começam "apagadas" e acendem ao rolar. */
+  .percurso--vivo .parada__marco {
+    background: var(--papel);
+    color: var(--ameixa-600);
+    border-color: var(--lilas-200);
+    transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease, transform 300ms ease;
+  }
+
+  .percurso--vivo .parada.ativa .parada__marco {
+    background: var(--ameixa-900);
+    color: var(--texto-claro);
+    border-color: var(--ameixa-900);
+    transform: scale(1.08);
+  }
+
+
+  /* --------------------------------------------------------------- Você, por inteiro */
+
+  .contexto { display: grid; gap: var(--e-8); }
+
+  .contexto__mapa { display: grid; gap: var(--e-4); }
+
+  .orbita {
+    position: relative;
+    display: grid;
+    gap: var(--e-4);
+    justify-items: center;
+  }
+
+  .orbita__anel { display: none; }
+
+  .orbita__centro {
+    display: grid;
+    place-items: center;
+    width: 5.5rem;
+    height: 5.5rem;
+    border-radius: 50%;
+    background: var(--ameixa-900);
+    color: var(--texto-claro);
+    font-family: var(--fonte-corpo);
+    font-style: italic;
+    font-size: 1.5rem;
+  }
+
+  .orbita__fatores {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--e-2);
+    width: 100%;
+  }
+
+  .fator {
+    display: flex;
+    align-items: center;
+    gap: var(--e-2);
+    width: 100%;
+    min-height: 3rem;
+    padding: var(--e-2) var(--e-3);
+    border: 1px solid var(--lilas-200);
+    border-radius: var(--r-pilula);
+    background: var(--papel);
+    color: var(--ameixa-900);
+    font-family: var(--fonte-titulo);
+    font-size: var(--t-pequeno);
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 200ms ease, opacity 200ms ease;
+  }
+
+  .fator :global(svg) { flex: none; color: var(--ameixa-600); transition: color 200ms ease; }
+
+  .fator:hover { border-color: var(--ameixa-600); }
+
+  .fator[aria-pressed='true'] {
+    background: var(--ameixa-900);
+    border-color: var(--ameixa-900);
+    color: var(--texto-claro);
+  }
+
+  .fator[aria-pressed='true'] :global(svg) { color: var(--texto-claro); }
+
+
+  .contexto__legenda {
+    min-height: 4.5em;
+    padding: var(--e-4) var(--e-6);
+    background: var(--papel);
+    border-left: 3px solid var(--ocre-500);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--texto-suave);
+  }
+
+  /* --------------------------------------------------------------- É / não é */
+
+  .abas__lista {
+    display: inline-flex;
+    gap: var(--e-1);
+    padding: var(--e-1);
+    margin-bottom: var(--e-6);
+    background: var(--papel);
+    border: 1px solid var(--lilas-200);
+    border-radius: var(--r-pilula);
+  }
+
+  .abas__lista[hidden] { display: none; }
+
+  .aba {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--e-2);
+    min-height: 3rem;
+    padding: 0 var(--e-6);
+    border: 0;
+    border-radius: var(--r-pilula);
+    background: transparent;
+    color: var(--ameixa-900);
+    font-family: var(--fonte-titulo);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+
+  .aba:hover { background: var(--lilas-100); }
+
+  .aba[aria-selected='true'] {
+    background: var(--ameixa-900);
+    color: var(--texto-claro);
+  }
+
+  .abas__paineis { display: grid; gap: var(--e-8); }
+
+  .painel__titulo {
+    font-family: var(--fonte-titulo);
+    font-weight: 600;
+    color: var(--ameixa-900);
+    margin-bottom: var(--e-3);
+  }
+
+  /* Com as abas funcionando, o nome da lista já está no botão. */
+  .abas--vivas .painel__titulo { display: none; }
+
+  .painel ul {
     list-style: none;
     display: grid;
     gap: var(--e-3);
   }
 
-  .terapia__coluna li {
-    padding-left: var(--e-6);
-    position: relative;
-    color: var(--texto-suave);
+  .painel li {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: var(--e-3);
+    align-items: start;
   }
 
-  /* Um traço curto, não um marcador redondo: a lista de arcos é da outra seção. */
-  .terapia__coluna li::before {
+  .painel__icone {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--papel);
+    border: 1px solid var(--lilas-200);
+    color: var(--ameixa-600);
+  }
+
+  .painel--nao-e .painel__icone { color: var(--texto-suave); }
+
+  /* --------------------------------------------------------------- Ciclo */
+
+  .metodo { display: grid; gap: var(--e-8); align-items: center; }
+
+  /* No celular, os três pontos ficam um embaixo do outro, ligados por uma
+     linha; em tela larga (mais abaixo) viram um círculo com setas. */
+  .ciclo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--e-4);
+  }
+
+  .ciclo::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0.85em;
-    width: var(--e-3);
-    height: 1px;
-    background: var(--ameixa-600);
+    left: calc(1.375rem / 2 + 0.75rem);
+    top: 1.5rem;
+    bottom: 1.5rem;
+    border-left: 1px dashed var(--ameixa-600);
   }
 
-  .terapia__metodo {
-    margin-top: var(--e-12);
-    padding-top: var(--e-8);
-    border-top: 1px solid var(--linha);
+  .ciclo__anel { display: none; }
+
+  .ciclo__no {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--e-3);
+    font-family: var(--fonte-titulo);
+    font-size: var(--t-pequeno);
+    font-weight: 600;
+    color: var(--ameixa-900);
   }
 
-  .terapia__metodo p {
-    margin-top: var(--e-4);
-    max-width: 62ch;
-  }
-
-  .terapia__final {
-    margin-top: var(--e-8);
-    max-width: 52ch;
-    color: var(--texto-suave);
-    font-size: 1.0625rem;
+  .ciclo__no :global(svg) {
+    box-sizing: content-box;
+    padding: 0.75rem;
+    border-radius: 50%;
+    background: var(--papel);
+    border: 1px solid var(--lilas-200);
+    color: var(--ameixa-600);
   }
 
   @media (min-width: 48rem) {
-    .terapia__colunas {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--e-12);
+    .ciclo {
+      display: block;
+      width: 19rem;
+      max-width: 100%;
+      aspect-ratio: 1;
+      justify-self: center;
     }
 
-    /* A régua vertical que separa "É" de "Não é" */
-    .terapia__coluna + .terapia__coluna {
-      border-left: 1px solid var(--linha);
-      padding-left: var(--e-12);
+    .ciclo::before { display: none; }
+
+    .ciclo__anel {
+      display: block;
+      position: absolute;
+      inset: 20%;
+      width: 60%;
+      height: 60%;
+      color: var(--ameixa-600);
     }
+
+    .ciclo__anel path {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+    }
+
+    .ciclo__no {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      flex-direction: column;
+      gap: var(--e-1);
+      width: 8.5rem;
+      transform: translate(-50%, -50%) rotate(var(--angulo)) translate(6.65rem) rotate(calc(-1 * var(--angulo)));
+      text-align: center;
+    }
+  }
+
+  /* --------------------------------------------------------------- Fechamento */
+
+  .terapia__final {
+    max-width: 40ch;
+    font-style: italic;
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.625rem);
+    line-height: 1.45;
+    color: var(--ameixa-900);
+  }
+
+  .parada--final .parada__conteudo { padding-top: var(--e-3); }
+
+  /* --------------------------------------------------------------- Movimento
+     Só com "reduzir movimento" desligado. */
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* As partes em volta do "você" chegam uma a uma quando a parada acende. */
+    .percurso--vivo .orbita__fatores li {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 400ms ease, transform 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      transition-delay: calc(var(--ordem) * 80ms + 150ms);
+    }
+
+    .percurso--vivo .parada.ativa .orbita__fatores li {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Os itens da aba escolhida entram em sequência. */
+    .abas--vivas .painel:not([hidden]) li {
+      animation: entrar 420ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+      animation-delay: calc(var(--ordem) * 70ms);
+    }
+
+    /* O anel do ciclo gira devagar e cada ponto acende na sua vez. */
+    .parada.ativa .ciclo__anel { animation: girar 30s linear infinite; }
+
+    .parada.ativa .ciclo__no :global(svg) {
+      animation: acender 6s ease-in-out infinite;
+      animation-delay: calc(var(--ordem) * 2s);
+    }
+
+    .orbita__anel--fora { animation: girar 60s linear infinite; }
+  }
+
+  @keyframes entrar {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes girar { to { transform: rotate(360deg); } }
+
+  @keyframes acender {
+    0%, 30%, 100% { background: var(--papel); color: var(--ameixa-600); border-color: var(--lilas-200); }
+    8%, 22% { background: var(--ameixa-900); color: var(--texto-claro); border-color: var(--ameixa-900); }
+  }
+
+  /* --------------------------------------------------------------- Telas maiores */
+
+  @media (min-width: 48rem) {
+    .percurso { --trilho: 3.75rem; }
+    .percurso__lista { gap: var(--e-24); }
+    .parada { gap: var(--e-8); }
+
+    /* Em tela larga, as seis partes ficam em volta do "você". */
+    .orbita {
+      --raio: 10rem;
+      display: block;
+      width: 30rem;
+      max-width: 100%;
+      aspect-ratio: 1;
+      justify-self: center;
+    }
+
+    .orbita__anel {
+      display: block;
+      position: absolute;
+      inset: 18%;
+      border: 1px solid var(--lilas-200);
+      border-radius: 50%;
+    }
+
+    .orbita__anel--fora {
+      inset: 6%;
+      border-style: dashed;
+      border-color: var(--lilas-200);
+    }
+
+    .orbita__centro {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      translate: -50% -50%;
+      width: 6.5rem;
+      height: 6.5rem;
+      font-size: 1.75rem;
+    }
+
+    .orbita__fatores { display: block; }
+
+    .orbita__fatores li {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 10.5rem;
+      translate: -50% -50%;
+      rotate: var(--angulo);
+      pointer-events: none;
+    }
+
+    /* Os itens se sobrepõem no centro; só o botão recebe o toque. */
+    .orbita__fatores .fator { pointer-events: auto; }
+
+    /* Gira até o ângulo, anda até o anel, desgira para o texto ficar de pé. */
+    .fator {
+      justify-content: center;
+      translate: var(--raio) 0;
+      rotate: calc(-1 * var(--angulo));
+      text-align: center;
+      box-shadow: none;
+    }
+
+    .contexto__legenda { max-width: 30rem; justify-self: center; width: 100%; }
+  }
+
+  @media (min-width: 75rem) {
+    .contexto { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: start; gap: var(--e-12); }
+    .metodo { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: var(--e-12); }
   }
 </style>

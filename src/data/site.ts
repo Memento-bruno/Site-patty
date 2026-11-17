@@ -325,8 +325,34 @@ export const temas = {
 
 export const terapia = {
   titulo: 'O que acontece na terapia',
+  rotulo: 'Um passo de cada vez',
+  /* As cinco paradas do percurso, na ordem. O ícone de cada uma é um
+     arquivo de src/icons/ (sem o .svg). */
+  paradas: {
+    oQueE: { icone: 'chats-circle', titulo: 'Um trabalho feito a dois' },
+    contexto: { icone: 'user-focus', titulo: 'Você, por inteiro' },
+    eNaoE: { icone: 'signpost', titulo: 'O que a terapia é, e o que não é' },
+    metodo: { icone: 'arrows-clockwise', titulo: 'Como eu trabalho' },
+    final: { icone: 'plant', titulo: 'Quando procurar' },
+  },
   paragrafo:
     'Psicoterapia é um trabalho feito a dois, com uma profissional habilitada, sigilo e método. É um espaço para olhar com cuidado para o que você pensa, sente e faz, e para o que é importante na sua vida.',
+  contexto: {
+    paragrafos: [
+      'O sofrimento psicológico não acontece isoladamente. É atravessado por experiências, vínculos, saúde, trabalho, recursos disponíveis e pelo momento que cada pessoa está vivendo.',
+      'Na terapia, buscamos compreender o que está acontecendo sem reduzir você a um diagnóstico, a uma lembrança ou a um único comportamento.',
+    ],
+    centro: 'você',
+    instrucao: 'Toque em cada parte para ver como ela entra na conversa.',
+    fatores: [
+      { icone: 'book-open', nome: 'Experiências', texto: 'O que você já viveu e aprendeu ajuda a entender como você reage hoje.' },
+      { icone: 'users-three', nome: 'Vínculos', texto: 'As pessoas com quem você convive influenciam o que você sente, e são influenciadas também.' },
+      { icone: 'first-aid', nome: 'Saúde', texto: 'Sono, corpo, doenças e tratamentos em curso também entram na conversa.' },
+      { icone: 'briefcase', nome: 'Trabalho', texto: 'A rotina, as exigências e a falta ou o excesso de trabalho pesam no dia a dia.' },
+      { icone: 'toolbox', nome: 'Recursos', texto: 'Tempo, dinheiro, apoio e acesso a cuidados mudam o que é possível em cada momento.' },
+      { icone: 'hourglass-medium', nome: 'Momento de vida', texto: 'Cada fase traz perguntas próprias, e o que faz sentido agora pode mudar depois.' },
+    ],
+  },
   e: {
     titulo: 'É',
     itens: [
@@ -345,9 +371,13 @@ export const terapia = {
     ],
   },
   comoTrabalho: {
-    titulo: 'Como eu trabalho',
     texto:
       'Meu trabalho é orientado pela Terapia Cognitivo-Comportamental (TCC) e pela Terapia de Aceitação e Compromisso (ACT). Na prática, olhamos juntos para a relação entre pensamentos, emoções e comportamentos, buscamos formas mais flexíveis de lidar com o que é difícil e aproximamos suas escolhas daquilo que tem valor para você.',
+    ciclo: [
+      { icone: 'brain', nome: 'Pensamentos' },
+      { icone: 'heart', nome: 'Emoções' },
+      { icone: 'footprints', nome: 'Comportamentos' },
+    ],
   },
   fraseFinal:
     'Procurar terapia não é sinal de fraqueza e não precisa esperar o limite. É uma forma de cuidar da saúde, como qualquer outra.',
