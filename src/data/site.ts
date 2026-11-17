@@ -272,6 +272,23 @@ export const temas = {
       aviso: 'Não realizo avaliação neuropsicológica. Ofereço triagem clínica para encaminhamento, quando indicado, e acompanhamento psicoterapêutico.'
     },
     {
+      chave: 'autismo',
+      categoria: 'Neurodesenvolvimento',
+      titulo: 'Autismo em adultos',
+      resumo: 'Compreender o próprio jeito de perceber, sentir e se relacionar, com ou sem diagnóstico.',
+      introducao: 'Muitas pessoas só começam a se perguntar sobre autismo na vida adulta, às vezes depois de anos sentindo que precisam se esforçar mais do que os outros para dar conta de situações sociais, mudanças ou ambientes cheios de estímulos.',
+      acontecendo: [
+        'O autismo é uma condição do neurodesenvolvimento que se manifesta de formas muito diferentes de pessoa para pessoa. Em adultos, pode aparecer em diferenças na comunicação e na interação social, na sensibilidade a sons, luzes ou texturas, na preferência por rotinas previsíveis e em interesses intensos.',
+        'Algumas pessoas passaram a vida tentando disfarçar essas características para se adaptar, o que pode trazer cansaço, ansiedade e a sensação de não pertencer. Nem toda dificuldade social é autismo; por isso, uma compreensão clínica cuidadosa é importante.'
+      ],
+      trabalho: [
+        'A psicoterapia não tem como objetivo mudar quem você é. Podemos compreender o que torna certas situações mais difíceis, identificar sinais de sobrecarga, organizar a rotina e o ambiente de forma mais compatível com suas necessidades e desenvolver maneiras de comunicar limites e preferências.',
+        'Também podemos olhar para a ansiedade, a autocrítica ou o esgotamento que às vezes acompanham anos de adaptação, respeitando seu ritmo e sua forma de funcionar.'
+      ],
+      frase: 'Entender o próprio funcionamento pode abrir espaço para viver de um jeito menos custoso.',
+      aviso: 'Não realizo avaliação neuropsicológica. Quando há dúvida sobre o diagnóstico, posso orientar o encaminhamento para avaliação com profissionais habilitados.'
+    },
+    {
       chave: 'mudancas',
       categoria: 'Transições e experiências',
       titulo: 'Mudanças de vida, luto e crises',
