@@ -1,0 +1,426 @@
+---
+import Icone from './Icone.astro';
+import { temas } from '../data/site';
+
+const numero = (i: number) => String(i + 1).padStart(2, '0');
+---
+<section id="terapia" class="secao temas" aria-labelledby="temas-titulo">
+  <div class="container">
+    <div class="temas__cabeca">
+      <div>
+        <p class="intro">{temas.rotulo}</p>
+        <h2 id="temas-titulo">
+          {temas.titulo} <span class="temas__destaque">{temas.tituloDestaque}</span>
+        </h2>
+        <p class="temas__abertura">{temas.paragrafo}</p>
+      </div>
+      <span class="temas__contagem" aria-hidden="true">{temas.itens.length}</span>
+    </div>
+
+    <ul class="temas__grade" data-revelar data-revelar-grupo>
+      {
+        temas.itens.map((tema, i) => (
+          <li class="tema">
+            <div class="tema__topo">
+              <span class="tema__numero" aria-hidden="true">{numero(i)}</span>
+              <span class="tema__categoria">{tema.categoria}</span>
+            </div>
+            <h3>{tema.titulo}</h3>
+            <p class="tema__resumo">{tema.resumo}</p>
+            <button
+              class="tema__mais"
+              type="button"
+              data-abrir-tema={`tema-${tema.chave}`}
+              aria-haspopup="dialog"
+            >
+              <span>
+                {temas.botaoMais}
+                <span class="so-leitor">: {tema.titulo}</span>
+              </span>
+              <span class="tema__seta">
+                <Icone nome="arrow-up-right" tamanho="1rem" />
+              </span>
+            </button>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="temas__nota">{temas.nota}</p>
+  </div>
+
+  {
+    temas.itens.map((tema) => (
+      <dialog
+        class="janela"
+        id={`tema-${tema.chave}`}
+        aria-labelledby={`tema-${tema.chave}-titulo`}
+      >
+        <div class="janela__painel">
+          <div class="janela__cabeca">
+            <p class="intro">{tema.categoria}</p>
+            <button class="janela__fechar" type="button" data-fechar-tema>
+              <Icone nome="x" tamanho="1.25rem" />
+              <span class="so-leitor">{temas.janela.fechar}</span>
+            </button>
+          </div>
+
+          <div class="janela__corpo">
+            <h2 id={`tema-${tema.chave}-titulo`}>{tema.titulo}</h2>
+            <p class="janela__introducao">{tema.introducao}</p>
+
+            <section class="janela__bloco">
+              <h3>{temas.janela.acontecendo}</h3>
+              {tema.acontecendo.map((p) => <p>{p}</p>)}
+            </section>
+
+            <section class="janela__bloco">
+              <h3>{temas.janela.trabalho}</h3>
+              {tema.trabalho.map((p) => <p>{p}</p>)}
+            </section>
+
+            <p class="janela__frase">{tema.frase}</p>
+
+            {'aviso' in tema && (
+              <p class="janela__aviso">
+                <strong>{temas.janela.aviso}</strong> {tema.aviso}
+              </p>
+            )}
+          </div>
+
+          <div class="janela__rodape">
+            <p>{temas.janela.rodape}</p>
+            <button class="botao botao--primario" type="button" data-fechar-tema>
+              {temas.janela.voltar}
+            </button>
+          </div>
+        </div>
+      </dialog>
+    ))
+  }
+</section>
+
+<script>
+  /* Cada tema tem a sua janela (<dialog> nativo) já escrita no HTML:
+     o script só abre e fecha. Esc fecha sozinho; clicar fora também. */
+  let origem: HTMLElement | null = null;
+
+  for (const botao of document.querySelectorAll<HTMLButtonElement>('[data-abrir-tema]')) {
+    botao.addEventListener('click', () => {
+      const janela = document.getElementById(botao.dataset.abrirTema!) as HTMLDialogElement | null;
+      if (!janela) return;
+      origem = botao;
+      janela.querySelector('.janela__corpo')?.scrollTo(0, 0);
+      janela.showModal();
+      document.documentElement.classList.add('janela-aberta');
+    });
+  }
+
+  for (const janela of document.querySelectorAll<HTMLDialogElement>('dialog.janela')) {
+    for (const fechar of janela.querySelectorAll('[data-fechar-tema]')) {
+      fechar.addEventListener('click', () => janela.close());
+    }
+    janela.addEventListener('click', (evento) => {
+      if (evento.target === janela) janela.close();
+    });
+    janela.addEventListener('close', () => {
+      document.documentElement.classList.remove('janela-aberta');
+      origem?.focus();
+      origem = null;
+    });
+  }
+</script>
+
+<style>
+  /* --------------------------------------------------------------- Cabeçalho */
+
+  .temas__cabeca {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--e-12);
+    margin-bottom: var(--e-12);
+  }
+
+  .temas__destaque {
+    font-family: var(--fonte-corpo);
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ameixa-600);
+  }
+
+  .temas__abertura {
+    margin-top: var(--e-6);
+    max-width: 62ch;
+    color: var(--texto-suave);
+  }
+
+  /* Quantos temas há, num círculo fino: só no desktop. */
+  .temas__contagem {
+    display: none;
+    flex: none;
+    place-items: center;
+    width: 5.5rem;
+    height: 5.5rem;
+    border: 1px solid var(--lilas-200);
+    border-radius: 50%;
+    font-family: var(--fonte-corpo);
+    font-style: italic;
+    font-size: 2.25rem;
+    color: var(--ameixa-600);
+  }
+
+  /* --------------------------------------------------------------- Cartões */
+
+  .temas__grade {
+    list-style: none;
+    display: grid;
+    gap: var(--e-4);
+  }
+
+  .tema {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: var(--e-6);
+    background: var(--fundo);
+    border: 1px solid var(--linha);
+    border-radius: var(--r-cartao);
+    transition: background-color 200ms ease, border-color 200ms ease;
+  }
+
+  /* Um quarto de círculo no canto, só traço. */
+  .tema::after {
+    content: '';
+    position: absolute;
+    width: 7rem;
+    height: 7rem;
+    top: -3.5rem;
+    right: -3.5rem;
+    border: 1px solid var(--linha);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .tema:hover {
+    background: var(--lilas-100);
+    border-color: var(--lilas-200);
+  }
+
+  .tema__topo {
+    display: flex;
+    align-items: baseline;
+    gap: var(--e-3);
+    margin-bottom: var(--e-4);
+    padding-right: var(--e-12);
+  }
+
+  .tema__numero {
+    font-family: var(--fonte-corpo);
+    font-style: italic;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--ameixa-600);
+  }
+
+  .tema__categoria {
+    font-family: var(--fonte-titulo);
+    font-size: var(--t-pequeno);
+    font-weight: 500;
+    color: var(--texto-suave);
+  }
+
+  .tema h3 { margin-bottom: var(--e-3); }
+
+  .tema__resumo {
+    flex-grow: 1;
+    margin-bottom: var(--e-6);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--texto-suave);
+  }
+
+  .tema__mais {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e-3);
+    width: 100%;
+    min-height: 3rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-family: var(--fonte-titulo);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ameixa-900);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .tema__seta {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--lilas-200);
+    border-radius: 50%;
+    transition: background-color 150ms ease;
+  }
+
+  .tema__mais:hover .tema__seta { background: var(--lilas-200); }
+
+  .temas__nota {
+    margin-top: var(--e-6);
+    font-size: var(--t-pequeno);
+    color: var(--texto-suave);
+  }
+
+  @media (min-width: 40rem) {
+    .temas__grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 64rem) {
+    .temas__grade { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .temas__contagem { display: grid; }
+    .tema { padding: var(--e-8) var(--e-6); min-height: 17rem; }
+  }
+
+  /* --------------------------------------------------------------- Janela */
+
+  :global(html.janela-aberta) { overflow: hidden; }
+
+  .janela {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: var(--texto);
+    width: min(46rem, calc(100% - 1rem));
+    height: min(90vh, 52rem);
+    max-width: none;
+    max-height: none;
+    margin: auto;
+  }
+
+  .janela::backdrop {
+    background: rgb(35 27 40 / 0.6);
+    backdrop-filter: blur(4px);
+  }
+
+  .janela__painel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--papel);
+    border: 1px solid var(--linha);
+    border-radius: var(--r-cartao);
+  }
+
+  .janela__cabeca {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--e-4);
+    padding: var(--e-4) var(--e-6);
+    background: var(--lilas-100);
+    border-bottom: 1px solid var(--linha);
+  }
+
+  .janela__cabeca .intro { margin: 0; }
+
+  .janela__fechar {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--lilas-200);
+    border-radius: 50%;
+    background: var(--papel);
+    color: var(--ameixa-900);
+    cursor: pointer;
+  }
+
+  .janela__fechar:hover { background: var(--lilas-200); }
+
+  .janela__corpo {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--e-6) var(--e-6) var(--e-4);
+  }
+
+  .janela__corpo h2 { margin-bottom: var(--e-4); }
+
+  .janela__introducao {
+    margin-bottom: var(--e-6);
+    color: var(--texto-suave);
+  }
+
+  .janela__bloco {
+    border-top: 1px solid var(--linha);
+    padding-block: var(--e-6) var(--e-2);
+  }
+
+  .janela__bloco h3 {
+    font-size: 1.0625rem;
+    margin-bottom: var(--e-3);
+  }
+
+  .janela__bloco p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--texto-suave);
+    margin-bottom: var(--e-4);
+  }
+
+  /* A frase de fechamento: o ocre aparece só como fio, nunca no texto. */
+  .janela__frase {
+    margin: var(--e-4) 0 var(--e-6);
+    padding: var(--e-4) var(--e-6);
+    background: var(--lilas-100);
+    border-left: 3px solid var(--ocre-500);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    font-size: 1.1875rem;
+    line-height: 1.5;
+    color: var(--ameixa-900);
+  }
+
+  .janela__aviso {
+    margin-bottom: var(--e-4);
+    padding: var(--e-4);
+    background: var(--lilas-100);
+    border-radius: 8px;
+    font-size: var(--t-pequeno);
+    color: var(--texto-suave);
+  }
+
+  .janela__rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e-4);
+    padding: var(--e-4) var(--e-6);
+    border-top: 1px solid var(--linha);
+  }
+
+  .janela__rodape p {
+    font-size: var(--t-pequeno);
+    color: var(--texto-suave);
+    max-width: 20rem;
+  }
+
+  @media (max-width: 39.99rem) {
+    .janela { height: calc(100dvh - 1rem); }
+    .janela__rodape p { display: none; }
+    .janela__rodape .botao { width: 100%; }
+  }
+
+  @media (min-width: 48rem) {
+    .janela__cabeca { padding: var(--e-6) var(--e-8) var(--e-4); }
+    .janela__corpo { padding: var(--e-8) var(--e-12) var(--e-4); }
+    .janela__rodape { padding: var(--e-4) var(--e-8); }
+  }
+</style>

@@ -153,7 +153,11 @@ try {
 
       /* rola aos poucos, como alguém lendo; de uma vez só, o navegador
          revelaria tudo junto e o teste não veria o problema */
-      for (let passo = 0; passo < 30; passo += 1) {
+      /* até o fim da página, com folga: o número de passos acompanha a
+         altura dela, em vez de um total fixo que fica curto se ela crescer */
+      const altura = await pagina.evaluate(() => document.documentElement.scrollHeight);
+      const passos = Math.ceil(altura / 400) + 5;
+      for (let passo = 0; passo < passos; passo += 1) {
         await pagina.mouse.wheel(0, 400);
         await espera(150);
       }
