@@ -97,7 +97,7 @@ O site publica sozinho. Toda vez que uma alteração chega na branch `main`
 deste repositório, o GitHub constrói e publica a versão nova em poucos
 minutos.
 
-O site fica em **https://memento-bruno.github.io/Site-patty/**
+O site fica em **https://patriciadomingues.com.br**
 
 Dá para acompanhar na aba **Actions** do repositório. Se algo der errado, a
 publicação para e o site que já estava no ar continua como estava.
@@ -110,16 +110,26 @@ Conselho Federal de Psicologia (ver abaixo).
 Uma vez só, nas configurações do repositório: **Settings → Pages → Source →
 GitHub Actions**.
 
-### Quando houver domínio próprio
+### Domínio próprio
 
-1. Aponte o domínio para o GitHub Pages no painel do registro.br.
-2. No GitHub: **Settings → Pages → Custom domain**, digite o domínio e salve.
-3. Em `astro.config.mjs`, troque o valor padrão de `base` de `'/Site-patty'`
-   para `'/'` (só para quem roda o site na própria máquina).
+O domínio `patriciadomingues.com.br` foi registrado no registro.br. No painel
+dele, a zona DNS tem:
+
+| Tipo  | Nome  | Valor                     |
+|-------|-------|---------------------------|
+| A     | (vazio) | 185.199.108.153         |
+| A     | (vazio) | 185.199.109.153         |
+| A     | (vazio) | 185.199.110.153         |
+| A     | (vazio) | 185.199.111.153         |
+| CNAME | www   | memento-bruno.github.io   |
+
+No GitHub: **Settings → Pages → Custom domain** com `patriciadomingues.com.br`
+e **Enforce HTTPS** marcado. O endereço antigo
+(`memento-bruno.github.io/Site-patty`) passa a redirecionar para o novo.
 
 Não precisa mexer em mais nada: o endereço do site, o caminho base, o sitemap
 e o `robots.txt` são montados na hora da publicação a partir da configuração do
-GitHub Pages.
+GitHub Pages. O arquivo `public/CNAME` só registra o domínio no repositório.
 
 ---
 
@@ -150,7 +160,7 @@ navegador.
 Para medir desempenho, com o site construído e `npm run preview` rodando:
 
 ```bash
-npx lighthouse http://localhost:4321/Site-patty/ --view
+npx lighthouse http://localhost:4321/ --view
 ```
 
 ---
