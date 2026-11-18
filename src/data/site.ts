@@ -389,20 +389,24 @@ export const comoFunciona = {
   titulo: 'Como funciona',
   passos: [
     {
+      icone: 'calendar-blank',
       titulo: 'Você escolhe como agendar.',
       texto:
         'Pela Vittude, com agenda e pagamento na própria plataforma, ou diretamente comigo pelo WhatsApp.',
     },
     {
+      icone: 'hand-waving',
       titulo: 'Primeira sessão.',
       texto:
         'Nos conhecemos, você conta o que te trouxe e avaliamos juntos se o atendimento online é adequado para o seu momento.',
     },
     {
+      icone: 'path',
       titulo: 'Combinamos o caminho.',
       texto: 'Definimos objetivos, frequência e por onde começar.',
     },
     {
+      icone: 'video-camera',
       titulo: 'Acompanhamento.',
       texto:
         'Sessões de 50 minutos por videochamada. Ao longo do processo, revisamos juntos como você está.',
@@ -410,8 +414,14 @@ export const comoFunciona = {
   ],
   caixa: {
     titulo: 'Para a sessão',
-    texto:
-      'Internet estável, celular ou computador com câmera, fone de ouvido e um lugar onde você possa falar à vontade.',
+    instrucao: 'Antes do horário, confira o que vai precisar. Toque em cada item.',
+    itens: [
+      { icone: 'wifi-high', texto: 'Internet estável' },
+      { icone: 'laptop', texto: 'Celular ou computador com câmera' },
+      { icone: 'headphones', texto: 'Fone de ouvido' },
+      { icone: 'armchair', texto: 'Um lugar onde você possa falar à vontade' },
+    ],
+    pronto: 'Tudo certo para a sessão.',
   },
 } as const;
 
@@ -420,10 +430,9 @@ export const comoFunciona = {
 export const sobre = {
   titulo: 'Quem vai te acompanhar',
   paragrafos: [
-    'Olá, eu sou a Patricia. Muito prazer!',
-    'Sou psicóloga clínica e atendo online adultos e idosos, acompanhando pessoas em diferentes lugares do Brasil e do mundo.',
-    'Minha história começou em São Paulo. Crescer nessa cidade despertou meu interesse pela complexidade das experiências humanas e me levou à Psicologia. Durante a formação, participei de projetos sociais e grupos de estudo, que ampliaram meu entendimento da psicologia como espaço de cuidado e de aprendizado contínuo.',
-    'Acredito numa abordagem científica e sensível, que considera o contexto de cada pessoa. Meu objetivo é oferecer um espaço de escuta e compreensão, para que você possa dar os próximos passos com mais confiança.',
+    'Sou Patricia Braz Domingues, psicóloga clínica (CRP 06/167326). Atendo adultos e idosos de forma online, incluindo brasileiros que vivem em outros países.',
+    'Minha prática busca unir o conhecimento científico à compreensão da experiência singular de cada pessoa. Isso significa olhar para o sofrimento com atenção à história, às relações e às condições concretas de vida, sem perder de vista o que pode ser construído daqui para frente.',
+    'Entendo a psicoterapia como um trabalho colaborativo, em que acolhimento, reflexão e intervenções práticas se complementam.',
   ],
   foto: {
     alt: 'Patricia Braz Domingues sorrindo, sentada diante do notebook onde faz os atendimentos',
@@ -431,12 +440,14 @@ export const sobre = {
   },
   formacao: {
     titulo: 'Formação',
+    rotuloRolagem: 'Deslize para o lado para ver todas.',
     /* Do mais recente para o mais antigo. `andamento: true` faz o site
        escrever "em andamento" — nunca apresentar como concluído. */
     itens: [
       {
         periodo: '2025–2026',
         curso: 'Curso de Psicoterapia Baseada em Evidências',
+        icone: 'book-open',
         instituicao: 'InPBE — Instituto de Psicologia Baseada em Evidências',
         andamento: false,
         nota: null as string | null,
@@ -444,6 +455,7 @@ export const sobre = {
       {
         periodo: '2025–2026',
         curso: 'Pós-graduação em Neuropsicologia',
+        icone: 'brain',
         instituicao: 'Universidade Anhembi Morumbi',
         andamento: true,
         nota: null as string | null,
@@ -452,6 +464,7 @@ export const sobre = {
         periodo: '2023–2024',
         curso:
           'Especialização (pós-graduação lato sensu) em Saúde Mental e Desenvolvimento Humano',
+        icone: 'certificate',
         instituicao: 'PUCPR',
         andamento: false,
         nota: 'Trabalho final: “A saúde mental do idoso diante de suas perdas e luto: contribuições da psicoterapia de Aceitação e Compromisso”.',
@@ -459,6 +472,7 @@ export const sobre = {
       {
         periodo: '2022–2023' as string | null,
         curso: 'Formação em Perdas e Luto',
+        icone: 'hand-heart',
         instituicao: 'AC Bastos' as string | null,
         andamento: false,
         nota: 'Acolhimento, avaliação e intervenção.' as string | null,
@@ -466,6 +480,7 @@ export const sobre = {
       {
         periodo: '2016–2020' as string | null,
         curso: 'Graduação em Psicologia',
+        icone: 'graduation-cap',
         instituicao: 'Universidade Paulista (UNIP)' as string | null,
         nota: 'Trabalho final: “Breve revisão bibliográfica: as implicações psicológicas na vida dos cuidadores familiares de pacientes com a doença de Alzheimer”.' as string | null,
         andamento: false,

@@ -1,15 +1,21 @@
 ---
+import Icone from './Icone.astro';
 import { comoFunciona, botoes } from '../data/site';
+
+const { caixa } = comoFunciona;
 ---
-<section id="como-funciona" class="secao">
+<section id="como-funciona" class="secao como">
   <div class="container">
     <h2>{comoFunciona.titulo}</h2>
 
-    <ol class="passos" data-revelar data-revelar-grupo>
+    <ol class="passos" data-passos>
       {
         comoFunciona.passos.map((passo, indice) => (
-          <li class="passo">
-            <span class="passo__numero" aria-hidden="true">{indice + 1}</span>
+          <li class="passo" style={`--ordem: ${indice};`}>
+            <span class="passo__marco" aria-hidden="true">
+              <Icone nome={passo.icone} tamanho="1.5rem" />
+              <span class="passo__numero">{indice + 1}</span>
+            </span>
             <h3 class="passo__titulo">{passo.titulo}</h3>
             <p class="passo__texto">{passo.texto}</p>
           </li>
@@ -17,18 +23,62 @@ import { comoFunciona, botoes } from '../data/site';
       }
     </ol>
 
-    <div class="caixa">
-      <h3>{comoFunciona.caixa.titulo}</h3>
-      <p>{comoFunciona.caixa.texto}</p>
+    <div class="caixa" data-checklist>
+      <h3>{caixa.titulo}</h3>
+      <p class="caixa__instrucao">{caixa.instrucao}</p>
+      <ul class="checklist">
+        {
+          caixa.itens.map((item) => (
+            <li>
+              <button type="button" class="item" aria-pressed="false">
+                <span class="item__icone"><Icone nome={item.icone} tamanho="1.375rem" /></span>
+                <span class="item__texto">{item.texto}</span>
+                <span class="item__visto"><Icone nome="check" tamanho="1rem" /></span>
+              </button>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="caixa__pronto" aria-live="polite" data-pronto data-texto={caixa.pronto}></p>
     </div>
 
     <p class="acao"><a class="botao botao--primario" href="#agendar">{botoes.agendar}</a></p>
   </div>
 </section>
 
+<script>
+  /* Os passos acendem um depois do outro, uma vez, quando aparecem. */
+  const passos = document.querySelector<HTMLElement>('[data-passos]');
+  if (passos && 'IntersectionObserver' in window) {
+    passos.classList.add('passos--espera');
+    new IntersectionObserver((entradas, obs) => {
+      if (entradas.some((e) => e.isIntersecting)) {
+        passos.classList.add('passos--em-cena');
+        obs.disconnect();
+      }
+    }, { rootMargin: '0px 0px -20% 0px' }).observe(passos);
+  }
+
+  /* "Para a sessão": a pessoa vai marcando o que já tem. Nada é guardado. */
+  const lista = document.querySelector<HTMLElement>('[data-checklist]');
+  if (lista) {
+    const itens = [...lista.querySelectorAll<HTMLButtonElement>('.item')];
+    const pronto = lista.querySelector<HTMLElement>('[data-pronto]')!;
+    for (const item of itens) {
+      item.addEventListener('click', () => {
+        item.setAttribute('aria-pressed', String(item.getAttribute('aria-pressed') !== 'true'));
+        const todos = itens.every((i) => i.getAttribute('aria-pressed') === 'true');
+        lista.classList.toggle('caixa--pronta', todos);
+        pronto.textContent = todos ? (pronto.dataset.texto ?? '') : '';
+      });
+    }
+  }
+</script>
+
 <style>
   /* Única seção numerada do site, porque é a única sequência real. */
   .passos {
+    --marco: 3.5rem;
     list-style: none;
     display: grid;
     gap: var(--e-8);
@@ -37,58 +87,184 @@ import { comoFunciona, botoes } from '../data/site';
 
   .passo {
     position: relative;
-    padding-left: var(--e-12);
+    padding-left: calc(var(--marco) + var(--e-4));
+  }
+
+  .passo__marco {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: var(--marco);
+    height: var(--marco);
+    border-radius: 50%;
+    background: var(--ameixa-900);
+    color: var(--texto-claro);
   }
 
   .passo__numero {
     position: absolute;
-    left: 0;
-    top: 0;
+    right: -0.25rem;
+    bottom: -0.25rem;
     display: grid;
     place-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border: 1px solid var(--ameixa-600);
-    border-radius: var(--r-pilula);
-    background: var(--papel);
-    font-family: var(--fonte-titulo);
-    font-size: 1.0625rem;
-    font-weight: 600;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--lilas-200);
     color: var(--ameixa-900);
+    font-family: var(--fonte-titulo);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    line-height: 1;
   }
 
-  /* A linha fina que liga os passos */
+  /* O fio que liga os passos. */
   .passo:not(:last-child)::before {
     content: '';
     position: absolute;
-    left: 1.25rem;
-    top: 2.5rem;
+    left: calc(var(--marco) / 2 - 1px);
+    top: var(--marco);
     bottom: calc(var(--e-8) * -1);
-    width: 1px;
-    background: var(--linha);
+    width: 2px;
+    background: var(--lilas-200);
+    transform-origin: top;
   }
 
   .passo__titulo { margin-bottom: var(--e-2); }
   .passo__texto { color: var(--texto-suave); }
+
+  /* --------------------------------------------------------------- Para a sessão */
 
   .caixa {
     margin-top: var(--e-12);
     padding: var(--e-6);
     background: var(--lilas-100);
     border-radius: var(--r-cartao);
-    max-width: 44rem;
+    max-width: 52rem;
+    transition: background-color 400ms ease;
   }
 
-  .caixa p {
+  .caixa__instrucao {
     margin-top: var(--e-2);
     color: var(--texto-suave);
   }
 
+  .checklist {
+    list-style: none;
+    display: grid;
+    gap: var(--e-2);
+    margin-top: var(--e-4);
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--e-3);
+    width: 100%;
+    min-height: 3.25rem;
+    padding: var(--e-2) var(--e-4) var(--e-2) var(--e-2);
+    border: 1px solid var(--lilas-200);
+    border-radius: 12px;
+    background: var(--papel);
+    color: var(--texto);
+    font-size: 1rem;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 200ms ease, background-color 200ms ease;
+  }
+
+  .item:hover { border-color: var(--ameixa-600); }
+
+  .item__icone {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--lilas-100);
+    color: var(--ameixa-600);
+  }
+
+  .item__visto {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    border: 1.5px solid var(--lilas-200);
+    color: transparent;
+    transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .item[aria-pressed='true'] { border-color: var(--ameixa-600); }
+
+  .item[aria-pressed='true'] .item__visto {
+    background: var(--ameixa-900);
+    border-color: var(--ameixa-900);
+    color: var(--texto-claro);
+    transform: scale(1.1);
+  }
+
+  .item[aria-pressed='true'] .item__icone {
+    background: var(--ameixa-900);
+    color: var(--texto-claro);
+  }
+
+  .caixa__pronto {
+    margin-top: var(--e-3);
+    font-family: var(--fonte-titulo);
+    font-weight: 600;
+    color: var(--ameixa-900);
+  }
+
+  .caixa__pronto:empty { display: none; }
+
+  .caixa--pronta { background: var(--lilas-200); }
+
   .acao { margin-top: var(--e-8); }
   .acao .botao { width: 100%; }
 
+  /* --------------------------------------------------------------- Movimento */
+
+  @media (prefers-reduced-motion: no-preference) {
+    .passos--espera .passo__marco {
+      transform: scale(0.6);
+      opacity: 0;
+      transition: transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 300ms ease;
+      transition-delay: calc(var(--ordem) * 350ms);
+    }
+
+    .passos--espera .passo__titulo,
+    .passos--espera .passo__texto {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 500ms ease, transform 500ms ease;
+      transition-delay: calc(var(--ordem) * 350ms + 150ms);
+    }
+
+    .passos--espera .passo:not(:last-child)::before {
+      transform: scaleY(0);
+      transition: transform 350ms ease;
+      transition-delay: calc(var(--ordem) * 350ms + 250ms);
+    }
+
+    .passos--em-cena .passo__marco,
+    .passos--em-cena .passo__titulo,
+    .passos--em-cena .passo__texto { opacity: 1; transform: none; }
+
+    .passos--em-cena .passo:not(:last-child)::before { transform: none; }
+
+    .passo:hover .passo__marco { transform: translateY(-3px); transition-delay: 0s; }
+  }
+
   @media (min-width: 48rem) {
     .acao .botao { width: auto; }
+
+    .checklist { grid-template-columns: 1fr 1fr; }
 
     .passos {
       grid-template-columns: repeat(4, 1fr);
@@ -106,20 +282,26 @@ import { comoFunciona, botoes } from '../data/site';
       align-content: start;
     }
 
-    .passo__numero {
-      position: static;
+    .passo__marco {
+      position: relative;
       justify-self: start;
     }
 
     .passo__titulo { margin-bottom: 0; }
 
     .passo:not(:last-child)::before {
-      left: 2.5rem;
-      top: 1.25rem;
+      left: calc(var(--marco) + var(--e-2));
+      top: calc(var(--marco) / 2 - 1px);
       bottom: auto;
       width: auto;
-      right: calc(var(--e-6) * -1);
-      height: 1px;
+      right: calc(var(--e-2) * -1 + var(--e-6) * -1 + var(--e-2));
+      height: 2px;
+      transform-origin: left;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .passos--espera .passo:not(:last-child)::before { transform: scaleX(0); }
+      .passos--em-cena .passo:not(:last-child)::before { transform: none; }
     }
   }
 </style>

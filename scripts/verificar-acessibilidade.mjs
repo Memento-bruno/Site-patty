@@ -227,8 +227,10 @@ try {
         const html = original.replace(
           /* O (?:(?!<\/script>)[\s\S]) impede a busca de atravessar o fim de um
              script: sem isso ela começaria no primeiro <script type="module">
-             da página (o do menu) e varreria tudo até achar o termo. */
-          /<script type="module">(?:(?!<\/script>)[\s\S])*?IntersectionObserver(?:(?!<\/script>)[\s\S])*?<\/script>/,
+             da página (o do menu) e varreria tudo até achar o termo. O termo é
+             `data-revelar`, e não IntersectionObserver, porque outras seções
+             também usam o observador para as próprias animações. */
+          /<script type="module">(?:(?!<\/script>)[\s\S])*?data-revelar(?:(?!<\/script>)[\s\S])*?<\/script>/,
           '',
         );
         removeu = html !== original;
