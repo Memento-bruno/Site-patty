@@ -1,15 +1,9 @@
 ---
 import Foto from './Foto.astro';
 import Texto from './Texto.astro';
+import Icone from './Icone.astro';
 import { sobre, profissional, links, botoes } from '../data/site';
 
-/* A lista de temas é lida como uma frase, então começa em maiúscula.
-   Capitalizar aqui, e não nos dados, mantém a regra válida se os temas
-   forem reordenados — e, ao contrário de um ::first-letter em CSS, deixa o
-   texto correto no próprio HTML, que é o que vai para a área de
-   transferência de quem copia. */
-const temas = sobre.temas.itens.join(', ');
-const temasFrase = `${temas.charAt(0).toUpperCase()}${temas.slice(1)}.`;
 ---
 <section id="sobre" class="secao sobre">
   <div class="container sobre__grade">
@@ -31,35 +25,62 @@ const temasFrase = `${temas.charAt(0).toUpperCase()}${temas.slice(1)}.`;
 
       <p class="sobre__identificacao">
         <strong>{profissional.identificacao}</strong>
-        <a href={links.cadastroCfp} target="_blank" rel="noopener noreferrer">
+        <a class="botao botao--contorno" href={links.cadastroCfp} target="_blank" rel="noopener noreferrer">
           {botoes.verificarCrp}<span class="so-leitor"> (abre em nova aba)</span>
+          <Icone nome="arrow-square-out" tamanho="1.125rem" />
         </a>
       </p>
 
-      <h3 class="sobre__subtitulo">{sobre.formacao.titulo}</h3>
-      <dl class="formacao">
+    </div>
+  </div>
+
+  <div class="container">
+    <h3 class="sobre__subtitulo" id="formacao-titulo">{sobre.formacao.titulo}</h3>
+    <p class="linha-tempo__dica" aria-hidden="true">{sobre.formacao.rotuloRolagem}</p>
+    <div
+      class="linha-tempo"
+      tabindex="0"
+      role="region"
+      aria-labelledby="formacao-titulo"
+      data-linha-tempo
+    >
+      <ol class="linha-tempo__lista">
         {
-          sobre.formacao.itens.map((item) => (
-            <div class="formacao__item">
-              <dt>{item.periodo ?? ''}</dt>
-              <dd>
-                <span class="formacao__curso">{item.curso}</span>
+          sobre.formacao.itens.map((item, i) => (
+            <li class="marco" style={`--ordem: ${i};`}>
+              <span class="marco__icone"><Icone nome={item.icone} tamanho="1.375rem" /></span>
+              <div class="marco__caixa">
+                <p class="marco__periodo">
+                  {item.periodo ?? ''}
+                  {item.andamento && <span class="marco__estado">Em andamento</span>}
+                </p>
+                <p class="marco__curso">{item.curso}</p>
                 {item.instituicao && (
-                  <span class="formacao__instituicao"><Texto valor={item.instituicao} /></span>
+                  <p class="marco__instituicao"><Texto valor={item.instituicao} /></p>
                 )}
-                {item.andamento && <span class="formacao__estado">Em andamento</span>}
-                {item.nota && <span class="formacao__nota">{item.nota}</span>}
-              </dd>
-            </div>
+                {item.nota && <p class="marco__nota">{item.nota}</p>}
+              </div>
+            </li>
           ))
         }
-      </dl>
-
-      <h3 class="sobre__subtitulo">{sobre.temas.titulo}</h3>
-      <p class="sobre__temas">{temasFrase}</p>
+      </ol>
     </div>
   </div>
 </section>
+
+<script>
+  /* A linha da formação se desenha uma vez, quando aparece na tela. */
+  const linha = document.querySelector<HTMLElement>('[data-linha-tempo]');
+  if (linha && 'IntersectionObserver' in window) {
+    linha.classList.add('linha-tempo--espera');
+    new IntersectionObserver((entradas, obs) => {
+      if (entradas.some((e) => e.isIntersecting)) {
+        linha.classList.add('linha-tempo--em-cena');
+        obs.disconnect();
+      }
+    }, { rootMargin: '0px 0px -15% 0px' }).observe(linha);
+  }
+</script>
 
 <style>
   .sobre__grade { display: grid; gap: var(--e-8); }
@@ -83,57 +104,143 @@ const temasFrase = `${temas.charAt(0).toUpperCase()}${temas.slice(1)}.`;
   }
 
   .sobre__identificacao strong { font-family: var(--fonte-titulo); }
-  .sobre__identificacao a {
-    display: inline-flex;
-    align-items: center;
+  .sobre__identificacao .botao {
     align-self: start;
-    min-height: 3rem;
+    margin-top: var(--e-2);
     font-size: var(--t-pequeno);
+    text-align: left;
   }
 
   .sobre__subtitulo { margin-top: var(--e-12); }
 
-  .formacao {
-    margin: var(--e-6) 0 0;
-    display: grid;
-    gap: var(--e-6);
+
+  /* --------------------------------------------------------------- Formação
+     Linha do tempo horizontal: no celular desliza para o lado; em tela
+     larga as cinco caixas cabem lado a lado. */
+
+  .linha-tempo {
+    margin-top: var(--e-6);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--margem);
+    margin-inline: calc(var(--margem) * -1);
+    padding: var(--e-2) var(--margem) var(--e-4);
+    scrollbar-width: thin;
+    scrollbar-color: var(--lilas-200) transparent;
   }
 
-  .formacao__item {
+  .linha-tempo:focus-visible { outline-offset: -3px; }
+
+  .linha-tempo__lista {
+    --icone: 3rem;
+    list-style: none;
+    position: relative;
     display: grid;
-    gap: var(--e-1);
-    padding-bottom: var(--e-6);
-    border-bottom: 1px solid var(--linha);
+    grid-auto-flow: column;
+    grid-auto-columns: 15.5rem;
+    gap: var(--e-4);
+    width: max-content;
   }
 
-  .formacao__item:last-child { border-bottom: 0; padding-bottom: 0; }
+  /* O fio que atravessa todos os ícones. */
+  .linha-tempo__lista::before {
+    content: '';
+    position: absolute;
+    left: calc(var(--icone) / 2);
+    right: 0;
+    top: calc(var(--icone) / 2);
+    height: 2px;
+    background: var(--lilas-200);
+    transform-origin: left;
+  }
 
-  .formacao dt {
+  .marco {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: var(--e-4);
+    scroll-snap-align: start;
+  }
+
+  .marco__icone {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: var(--icone);
+    height: var(--icone);
+    border-radius: 50%;
+    background: var(--ameixa-900);
+    color: var(--texto-claro);
+  }
+
+  .marco__caixa {
+    height: 100%;
+    display: grid;
+    gap: var(--e-2);
+    align-content: start;
+    padding: var(--e-4);
+    background: var(--papel);
+    border: 1px solid var(--linha);
+    border-radius: 12px;
+  }
+
+  .marco__periodo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--e-2);
     font-family: var(--fonte-titulo);
     font-size: var(--t-pequeno);
     font-weight: 600;
-    color: var(--texto-suave);
+    color: var(--ameixa-600);
   }
 
-  .formacao dd { margin: 0; display: grid; gap: var(--e-1); }
+  /* Curso em andamento nunca aparece como concluído (briefing 2). */
+  .marco__estado {
+    padding: 0 var(--e-2);
+    border-radius: var(--r-pilula);
+    background: var(--lilas-100);
+    color: var(--ameixa-900);
+  }
 
-  .formacao__curso { font-size: 1.0625rem; }
+  .marco__curso { font-size: 1.0625rem; line-height: 1.4; color: var(--texto); }
 
-  .formacao__instituicao,
-  .formacao__estado,
-  .formacao__nota {
+  .marco__instituicao,
+  .marco__nota {
     font-size: var(--t-pequeno);
     color: var(--texto-suave);
   }
 
-  /* Curso em andamento nunca aparece como concluído (briefing 2). */
-  .formacao__estado { font-family: var(--fonte-titulo); font-weight: 600; }
-
-  .sobre__temas {
-    margin-top: var(--e-4);
+  .linha-tempo__dica {
+    margin-top: var(--e-2);
+    font-size: var(--t-pequeno);
     color: var(--texto-suave);
   }
 
+  @media (prefers-reduced-motion: no-preference) {
+    .linha-tempo--espera .linha-tempo__lista::before {
+      transform: scaleX(0);
+      transition: transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    .linha-tempo--espera .marco {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 500ms ease, transform 500ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      transition-delay: calc(var(--ordem) * 160ms + 200ms);
+    }
+
+    .linha-tempo--em-cena .linha-tempo__lista::before { transform: none; }
+    .linha-tempo--em-cena .marco { opacity: 1; transform: none; }
+
+    .marco__caixa { transition: border-color 200ms ease, transform 200ms ease; }
+    .marco:hover .marco__caixa { border-color: var(--ameixa-600); transform: translateY(-3px); }
+  }
+
+  @media (min-width: 64rem) {
+    .linha-tempo { overflow: visible; margin-inline: 0; padding-inline: 0; }
+    .linha-tempo__lista { width: auto; grid-auto-columns: 1fr; }
+    .linha-tempo__dica { display: none; }
+  }
 
   @media (min-width: 48rem) {
     .sobre__grade {
@@ -148,10 +255,5 @@ const temasFrase = `${temas.charAt(0).toUpperCase()}${temas.slice(1)}.`;
     }
 
     .sobre__corpo { grid-column: 6 / 13; }
-
-    .formacao__item {
-      grid-template-columns: 7rem 1fr;
-      gap: var(--e-4);
-    }
   }
 </style>

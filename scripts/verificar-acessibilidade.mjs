@@ -153,7 +153,11 @@ try {
 
       /* rola aos poucos, como alguém lendo; de uma vez só, o navegador
          revelaria tudo junto e o teste não veria o problema */
-      for (let passo = 0; passo < 30; passo += 1) {
+      /* até o fim da página, com folga: o número de passos acompanha a
+         altura dela, em vez de um total fixo que fica curto se ela crescer */
+      const altura = await pagina.evaluate(() => document.documentElement.scrollHeight);
+      const passos = Math.ceil(altura / 400) + 5;
+      for (let passo = 0; passo < passos; passo += 1) {
         await pagina.mouse.wheel(0, 400);
         await espera(150);
       }
@@ -223,8 +227,10 @@ try {
         const html = original.replace(
           /* O (?:(?!<\/script>)[\s\S]) impede a busca de atravessar o fim de um
              script: sem isso ela começaria no primeiro <script type="module">
-             da página (o do menu) e varreria tudo até achar o termo. */
-          /<script type="module">(?:(?!<\/script>)[\s\S])*?IntersectionObserver(?:(?!<\/script>)[\s\S])*?<\/script>/,
+             da página (o do menu) e varreria tudo até achar o termo. O termo é
+             `data-revelar`, e não IntersectionObserver, porque outras seções
+             também usam o observador para as próprias animações. */
+          /<script type="module">(?:(?!<\/script>)[\s\S])*?data-revelar(?:(?!<\/script>)[\s\S])*?<\/script>/,
           '',
         );
         removeu = html !== original;

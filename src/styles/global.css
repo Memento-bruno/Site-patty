@@ -204,7 +204,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 .em-ameixa .botao--contorno {
   color: var(--texto-claro);
-  border-color: #8E76A0;
+  border-color: #7FA3C6;
 }
 
 .em-ameixa .botao--contorno:hover {
