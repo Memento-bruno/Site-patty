@@ -32,14 +32,22 @@ import { duvidas, botoes, whatsappUrl } from '../data/site';
 </section>
 
 <style>
+  /* Título, perguntas e fechamento centralizados (pedido do Bruno). */
+  #duvidas h2 { text-align: center; }
+
   .duvidas__lista {
-    margin-top: var(--e-8);
-    max-width: 47.5rem;
+    margin: var(--e-8) auto 0;
+    max-width: 62rem;
   }
 
   /* <details> nativo: sem JavaScript. Cada pergunta é uma caixa que se
      abre ao toque. */
-  .duvidas__lista { display: grid; gap: var(--e-3); }
+  .duvidas__lista { display: grid; gap: var(--e-3); align-items: start; }
+
+  @media (min-width: 48rem) {
+    .duvidas__lista { grid-template-columns: 1fr 1fr; gap: var(--e-4); }
+    .duvidas__lista .duvida summary { min-height: 5.5rem; }
+  }
 
   .duvida {
     border: 1px solid var(--lilas-200);
@@ -88,10 +96,10 @@ import { duvidas, botoes, whatsappUrl } from '../data/site';
 
   .duvidas__fechamento {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     align-items: center;
     gap: var(--e-4);
-    margin-top: var(--e-8);
-    max-width: 47.5rem;
+    margin: var(--e-12) auto 0;
+    text-align: center;
   }
 </style>

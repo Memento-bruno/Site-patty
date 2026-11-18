@@ -133,7 +133,8 @@ const numero = (i: number) => String(i + 1).padStart(2, '0');
 <style>
   /* --------------------------------------------------------------- Cabeçalho */
 
-  .temas__cabeca { margin-bottom: var(--e-12); }
+  .temas__cabeca { margin-bottom: var(--e-12); text-align: center; }
+  .temas__cabeca .intro { margin-inline: auto; }
 
   .temas__destaque {
     font-family: var(--fonte-corpo);
@@ -143,7 +144,7 @@ const numero = (i: number) => String(i + 1).padStart(2, '0');
   }
 
   .temas__abertura {
-    margin-top: var(--e-6);
+    margin: var(--e-6) auto 0;
     max-width: 62ch;
     color: var(--texto-suave);
   }
@@ -250,8 +251,11 @@ const numero = (i: number) => String(i + 1).padStart(2, '0');
 
   .tema__mais:hover .tema__seta { background: var(--lilas-200); }
 
+  /* Centralizada e numa linha só em tela larga (pedido do Bruno). */
   .temas__nota {
     margin-top: var(--e-6);
+    max-width: none;
+    text-align: center;
     font-size: var(--t-pequeno);
     color: var(--texto-suave);
   }
