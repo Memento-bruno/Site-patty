@@ -82,8 +82,13 @@ const dadosEstruturados = {
     <meta name="twitter:image" content={imagemOg} />
 
     <link rel="sitemap" type="application/xml" href={url('/sitemap-index.xml')} />
+    <!-- Ícone da aba: o logo da Patricia. O SVG troca de cor sozinho com o
+         tema do computador; o .ico (logo escuro) é reserva para navegador
+         antigo que não lê SVG.
+         Para gerar de novo: npm run favicon -->
+    <link rel="icon" href={url('/favicon.ico')} sizes="32x32" />
     <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
-    <link rel="apple-touch-icon" href={url('/favicon.svg')} />
+    <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
 
     <link
       rel="preload"

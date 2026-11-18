@@ -12,6 +12,7 @@
     "build": "astro build && node scripts/verificar-pendencias.mjs",
     "preview": "astro preview",
     "og": "node scripts/gerar-og.mjs",
+    "favicon": "node scripts/gerar-favicon.mjs",
     "capturas": "node scripts/capturas.mjs",
     "astro": "astro",
     "a11y": "node scripts/verificar-acessibilidade.mjs",
