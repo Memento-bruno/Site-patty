@@ -32,8 +32,9 @@ const temasFrase = `${temas.charAt(0).toUpperCase()}${temas.slice(1)}.`;
 
       <p class="sobre__identificacao">
         <strong>{profissional.identificacao}</strong>
-        <a href={links.cadastroCfp} target="_blank" rel="noopener noreferrer">
+        <a class="botao botao--contorno" href={links.cadastroCfp} target="_blank" rel="noopener noreferrer">
           {botoes.verificarCrp}<span class="so-leitor"> (abre em nova aba)</span>
+          <Icone nome="arrow-square-out" tamanho="1.125rem" />
         </a>
       </p>
 
@@ -112,12 +113,11 @@ const temasFrase = `${temas.charAt(0).toUpperCase()}${temas.slice(1)}.`;
   }
 
   .sobre__identificacao strong { font-family: var(--fonte-titulo); }
-  .sobre__identificacao a {
-    display: inline-flex;
-    align-items: center;
+  .sobre__identificacao .botao {
     align-self: start;
-    min-height: 3rem;
+    margin-top: var(--e-2);
     font-size: var(--t-pequeno);
+    text-align: left;
   }
 
   .sobre__subtitulo { margin-top: var(--e-12); }
