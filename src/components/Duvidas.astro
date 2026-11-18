@@ -23,7 +23,8 @@ import { duvidas, botoes, whatsappUrl } from '../data/site';
 
     <p class="duvidas__fechamento">
       {duvidas.fechamento}{' '}
-      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+      <a class="botao botao--primario" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+        <Icone nome="whatsapp-logo" />
         {botoes.whatsapp}<span class="so-leitor"> (abre em nova aba)</span>
       </a>
     </p>
@@ -31,14 +32,32 @@ import { duvidas, botoes, whatsappUrl } from '../data/site';
 </section>
 
 <style>
+  /* Título, perguntas e fechamento centralizados (pedido do Bruno). */
+  #duvidas h2 { text-align: center; }
+
   .duvidas__lista {
-    margin-top: var(--e-8);
-    max-width: 47.5rem;
+    margin: var(--e-8) auto 0;
+    max-width: 62rem;
   }
 
-  /* <details> nativo: sem JavaScript. */
-  .duvida { border-top: 1px solid var(--linha); }
-  .duvida:last-of-type { border-bottom: 1px solid var(--linha); }
+  /* <details> nativo: sem JavaScript. Cada pergunta é uma caixa que se
+     abre ao toque. */
+  .duvidas__lista { display: grid; gap: var(--e-3); align-items: start; }
+
+  @media (min-width: 48rem) {
+    .duvidas__lista { grid-template-columns: 1fr 1fr; gap: var(--e-4); }
+    .duvidas__lista .duvida summary { min-height: 5.5rem; }
+  }
+
+  .duvida {
+    border: 1px solid var(--lilas-200);
+    border-radius: 12px;
+    background: var(--papel);
+    transition: border-color 200ms ease, background-color 200ms ease;
+  }
+
+  .duvida:hover { border-color: var(--ameixa-600); }
+  .duvida[open] { border-color: var(--ameixa-600); background: var(--lilas-100); }
 
   .duvida summary {
     display: flex;
@@ -46,13 +65,14 @@ import { duvidas, botoes, whatsappUrl } from '../data/site';
     justify-content: space-between;
     gap: var(--e-4);
     min-height: 3.5rem;
-    padding-block: var(--e-4);
+    padding: var(--e-4) var(--e-6);
     cursor: pointer;
     list-style: none;
     font-family: var(--fonte-titulo);
-    font-size: 1.1875rem;
+    font-size: 1.125rem;
     font-weight: 600;
     color: var(--ameixa-900);
+    border-radius: 12px;
   }
 
   .duvida summary::-webkit-details-marker { display: none; }
@@ -70,12 +90,16 @@ import { duvidas, botoes, whatsappUrl } from '../data/site';
   }
 
   .duvida p {
-    padding-bottom: var(--e-6);
+    padding: 0 var(--e-6) var(--e-6);
     color: var(--texto-suave);
   }
 
   .duvidas__fechamento {
-    margin-top: var(--e-8);
-    max-width: 47.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--e-4);
+    margin: var(--e-12) auto 0;
+    text-align: center;
   }
 </style>

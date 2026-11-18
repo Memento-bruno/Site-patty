@@ -51,7 +51,7 @@ const secundarios = [
         <ul class="agendar__secundarios">
           {secundarios.map((item) => (
             <li>
-              <a href={item.href} target="_blank" rel="noopener noreferrer">
+              <a class="botao botao--contorno" href={item.href} target="_blank" rel="noopener noreferrer">
                 <Icone nome={item.icone} tamanho="1.125rem" />
                 {item.rotulo}<span class="so-leitor"> (abre em nova aba)</span>
               </a>
@@ -66,9 +66,13 @@ const secundarios = [
 <style>
   .agendar { background: var(--ameixa-900); }
 
+  /* Seção inteira centralizada (pedido do Bruno, 18/11/2026). */
+  .agendar h2 { text-align: center; }
+
   .agendar__abertura {
-    margin-top: var(--e-6);
+    margin: var(--e-6) auto 0;
     max-width: 56ch;
+    text-align: center;
   }
 
   .agendar__blocos {
@@ -87,15 +91,18 @@ const secundarios = [
     gap: var(--e-4);
   }
 
+  .agendar__bloco { align-items: center; text-align: center; }
   .agendar__bloco p { flex: 1; }
   .agendar__bloco .botao { align-self: stretch; }
 
   .agendar__notas {
     display: grid;
     gap: var(--e-2);
+    justify-items: center;
     margin-top: var(--e-8);
     font-size: var(--t-pequeno);
     color: var(--texto-suave);
+    text-align: center;
   }
 
   .agendar__notas p { max-width: 60ch; }
@@ -104,21 +111,15 @@ const secundarios = [
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--e-6);
+    justify-content: center;
+    gap: var(--e-4);
     margin-top: var(--e-8);
     padding-top: var(--e-6);
     border-top: 1px solid var(--linha);
   }
 
-  .agendar__secundarios a {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--e-2);
-    min-height: 3rem;
-    font-family: var(--fonte-titulo);
-    font-size: var(--t-pequeno);
-    font-weight: 500;
-  }
+  .agendar__secundarios .botao { font-size: var(--t-pequeno); }
+  .agendar__secundarios .botao :global(svg) { width: 1.125rem; height: 1.125rem; }
 
   @media (min-width: 48rem) {
     .agendar__blocos {
@@ -127,6 +128,6 @@ const secundarios = [
     }
 
     .agendar__bloco { padding: var(--e-8); }
-    .agendar__bloco .botao { align-self: start; }
+    .agendar__bloco .botao { align-self: center; }
   }
 </style>

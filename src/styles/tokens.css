@@ -5,22 +5,24 @@
    --------------------------------------------------------------------------- */
 
 :root {
-  /* Paleta A — ameixa e ocre */
-  --ameixa-900: #3B2745;
-  --ameixa-600: #6E4F7E;
-  --lilas-200: #DCD0E4;
-  --lilas-100: #EFE9F3;
-  --papel: #FBFAFC;
-  --tinta: #231B28;
+  /* Paleta C — azul bebê e ocre (pedido do Bruno, 17/11/2026).
+     Os nomes "ameixa" e "lilás" ficaram por costume: hoje são azuis.
+     A Paleta A (ameixa) original está comentada no fim do arquivo. */
+  --ameixa-900: #1F3B5C;   /* azul-marinho: títulos, botões */
+  --ameixa-600: #3E6A96;   /* azul médio: links, ícones */
+  --lilas-200: #C6E2F5;    /* azul bebê */
+  --lilas-100: #E6F3FC;    /* azul bebê bem claro: faixas */
+  --papel: #F8FBFE;
+  --tinta: #18222E;
   /* Acento decorativo. NUNCA em texto: contraste ~3:1 sobre --papel. */
   --ocre-500: #B8862F;
-  --linha: #E3DAE8;
+  --linha: #D3E6F3;
 
   /* Papéis derivados (não inventar cor nova nos componentes) */
   --fundo: var(--papel);
   --texto: var(--tinta);
-  --texto-suave: #4B3D55;   /* 9.6:1 sobre --papel */
-  --texto-claro: #F4EFF7;   /* texto sobre --ameixa-900 */
+  --texto-suave: #3A4B5E;
+  --texto-claro: #F1F7FC;   /* texto sobre --ameixa-900 */
   --foco: var(--ameixa-600);
 
   /* Tipografia */
@@ -56,7 +58,7 @@
   --r-pilula: 999px;
 
   /* Única sombra do site: os três cartões sobre o hero */
-  --sombra-cartao: 0 18px 40px -24px rgb(59 39 69 / 0.35);
+  --sombra-cartao: 0 18px 40px -24px rgb(31 59 92 / 0.35);
 
   /* Grade */
   --largura: 1200px;
@@ -86,10 +88,26 @@
 .em-ameixa {
   color: var(--texto-claro);
   --texto: var(--texto-claro);
-  --texto-suave: #D9CCE2;
-  --linha: #5A4468;
-  --foco: #E6D7F0;
+  --texto-suave: #CFE0EE;
+  --linha: #3A5A7E;
+  --foco: #CFE6F8;
 }
+
+/* ---------------------------------------------------------------------------
+   Paleta A — "ameixa e ocre" (a original, até 17/11/2026).
+   Para voltar: cole estes valores no lugar da Paleta C.
+
+   --ameixa-900: #3B2745;
+   --ameixa-600: #6E4F7E;
+   --lilas-200:  #DCD0E4;
+   --lilas-100:  #EFE9F3;
+   --papel:      #FBFAFC;
+   --tinta:      #231B28;
+   --linha:      #E3DAE8;
+   --texto-suave: #4B3D55;
+   --texto-claro: #F4EFF7;
+   (.em-ameixa: --texto-suave #D9CCE2; --linha #5A4468; --foco #E6D7F0)
+   --------------------------------------------------------------------------- */
 
 /* ---------------------------------------------------------------------------
    Paleta B — "azul-tinta e areia" (alternativa da seção 6.2 do briefing).

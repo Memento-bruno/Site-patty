@@ -108,28 +108,251 @@ export const essencial = [
   },
 ] as const;
 
-/* --------------------------------------------------------------------------- Talvez você esteja aqui */
+/* --------------------------------------------------------------------------- Por onde podemos começar (temas) */
 
-export const reconhecer = {
-  titulo: 'Talvez você esteja aqui porque…',
+/* Cada tema vira um cartão; "Entenda melhor" abre uma janela com o texto
+   completo. Para tirar um tema, apague o bloco dele; para mudar a ordem,
+   mude a ordem dos blocos. O número do cartão é contado sozinho. */
+export const temas = {
+  rotulo: 'Por onde podemos começar',
+  titulo: 'O que pode trazer você',
+  tituloDestaque: 'à psicoterapia?',
+  paragrafo:
+    'Nem sempre sabemos dar nome ao que estamos sentindo. Algumas pessoas chegam com uma dificuldade específica; outras querem compreender melhor suas relações, escolhas e formas de viver. Conheça alguns dos temas que podemos trabalhar.',
+  nota:
+    'Os temas não substituem uma avaliação clínica individual. Cada acompanhamento considera suas necessidades, objetivos e condições de vida.',
+  botaoMais: 'Entenda melhor',
+  janela: {
+    acontecendo: 'O que pode estar acontecendo',
+    trabalho: 'O que podemos investigar e trabalhar',
+    aviso: 'Sobre a avaliação:',
+    rodape: 'Informação geral. O cuidado é planejado individualmente.',
+    voltar: 'Voltar aos temas',
+    fechar: 'Fechar explicação',
+  },
   itens: [
-    'A preocupação não desliga, mesmo quando está tudo aparentemente bem.',
-    'Você perdeu alguém ou algo importante, e o luto tem sido difícil de carregar.',
-    'Está no meio de uma mudança de trabalho, de cidade ou de fase da vida, e se sente sem chão.',
-    'Os relacionamentos têm trazido mais desgaste do que conforto.',
-    'Sente um cansaço que não passa com descanso, ou tem vivido no automático.',
-    'Quer se conhecer melhor, mesmo sem nenhuma crise acontecendo.',
+    {
+      chave: 'ansiedade',
+      categoria: 'Emoções e bem-estar',
+      titulo: 'Ansiedade e preocupação',
+      resumo: 'Medos, preocupações constantes e tentativas de evitar o que provoca desconforto.',
+      introducao: 'A ansiedade é uma experiência humana importante, mas pode se tornar desgastante quando a preocupação ocupa grande parte do dia ou o medo passa a organizar suas decisões.',
+      acontecendo: [
+        'Talvez você se perceba antecipando situações negativas, buscando garantias de que tudo vai ficar bem ou evitando conversas, lugares e decisões. Em algumas pessoas, a ansiedade aparece principalmente no corpo; em outras, nas preocupações repetitivas ou no medo de julgamento.',
+        'Essas experiências têm formas e funções diferentes. Por isso, compreender quando a ansiedade surge e o que a mantém costuma ser mais útil do que tratá-la como uma coisa só.'
+      ],
+      trabalho: [
+        'Podemos investigar a relação entre interpretações, atenção, sensações físicas e comportamentos. Conforme cada caso, o trabalho pode envolver reavaliação de pensamentos, experimentos comportamentais, exposição planejada a situações temidas e redução de estratégias de evitação.',
+        'Também podemos desenvolver maneiras de responder às emoções difíceis sem que elas precisem determinar todas as suas escolhas.'
+      ],
+      frase: 'O objetivo não é nunca mais sentir ansiedade, mas diminuir o espaço que ela ocupa nas suas decisões.'
+    },
+    {
+      chave: 'depressao',
+      categoria: 'Emoções e bem-estar',
+      titulo: 'Depressão e desânimo',
+      resumo: 'Tristeza persistente, perda de interesse e dificuldade para retomar atividades e vínculos.',
+      introducao: 'Quando atividades antes significativas perdem o sentido, a energia diminui ou até tarefas simples parecem exigir demais, é importante compreender o que está acontecendo.',
+      acontecendo: [
+        'Desânimo, alterações do sono, isolamento, autocrítica, dificuldade de concentração e redução do interesse podem ocorrer de maneiras diferentes. Nem toda tristeza é depressão; e uma avaliação cuidadosa considera duração, intensidade, contexto e impacto na vida.',
+        'Às vezes, quanto menos a pessoa consegue se envolver em atividades e relações importantes, menos oportunidades encontra para experimentar interesse, prazer ou realização, mantendo um ciclo difícil de interromper.'
+      ],
+      trabalho: [
+        'Na psicoterapia, podemos identificar padrões de pensamento e comportamento que contribuem para o sofrimento, explorar circunstâncias que o agravam e planejar passos graduais de retomada. A ativação comportamental é uma possibilidade: não significa apenas ocupar a agenda, mas reconstruir contato com atividades, pessoas e experiências relevantes para você.',
+        'Quando necessário, o cuidado pode envolver articulação com avaliação ou acompanhamento médico.'
+      ],
+      frase: 'Às vezes, a motivação não vem antes do primeiro passo; ela pode ser reconstruída ao longo do caminho.'
+    },
+    {
+      chave: 'estresse',
+      categoria: 'Emoções e bem-estar',
+      titulo: 'Estresse e esgotamento',
+      resumo: 'Sobrecarga, exigências prolongadas e dificuldade de encontrar tempo para descansar.',
+      introducao: 'Nem todo estresse indica um problema psicológico. Mas, quando as exigências superam por muito tempo os recursos disponíveis, a saúde e a qualidade de vida podem ser afetadas.',
+      acontecendo: [
+        'Cansaço persistente, irritabilidade, dificuldade para se desligar do trabalho, sensação de urgência constante e alterações no sono podem indicar que algo precisa de atenção. Em alguns casos, a sobrecarga está relacionada ao trabalho; em outros, à combinação entre responsabilidades profissionais, familiares e pessoais.',
+        'O contexto importa: nem toda dificuldade se resolve apenas mudando pensamentos ou aprendendo a relaxar.'
+      ],
+      trabalho: [
+        'Podemos mapear fontes de estresse, identificar padrões de autocobrança, analisar limites e possibilidades reais de mudança e desenvolver habilidades de resolução de problemas, comunicação e organização. Técnicas de atenção ao momento presente e estratégias de recuperação podem ser úteis, quando adequadas.',
+        'O trabalho também considera condições externas sobre as quais você talvez tenha controle limitado e como lidar com elas sem transformar toda a responsabilidade em algo individual.'
+      ],
+      frase: 'Cuidar de si nem sempre significa suportar melhor tudo o que exige demais.'
+    },
+    {
+      chave: 'regulacao',
+      categoria: 'Emoções e bem-estar',
+      titulo: 'Regulação emocional',
+      resumo: 'Emoções intensas, reações impulsivas e dificuldade para atravessar momentos difíceis.',
+      introducao: 'Sentir intensamente não é, por si só, um problema. A dificuldade pode surgir quando as emoções parecem tomar conta das decisões, das relações ou da maneira como você trata a si mesmo.',
+      acontecendo: [
+        'Algumas pessoas se arrependem de reações impulsivas. Outras tentam evitar qualquer desconforto ou sentem que uma emoção demora muito para diminuir. As respostas emocionais são influenciadas pela história pessoal, pelos vínculos, pelo corpo e pelo contexto.'
+      ],
+      trabalho: [
+        'A psicoterapia pode ajudar a identificar sinais emocionais, reconhecer situações de vulnerabilidade e compreender o que acontece antes e depois de determinadas reações. Podemos utilizar habilidades de atenção plena, regulação emocional, tolerância ao mal-estar e comunicação interpessoal, conforme a necessidade.',
+        'Isso inclui recursos presentes na TCC e nas terapias contextuais, inclusive habilidades derivadas da DBT, sem pressupor que todo acompanhamento corresponda ao programa completo de DBT.'
+      ],
+      frase: 'Aprender a lidar com uma emoção não exige deixar de senti-la.'
+    },
+    {
+      chave: 'relacionamentos',
+      categoria: 'Relações e desenvolvimento',
+      titulo: 'Relacionamentos e autoestima',
+      resumo: 'Conflitos, dificuldade para estabelecer limites, insegurança e autocrítica.',
+      introducao: 'Os relacionamentos podem oferecer conexão e apoio, mas também despertar insegurança, conflitos e padrões difíceis de compreender.',
+      acontecendo: [
+        'Medo de desagradar, necessidade constante de aprovação, dificuldade para expressar o que sente, conflitos repetidos e autocrítica intensa são algumas questões possíveis. Experiências anteriores influenciam o que esperamos dos outros, mas não determinam sozinhas todas as relações que construímos.'
+      ],
+      trabalho: [
+        'Podemos investigar interpretações sobre si e sobre as pessoas, padrões de comunicação, expectativas e maneiras de responder ao medo de rejeição. O trabalho pode incluir habilidades de assertividade, definição de limites, manejo de conflitos e uma relação mais flexível com a autocrítica.',
+        'Na psicoterapia individual, olhamos para como você participa e é afetado pelas relações — sem atribuir a você toda a responsabilidade pelo que acontece entre duas pessoas.'
+      ],
+      frase: 'Relações não dependem apenas de encontrar alguém compatível, mas também do que acontece entre as pessoas.'
+    },
+    {
+      chave: 'sono',
+      categoria: 'Emoções e bem-estar',
+      titulo: 'Sono e insônia',
+      resumo: 'Dificuldade para adormecer, despertares noturnos e preocupação com o próprio sono.',
+      introducao: 'Dormir mal não afeta apenas a noite. Pode influenciar o humor, a atenção, a disposição e a forma como atravessamos o dia.',
+      acontecendo: [
+        'Algumas pessoas demoram a pegar no sono; outras acordam muitas vezes, despertam cedo demais ou desenvolvem receio de não conseguir dormir. Hábitos, condições de saúde, horários de trabalho, ansiedade e a própria tentativa de controlar o sono podem estar envolvidos.',
+        'É importante distinguir uma dificuldade pontual de um quadro persistente e considerar a necessidade de avaliação médica para outras causas.'
+      ],
+      trabalho: [
+        'Podemos compreender a relação entre rotina, comportamentos, pensamentos e sono, e trabalhar mudanças compatíveis com sua realidade. Estratégias comportamentais, organização de horários e manejo da preocupação com o dormir podem fazer parte do processo, conforme a avaliação.',
+        'Em casos de insônia crônica, a TCC específica para insônia (TCC-I) é uma referência de tratamento, e o encaminhamento para avaliação especializada pode ser indicado quando necessário.'
+      ],
+      frase: 'Dormir melhor não é simplesmente se esforçar mais para dormir.'
+    },
+    {
+      chave: 'autoconhecimento',
+      categoria: 'Relações e desenvolvimento',
+      titulo: 'Autoconhecimento e desenvolvimento pessoal',
+      resumo: 'Compreender padrões, escolhas, valores e novas possibilidades de ação.',
+      introducao: 'Você não precisa estar em crise ou ter um diagnóstico para procurar psicoterapia. O desejo de compreender melhor a própria experiência também pode ser um ponto de partida.',
+      acontecendo: [
+        'Talvez você queira entender por que determinadas situações provocam reações tão intensas, por que certos padrões se repetem ou o que realmente importa nas decisões que precisa tomar. Conhecer a si mesmo não significa encontrar uma identidade fixa e definitiva.'
+      ],
+      trabalho: [
+        'Podemos explorar experiências do cotidiano, identificar interpretações e comportamentos recorrentes, reconhecer valores pessoais e experimentar formas diferentes de agir. O processo combina reflexão com observação e prática, conforme seus objetivos.',
+        'A ideia não é dizer quem você deveria ser, mas ampliar a compreensão que você tem de si e as possibilidades de escolha na sua vida.'
+      ],
+      frase: 'Autoconhecimento também é descobrir que alguns caminhos podem ser construídos de outra forma.'
+    },
+    {
+      chave: 'autocobranca',
+      categoria: 'Relações e desenvolvimento',
+      titulo: 'Autocobrança e procrastinação',
+      resumo: 'Perfeccionismo, medo de errar, adiamentos e dificuldade de começar ou concluir tarefas.',
+      introducao: 'Às vezes, quanto mais importante uma tarefa parece, mais difícil é começar. E quanto maior a cobrança, menos espaço sobra para experimentar e aprender.',
+      acontecendo: [
+        'Adiar decisões, revisar algo inúmeras vezes, sentir culpa ao descansar ou acreditar que só vale tentar quando há garantia de acerto podem fazer parte de ciclos de autocobrança e evitação. Em outros casos, dificuldades de planejamento e organização também precisam ser consideradas.'
+      ],
+      trabalho: [
+        'Podemos compreender a função dos adiamentos, flexibilizar padrões rígidos de exigência, desenvolver estratégias de organização e testar passos menores e realistas. A atenção não fica apenas na força de vontade, mas também nas condições que tornam uma ação mais ou menos possível.',
+        'Nem toda procrastinação é preguiça ou TDAH: investigar o contexto e o funcionamento individual é parte do trabalho.'
+      ],
+      frase: 'Mudanças sustentáveis costumam depender menos de cobrança e mais de condições possíveis para agir.'
+    },
+    {
+      chave: 'tdah',
+      categoria: 'Neurodesenvolvimento',
+      titulo: 'TDAH em adultos',
+      resumo: 'Atenção, planejamento, organização, impulsividade e regulação emocional no cotidiano.',
+      introducao: 'Para algumas pessoas, manter a atenção, organizar tarefas, administrar o tempo e concluir projetos exige esforço constante — inclusive quando existe interesse e vontade de fazer.',
+      acontecendo: [
+        'O TDAH pode envolver dificuldades de atenção, controle de impulsos e funções executivas, mas experiências semelhantes também podem surgir por outros motivos. Por isso, uma compreensão clínica cuidadosa é importante para não transformar qualquer distração em diagnóstico.'
+      ],
+      trabalho: [
+        'O acompanhamento psicoterapêutico pode envolver estratégias de organização, planejamento, uso de lembretes externos, divisão de tarefas em etapas, autorregulação emocional e manejo de padrões que dificultam o cotidiano. Essas intervenções são adaptadas às necessidades individuais.',
+        'Se houver suspeita de TDAH, uma triagem clínica pode ajudar a identificar a necessidade de encaminhamento para avaliação especializada.'
+      ],
+      frase: 'Organização não precisa depender apenas de lembrar, resistir ou se cobrar mais.',
+      aviso: 'Não realizo avaliação neuropsicológica. Ofereço triagem clínica para encaminhamento, quando indicado, e acompanhamento psicoterapêutico.'
+    },
+    {
+      chave: 'autismo',
+      categoria: 'Neurodesenvolvimento',
+      titulo: 'Autismo em adultos',
+      resumo: 'Compreender o próprio jeito de perceber, sentir e se relacionar, com ou sem diagnóstico.',
+      introducao: 'Muitas pessoas só começam a se perguntar sobre autismo na vida adulta, às vezes depois de anos sentindo que precisam se esforçar mais do que os outros para dar conta de situações sociais, mudanças ou ambientes cheios de estímulos.',
+      acontecendo: [
+        'O autismo é uma condição do neurodesenvolvimento que se manifesta de formas muito diferentes de pessoa para pessoa. Em adultos, pode aparecer em diferenças na comunicação e na interação social, na sensibilidade a sons, luzes ou texturas, na preferência por rotinas previsíveis e em interesses intensos.',
+        'Algumas pessoas passaram a vida tentando disfarçar essas características para se adaptar, o que pode trazer cansaço, ansiedade e a sensação de não pertencer. Nem toda dificuldade social é autismo; por isso, uma compreensão clínica cuidadosa é importante.'
+      ],
+      trabalho: [
+        'A psicoterapia não tem como objetivo mudar quem você é. Podemos compreender o que torna certas situações mais difíceis, identificar sinais de sobrecarga, organizar a rotina e o ambiente de forma mais compatível com suas necessidades e desenvolver maneiras de comunicar limites e preferências.',
+        'Também podemos olhar para a ansiedade, a autocrítica ou o esgotamento que às vezes acompanham anos de adaptação, respeitando seu ritmo e sua forma de funcionar.'
+      ],
+      frase: 'Entender o próprio funcionamento pode abrir espaço para viver de um jeito menos custoso.',
+      aviso: 'Não realizo avaliação neuropsicológica. Quando há dúvida sobre o diagnóstico, posso orientar o encaminhamento para avaliação com profissionais habilitados.'
+    },
+    {
+      chave: 'mudancas',
+      categoria: 'Transições e experiências',
+      titulo: 'Mudanças de vida, luto e crises',
+      resumo: 'Perdas, separações, transições de carreira e períodos em que a vida precisa se reorganizar.',
+      introducao: 'Algumas mudanças são escolhidas; outras chegam sem aviso. Mesmo transições desejadas podem trazer perdas, insegurança e sentimentos difíceis de organizar.',
+      acontecendo: [
+        'O luto não acontece apenas diante de uma morte. Pode estar relacionado à perda de vínculos, de planos ou de uma forma de viver. Separações, adoecimento, mudanças de cidade, transições profissionais e outras crises também podem exigir adaptações importantes.',
+        'Não existe uma única maneira ou um prazo universal para viver essas experiências.'
+      ],
+      trabalho: [
+        'Na psicoterapia, podemos acolher o sofrimento, compreender o que mudou e explorar recursos para lidar com as exigências do presente. Isso pode envolver trabalhar emoções, pensamentos, vínculos, decisões e possibilidades de reconstrução do cotidiano, sem apressar a elaboração de perdas.'
+      ],
+      frase: 'A terapia não precisa apagar o que aconteceu para ajudar a construir uma relação diferente com essa história.'
+    },
+    {
+      chave: 'intercultural',
+      categoria: 'Transições e experiências',
+      titulo: 'Psicoterapia intercultural',
+      resumo: 'Imigração, expatriação, pertencimento e vida entre diferentes referências culturais.',
+      introducao: 'Viver em outro país pode ampliar possibilidades, mas também transformar vínculos, referências, rotina e o modo como você se percebe.',
+      acontecendo: [
+        'Distância de pessoas importantes, diferenças culturais, barreiras linguísticas, solidão, pertencimento, experiências de discriminação e mudanças na identidade profissional podem atravessar a imigração e a expatriação. Essas experiências não são, por si mesmas, transtornos psicológicos.',
+        'A transição de carreira pode ganhar contornos específicos quando ocorre junto à adaptação a outra cultura, mas também pode ser trabalhada independentemente de uma mudança de país.'
+      ],
+      trabalho: [
+        'Podemos explorar como a experiência intercultural se relaciona com suas emoções, vínculos e escolhas, e desenvolver recursos para lidar com mudanças e conflitos entre expectativas pessoais, familiares e culturais. O trabalho considera sua história, sua realidade e o que tem valor para você.'
+      ],
+      frase: 'Mudar de país não significa deixar de ser quem você é — mas pode abrir perguntas novas sobre pertencimento e identidade.'
+    }
   ],
-  fechamento:
-    'Nada disso precisa virar um rótulo. Na terapia, a gente começa entendendo o que está acontecendo com você, no seu contexto, sem pressa e sem julgamento.',
 } as const;
 
 /* --------------------------------------------------------------------------- O que acontece na terapia */
 
 export const terapia = {
   titulo: 'O que acontece na terapia',
+  rotulo: 'Um passo de cada vez',
+  /* As cinco paradas do percurso, na ordem. O ícone de cada uma é um
+     arquivo de src/icons/ (sem o .svg). */
+  paradas: {
+    oQueE: { icone: 'chats-circle', titulo: 'Um trabalho feito a dois' },
+    contexto: { icone: 'user-focus', titulo: 'Você, por inteiro' },
+    eNaoE: { icone: 'signpost', titulo: 'O que a terapia é, e o que não é' },
+    metodo: { icone: 'arrows-clockwise', titulo: 'Como eu trabalho' },
+    final: { icone: 'plant', titulo: 'Quando procurar' },
+  },
   paragrafo:
     'Psicoterapia é um trabalho feito a dois, com uma profissional habilitada, sigilo e método. É um espaço para olhar com cuidado para o que você pensa, sente e faz, e para o que é importante na sua vida.',
+  contexto: {
+    paragrafos: [
+      'O sofrimento psicológico não acontece isoladamente. É atravessado por experiências, vínculos, saúde, trabalho, recursos disponíveis e pelo momento que cada pessoa está vivendo.',
+      'Na terapia, buscamos compreender o que está acontecendo sem reduzir você a um diagnóstico, a uma lembrança ou a um único comportamento.',
+    ],
+    centro: 'você',
+    instrucao: 'Toque em cada parte para ver como ela entra na conversa.',
+    fatores: [
+      { icone: 'book-open', nome: 'Experiências', texto: 'O que você já viveu e aprendeu ajuda a entender como você reage hoje.' },
+      { icone: 'users-three', nome: 'Vínculos', texto: 'As pessoas com quem você convive influenciam o que você sente, e são influenciadas também.' },
+      { icone: 'first-aid', nome: 'Saúde', texto: 'Sono, corpo, doenças e tratamentos em curso também entram na conversa.' },
+      { icone: 'briefcase', nome: 'Trabalho', texto: 'A rotina, as exigências e a falta ou o excesso de trabalho pesam no dia a dia.' },
+      { icone: 'toolbox', nome: 'Recursos', texto: 'Tempo, dinheiro, apoio e acesso a cuidados mudam o que é possível em cada momento.' },
+      { icone: 'hourglass-medium', nome: 'Momento de vida', texto: 'Cada fase traz perguntas próprias, e o que faz sentido agora pode mudar depois.' },
+    ],
+  },
   e: {
     titulo: 'É',
     itens: [
@@ -148,9 +371,13 @@ export const terapia = {
     ],
   },
   comoTrabalho: {
-    titulo: 'Como eu trabalho',
     texto:
       'Meu trabalho é orientado pela Terapia Cognitivo-Comportamental (TCC) e pela Terapia de Aceitação e Compromisso (ACT). Na prática, olhamos juntos para a relação entre pensamentos, emoções e comportamentos, buscamos formas mais flexíveis de lidar com o que é difícil e aproximamos suas escolhas daquilo que tem valor para você.',
+    ciclo: [
+      { icone: 'brain', nome: 'Pensamentos' },
+      { icone: 'heart', nome: 'Emoções' },
+      { icone: 'footprints', nome: 'Comportamentos' },
+    ],
   },
   fraseFinal:
     'Procurar terapia não é sinal de fraqueza e não precisa esperar o limite. É uma forma de cuidar da saúde, como qualquer outra.',
@@ -162,20 +389,24 @@ export const comoFunciona = {
   titulo: 'Como funciona',
   passos: [
     {
+      icone: 'calendar-blank',
       titulo: 'Você escolhe como agendar.',
       texto:
         'Pela Vittude, com agenda e pagamento na própria plataforma, ou diretamente comigo pelo WhatsApp.',
     },
     {
+      icone: 'hand-waving',
       titulo: 'Primeira sessão.',
       texto:
         'Nos conhecemos, você conta o que te trouxe e avaliamos juntos se o atendimento online é adequado para o seu momento.',
     },
     {
+      icone: 'path',
       titulo: 'Combinamos o caminho.',
       texto: 'Definimos objetivos, frequência e por onde começar.',
     },
     {
+      icone: 'video-camera',
       titulo: 'Acompanhamento.',
       texto:
         'Sessões de 50 minutos por videochamada. Ao longo do processo, revisamos juntos como você está.',
@@ -183,8 +414,14 @@ export const comoFunciona = {
   ],
   caixa: {
     titulo: 'Para a sessão',
-    texto:
-      'Internet estável, celular ou computador com câmera, fone de ouvido e um lugar onde você possa falar à vontade.',
+    instrucao: 'Antes do horário, confira o que vai precisar. Toque em cada item.',
+    itens: [
+      { icone: 'wifi-high', texto: 'Internet estável' },
+      { icone: 'laptop', texto: 'Celular ou computador com câmera' },
+      { icone: 'headphones', texto: 'Fone de ouvido' },
+      { icone: 'armchair', texto: 'Um lugar onde você possa falar à vontade' },
+    ],
+    pronto: 'Tudo certo para a sessão.',
   },
 } as const;
 
@@ -193,10 +430,9 @@ export const comoFunciona = {
 export const sobre = {
   titulo: 'Quem vai te acompanhar',
   paragrafos: [
-    'Olá, eu sou a Patricia. Muito prazer!',
-    'Sou psicóloga clínica e atendo online adultos e idosos, acompanhando pessoas em diferentes lugares do Brasil e do mundo.',
-    'Minha história começou em São Paulo. Crescer nessa cidade despertou meu interesse pela complexidade das experiências humanas e me levou à Psicologia. Durante a formação, participei de projetos sociais e grupos de estudo, que ampliaram meu entendimento da psicologia como espaço de cuidado e de aprendizado contínuo.',
-    'Acredito numa abordagem científica e sensível, que considera o contexto de cada pessoa. Meu objetivo é oferecer um espaço de escuta e compreensão, para que você possa dar os próximos passos com mais confiança.',
+    'Sou Patricia Braz Domingues, psicóloga clínica (CRP 06/167326). Atendo adultos e idosos de forma online, incluindo brasileiros que vivem em outros países.',
+    'Minha prática busca unir o conhecimento científico à compreensão da experiência singular de cada pessoa. Isso significa olhar para o sofrimento com atenção à história, às relações e às condições concretas de vida, sem perder de vista o que pode ser construído daqui para frente.',
+    'Entendo a psicoterapia como um trabalho colaborativo, em que acolhimento, reflexão e intervenções práticas se complementam.',
   ],
   foto: {
     alt: 'Patricia Braz Domingues sorrindo, sentada diante do notebook onde faz os atendimentos',
@@ -204,12 +440,14 @@ export const sobre = {
   },
   formacao: {
     titulo: 'Formação',
+    rotuloRolagem: 'Deslize para o lado para ver todas.',
     /* Do mais recente para o mais antigo. `andamento: true` faz o site
        escrever "em andamento" — nunca apresentar como concluído. */
     itens: [
       {
         periodo: '2025–2026',
         curso: 'Curso de Psicoterapia Baseada em Evidências',
+        icone: 'book-open',
         instituicao: 'InPBE — Instituto de Psicologia Baseada em Evidências',
         andamento: false,
         nota: null as string | null,
@@ -217,6 +455,7 @@ export const sobre = {
       {
         periodo: '2025–2026',
         curso: 'Pós-graduação em Neuropsicologia',
+        icone: 'brain',
         instituicao: 'Universidade Anhembi Morumbi',
         andamento: true,
         nota: null as string | null,
@@ -225,6 +464,7 @@ export const sobre = {
         periodo: '2023–2024',
         curso:
           'Especialização (pós-graduação lato sensu) em Saúde Mental e Desenvolvimento Humano',
+        icone: 'certificate',
         instituicao: 'PUCPR',
         andamento: false,
         nota: 'Trabalho final: “A saúde mental do idoso diante de suas perdas e luto: contribuições da psicoterapia de Aceitação e Compromisso”.',
@@ -232,6 +472,7 @@ export const sobre = {
       {
         periodo: '2022–2023' as string | null,
         curso: 'Formação em Perdas e Luto',
+        icone: 'hand-heart',
         instituicao: 'AC Bastos' as string | null,
         andamento: false,
         nota: 'Acolhimento, avaliação e intervenção.' as string | null,
@@ -239,32 +480,11 @@ export const sobre = {
       {
         periodo: '2016–2020' as string | null,
         curso: 'Graduação em Psicologia',
+        icone: 'graduation-cap',
         instituicao: 'Universidade Paulista (UNIP)' as string | null,
         nota: 'Trabalho final: “Breve revisão bibliográfica: as implicações psicológicas na vida dos cuidadores familiares de pacientes com a doença de Alzheimer”.' as string | null,
         andamento: false,
       },
-    ],
-  },
-  temas: {
-    titulo: 'Temas com que trabalho',
-    /* Em minúsculas, menos as siglas. A lista é lida como uma frase corrida
-       e quem capitaliza a primeira é o componente Sobre.astro, na hora de
-       montar a frase — assim a ordem pode mudar sem deixar um "Ansiedade"
-       perdido no meio dela. */
-    itens: [
-      'ansiedade',
-      'TDAH',
-      'autoestima e insegurança',
-      'relacionamentos',
-      'regulação emocional',
-      'estresse e burnout',
-      'questões profissionais',
-      'luto e perdas',
-      'transições de vida',
-      'procrastinação e organização',
-      'depressão',
-      'TOC',
-      'autoconhecimento',
     ],
   },
 } as const;
@@ -277,18 +497,18 @@ export const agendar = {
     'Escolha o caminho mais prático para você. Se tiver dúvidas antes de marcar, pode me chamar no WhatsApp.',
   blocos: [
     {
-      id: 'vittude',
-      titulo: 'Pela Vittude',
-      texto:
-        'Veja os horários disponíveis e agende direto na plataforma. Pagamento por cartão ou boleto.',
-      acao: 'vittude',
-    },
-    {
       id: 'whatsapp',
       titulo: 'Direto comigo',
       texto:
         'Me envie uma mensagem pelo WhatsApp para combinarmos horário e valor. O pagamento pode ser por Pix, transferência ou cartão.',
       acao: 'whatsapp',
+    },
+    {
+      id: 'vittude',
+      titulo: 'Pela Vittude',
+      texto:
+        'Veja os horários disponíveis e agende direto na plataforma. Pagamento por cartão ou boleto.',
+      acao: 'vittude',
     },
   ],
   /* Orientação de privacidade recomendada pelo briefing (3.4). */
