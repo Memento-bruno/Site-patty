@@ -487,28 +487,6 @@ export const sobre = {
       },
     ],
   },
-  temas: {
-    titulo: 'Temas com que trabalho',
-    /* Em minúsculas, menos as siglas. A lista é lida como uma frase corrida
-       e quem capitaliza a primeira é o componente Sobre.astro, na hora de
-       montar a frase — assim a ordem pode mudar sem deixar um "Ansiedade"
-       perdido no meio dela. */
-    itens: [
-      'ansiedade',
-      'TDAH',
-      'autoestima e insegurança',
-      'relacionamentos',
-      'regulação emocional',
-      'estresse e burnout',
-      'questões profissionais',
-      'luto e perdas',
-      'transições de vida',
-      'procrastinação e organização',
-      'depressão',
-      'TOC',
-      'autoconhecimento',
-    ],
-  },
 } as const;
 
 /* --------------------------------------------------------------------------- Como agendar */
