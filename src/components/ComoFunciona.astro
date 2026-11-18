@@ -76,6 +76,9 @@ const { caixa } = comoFunciona;
 </script>
 
 <style>
+  /* Seção centralizada (pedido do Bruno, 18/11/2026). */
+  .como h2 { text-align: center; }
+
   /* Única seção numerada do site, porque é a única sequência real. */
   .passos {
     --marco: 3.5rem;
@@ -87,13 +90,14 @@ const { caixa } = comoFunciona;
 
   .passo {
     position: relative;
-    padding-left: calc(var(--marco) + var(--e-4));
+    display: grid;
+    justify-items: center;
+    gap: var(--e-3);
+    text-align: center;
   }
 
   .passo__marco {
-    position: absolute;
-    left: 0;
-    top: 0;
+    position: relative;
     z-index: 1;
     display: grid;
     place-items: center;
@@ -121,25 +125,23 @@ const { caixa } = comoFunciona;
     line-height: 1;
   }
 
-  /* O fio que liga os passos. */
+  /* O fio que liga os passos (só em tela larga, onde ficam lado a lado). */
   .passo:not(:last-child)::before {
-    content: '';
+    content: none;
     position: absolute;
-    left: calc(var(--marco) / 2 - 1px);
-    top: var(--marco);
-    bottom: calc(var(--e-8) * -1);
-    width: 2px;
+    height: 2px;
     background: var(--lilas-200);
-    transform-origin: top;
+    transform-origin: left;
   }
 
-  .passo__titulo { margin-bottom: var(--e-2); }
+  .passo__texto { max-width: 34ch; }
   .passo__texto { color: var(--texto-suave); }
 
   /* --------------------------------------------------------------- Para a sessão */
 
   .caixa {
-    margin-top: var(--e-12);
+    margin: var(--e-12) auto 0;
+    text-align: center;
     padding: var(--e-6);
     background: var(--lilas-100);
     border-radius: var(--r-cartao);
@@ -157,6 +159,7 @@ const { caixa } = comoFunciona;
     display: grid;
     gap: var(--e-2);
     margin-top: var(--e-4);
+    text-align: left;
   }
 
   .item {
@@ -225,7 +228,7 @@ const { caixa } = comoFunciona;
 
   .caixa--pronta { background: var(--lilas-200); }
 
-  .acao { margin-top: var(--e-8); }
+  .acao { margin-top: var(--e-8); text-align: center; max-width: none; }
   .acao .botao { width: 100%; }
 
   /* --------------------------------------------------------------- Movimento */
@@ -247,7 +250,7 @@ const { caixa } = comoFunciona;
     }
 
     .passos--espera .passo:not(:last-child)::before {
-      transform: scaleY(0);
+      transform: scaleX(0);
       transition: transform 350ms ease;
       transition-delay: calc(var(--ordem) * 350ms + 250ms);
     }
@@ -274,29 +277,18 @@ const { caixa } = comoFunciona;
     }
 
     .passo {
-      padding-left: 0;
-      display: grid;
       grid-row: span 3;
       grid-template-rows: subgrid;
       row-gap: var(--e-4);
       align-content: start;
     }
 
-    .passo__marco {
-      position: relative;
-      justify-self: start;
-    }
-
-    .passo__titulo { margin-bottom: 0; }
-
+    /* Do lado direito de um ícone até o lado esquerdo do próximo. */
     .passo:not(:last-child)::before {
-      left: calc(var(--marco) + var(--e-2));
+      content: '';
       top: calc(var(--marco) / 2 - 1px);
-      bottom: auto;
-      width: auto;
-      right: calc(var(--e-2) * -1 + var(--e-6) * -1 + var(--e-2));
-      height: 2px;
-      transform-origin: left;
+      left: calc(50% + var(--marco) / 2 + var(--e-2));
+      right: calc(-50% - var(--e-6) + var(--marco) / 2 + var(--e-2));
     }
 
     @media (prefers-reduced-motion: no-preference) {
