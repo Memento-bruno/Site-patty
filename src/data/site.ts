@@ -519,18 +519,18 @@ export const agendar = {
     'Escolha o caminho mais prático para você. Se tiver dúvidas antes de marcar, pode me chamar no WhatsApp.',
   blocos: [
     {
-      id: 'vittude',
-      titulo: 'Pela Vittude',
-      texto:
-        'Veja os horários disponíveis e agende direto na plataforma. Pagamento por cartão ou boleto.',
-      acao: 'vittude',
-    },
-    {
       id: 'whatsapp',
       titulo: 'Direto comigo',
       texto:
         'Me envie uma mensagem pelo WhatsApp para combinarmos horário e valor. O pagamento pode ser por Pix, transferência ou cartão.',
       acao: 'whatsapp',
+    },
+    {
+      id: 'vittude',
+      titulo: 'Pela Vittude',
+      texto:
+        'Veja os horários disponíveis e agende direto na plataforma. Pagamento por cartão ou boleto.',
+      acao: 'vittude',
     },
   ],
   /* Orientação de privacidade recomendada pelo briefing (3.4). */
